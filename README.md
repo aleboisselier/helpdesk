@@ -1,6 +1,6 @@
 ![HelpDesk](http://angular.kobject.net/git/phalconist/helpdesk.png "HelpDesk")
 # HelpDesk DOA
-A Helpdesk Application for educational purposes using a micro-framework...
+A Helpdesk Application for educational purposes using a micro-framework.
 # How To : 
 
 - [x] Fork your own copy of this repository.
