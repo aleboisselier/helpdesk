@@ -17,7 +17,11 @@ class DefaultC extends BaseController {
 	 */
 	public function index() {
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
-		$this->loadView("main/vDefault");
+		if(Auth::isAuth()){
+			$this->loadView("main/vDefault");
+		}else{
+			$this->loadView("main/vLogin");
+		}
 		$this->loadView("main/vFooter");
 		Jquery::getOn("click", ".btAjax", "sample/ajaxSample","#response");
 		echo Jquery::compile();
@@ -61,6 +65,20 @@ class DefaultC extends BaseController {
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => true
 		);
+		$this->index();
+	}
+
+	public function login(){
+		if (isset($_POST["email"]) && isset($_POST['pass'])) {
+			$user = DAO::getOne("User", "mail='".$_POST["email"]."' AND password='".$_POST['pass']."'");
+			if ($user != null) {
+				$_SESSION["user"] = $user;
+				$_SESSION['KCFINDER'] = array(
+					'disabled' => true
+				);
+			}
+		}
+
 		$this->index();
 	}
 
