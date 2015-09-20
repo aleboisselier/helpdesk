@@ -12,6 +12,7 @@
 <script type="text/javascript" src="assets/js/ckeditor/ckeditor.js"></script>
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+<link rel="icon" href="assets/img/helpdesk.png">
 </head>
 <meta charset="UTF-8">
 <body>
@@ -27,17 +28,10 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="#" target="_self">HelpDesk</a>
+				</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="collapse-mainNav">
-				<ul class="nav navbar-nav navbar-nav">
-					<li id='mainNav-navzone-1-li-1'><a id='mainNav-navzone-1-link-1'
-						href="#">Créer un ticket</a></li>
-					<li id='mainNav-navzone-1-li-2'><a id='mainNav-navzone-1-link-2'
-						href="#">Tickets</a></li>
-					<li id='mainNav-navzone-1-li-3'><a id='mainNav-navzone-1-link-3'
-						href="#">Foire aux questions</a></li>
-				</ul>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="collapse-mainNav">
 					<ul class="nav navbar-nav navbar-nav">
 						<li id='mainNav-navzone-1-li-1'><a id='mainNav-navzone-1-link-1'
 							href="#">Créer un ticket</a></li>

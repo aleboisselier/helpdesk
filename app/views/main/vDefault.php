@@ -1,5 +1,11 @@
 
 <div class="container">
+<?php
+	if($_SESSION['logStatus'] == 'success'){
+		$this->_showMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
+	}
+	$_SESSION['logStatus'] = null;
+?>
 	<div class="well well-lg">
 		<div id="main">
 			<fieldset>

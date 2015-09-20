@@ -20,6 +20,7 @@ class DefaultC extends BaseController {
 		if(Auth::isAuth()){
 			$this->loadView("main/vDefault");
 		}else{
+			$this->loadView("main/vInfo",array("message"=>"TEST","type"=>"warning","dismissable"=>true,"timerInterval"=>false,"visible"=>true));
 			$this->loadView("main/vLogin");
 		}
 		$this->loadView("main/vFooter");
@@ -76,6 +77,8 @@ class DefaultC extends BaseController {
 				$_SESSION['KCFINDER'] = array(
 					'disabled' => true
 				);
+			}else{
+				
 			}
 		}
 
