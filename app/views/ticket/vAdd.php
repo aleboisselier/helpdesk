@@ -7,17 +7,22 @@
 </div>
 <div class="alert alert-info">Ticket : <?php echo $ticket->toString()?></div>
 <div class="form-group">
+	
 	<input type="hidden" name="id" value="<?php echo $ticket->getId()?>">
+	
 	<label for="type">Type</label>
 	<select class="form-control" name="type">
-	<?php echo $listType;?>
+		<?php echo $listType;?>
 	</select>
+	
 	<label for="idCategorie">Catégorie</label>
 	<select class="form-control" name="idCategorie">
-	<?php echo $listCat;?>
+		<?php echo $listCat;?>
 	</select>
+	
 	<label for="titre">Titre</label>
 	<input type="text" name="titre" id="titre" value="<?php echo $ticket->getTitre()?>" placeholder="Entrez le titre" class="form-control">
+	
 	<label for="description">Description</label>
 	<textarea name="description" id="description" placeholder="Entrez la description" class="form-control"><?php echo $ticket->getDescription()?></textarea>
 </div>

@@ -40,6 +40,9 @@ class _DefaultController extends BaseController {
 		echo "<table class='table table-striped'>";
 		echo "<thead><tr><th>".$this->model."</th></tr></thead>";
 		echo "<tbody>";
+		
+		echo "_DefaultController";
+		
 		foreach ($objects as $object){
 			echo "<tr>";
 			echo "<td>".$object->toString()."</td>";
@@ -50,6 +53,10 @@ class _DefaultController extends BaseController {
 		echo "</tbody>";
 		echo "</table>";
 		echo "<a class='btn btn-primary' href='".$config["siteUrl"].$baseHref."/frm'>Ajouter...</a>";
+	}
+
+	public function recherche(){
+		echo "ceci est la fontion recherche";
 	}
 
 	/**

@@ -26,19 +26,9 @@ class Faqs extends \_DefaultController {
 			$this->_showDisplayedMessage($message);
 		}
 		$faqs=DAO::getAll($this->model);
-		echo "<table class='table table-striped'>";
-		echo "<thead><tr><th>Questions</th></tr></thead>";
-		echo "<tbody>";
-		foreach ($faqs as $faq){
-			echo "<tr>";
-			echo "<td>".$faq->getTitre()."</td>";
-			echo "<td class='td-center'><a class='btn btn-primary btn-xs' href='".$baseHref."/frm/".$faq->getId()."'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>".
-			"<td class='td-center'><a class='btn btn-warning btn-xs' href='".$baseHref."/delete/".$faq->getId()."'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
-			echo "</tr>";
-		}
-		echo "</tbody>";
-		echo "</table>";
-		echo "<a class='btn btn-primary' href='".$config["siteUrl"].$baseHref."/frm'>Ajouter...</a>";
+		$this->loadView("faq/vFilter");
+		$this->loadView("faq/vList", array("faqs"=>$faqs));
+		echo Jquery::postFormOn('click', '#search', "faqs/filter", "searchForm", ".list");
 	}
 
 	public function frm($id=NULL){
@@ -55,6 +45,21 @@ class Faqs extends \_DefaultController {
 		echo Jquery::execute("CKEDITOR.replace('description');");
 	}
 
+	public function filter(){
+		$sql = "";
+		if(isset($_POST['titre'])){
+			$sql = "titre LIKE '%".$_POST['titre']."%'";
+		}
+		if (isset($_POST['categorie'])) {
+			if ($sql != "") {
+				$sql += " AND ";
+			}
+				$sql += "idCategorie = ".$_POST['categorie'];
+		}
+		$faqs=DAO::getAll($this->model, $sql);
+		$this->loadView("faq/vList", array("faqs"=>$faqs, "sql"=> $sql));
+	}
+
 	/* (non-PHPdoc)
 	 * @see _DefaultController::setValuesToObject()
 	 */
@@ -64,5 +69,6 @@ class Faqs extends \_DefaultController {
 		$categorie=DAO::getOne("Categorie", $_POST["idCategorie"]);
 		$object->setCategorie($categorie);
 	}
+ 
 
 }
