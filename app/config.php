@@ -1,7 +1,7 @@
 <?php
 return array(
 		"siteUrl"=>"http://127.0.0.1/helpdesk/",
-		"documentRoot"=>"DefaultC",
+		"documentRoot"=>"Indexx",
 		"database"=>[
 				"dbName"=>"helpdesk",
 				"serverName"=>"127.0.0.1",

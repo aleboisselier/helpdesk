@@ -48,15 +48,15 @@ class Auth {
 	public static function getInfoUser($style="primary"){
 		$user=self::getUser();
 		if(isset($user)){
-			$infoUser="<a class='btn btn-primary' href='defaultC/disconnect'>Déconnexion <span class='label label-success'>".$user."</span></a>";
+			$infoUser="<a class='btn btn-primary' href='indexx/disconnect'>Déconnexion <span class='label label-success'>".$user."</span></a>";
 		}else{
 			$infoUser='<div class="btn-group">
 							<button type="button" class="btn btn-'.$style.' dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								Connexion en tant que... <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="defaultC/asAdmin"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;Administrateur</a></li>
-								<li><a href="defaultC/asUser"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Utilisateur</a></li>
+								<li><a href="indexx/asAdmin"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;Administrateur</a></li>
+								<li><a href="indexx/asUser"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Utilisateur</a></li>
 							</ul>
 						</div>';
 		}
