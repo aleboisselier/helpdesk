@@ -26,9 +26,13 @@ class Faqs extends \_DefaultController {
 			$this->_showDisplayedMessage($message);
 		}
 		$faqs=DAO::getAll($this->model);
-		$this->loadView("faq/vFilter");
+		$categories=DAO::getAll("Categorie");
+		$auteur=DAO::getAll("User");
+		$listCategorie=Gui::select($categories,null,"Sélectionner une catégorie ...");
+		$listUser=Gui::select($auteur,null,"Sélectionner l'auteur...");
+		$this->loadView("faq/vFilter",array("listCategorie"=>$listCategorie,"listUser"=>$listUser));
 		$this->loadView("faq/vList", array("faqs"=>$faqs));
-		echo Jquery::postFormOn('click', '#search', "faqs/filter", "searchForm", ".list");
+		echo Jquery::postFormOn('change', '.search', "faqs/filter", "searchForm", ".list");
 	}
 
 	public function frm($id=NULL){
@@ -50,11 +54,17 @@ class Faqs extends \_DefaultController {
 		if(isset($_POST['titre'])){
 			$sql = "titre LIKE '%".$_POST['titre']."%'";
 		}
-		if (isset($_POST['categorie'])) {
+		if (isset($_POST['idCategorie']) && $_POST['idCategorie'] !="Sélectionner une catégorie ...") {
 			if ($sql != "") {
-				$sql += " AND ";
+				$sql .= " AND ";
 			}
-				$sql += "idCategorie = ".$_POST['categorie'];
+			$sql .= "idCategorie = ".$_POST['idCategorie'];
+		}
+		if (isset($_POST['idUser']) && $_POST['idUser'] != "Sélectionner l'auteur...") {
+			if ($sql != "") {
+				$sql .= " AND ";
+			}
+				$sql .= "idUser = ".$_POST['idUser'];
 		}
 		$faqs=DAO::getAll($this->model, $sql);
 		$this->loadView("faq/vList", array("faqs"=>$faqs, "sql"=> $sql));
