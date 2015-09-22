@@ -44,6 +44,7 @@ class Faqs extends \_DefaultController {
 		$this->loadView("faq/vList", array("faqs"=>$faqs));
 
 		echo Jquery::postFormOn('change', '.search', "faqs/filter", "searchForm", ".list");
+		echo Jquery::postFormOn('keyup', '.search', "faqs/filter", "searchForm", ".list");
 	}
 
 	public function frm($id=NULL){
