@@ -34,7 +34,7 @@ class Faqs extends \_DefaultController {
 			$listUser=Gui::select($auteurs,Auth::getUser()->getId(),"Sélectionner l'auteur...");
 		}else{
 			$faqs=DAO::getAll($this->model);
-			$listUser=Gui::select($auteur,null,"Sélectionner l'auteur...");
+			$listUser=Gui::select($auteurs,null,"Sélectionner l'auteur...");
 		}
 		
 		
