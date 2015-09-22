@@ -13,8 +13,3 @@
 	</div>
 </form>
 <a class='btn btn-primary' id="search">Filtrer</a>
-
-Filtres : 
- - Titre
- - Categorie
- - Auteur

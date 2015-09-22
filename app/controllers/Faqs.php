@@ -25,13 +25,24 @@ class Faqs extends \_DefaultController {
 			$message->setTimerInterval($this->messageTimerInterval);
 			$this->_showDisplayedMessage($message);
 		}
-		$faqs=DAO::getAll($this->model);
+
 		$categories=DAO::getAll("Categorie");
-		$auteur=DAO::getAll("User");
+		$auteurs=DAO::getAll("User");
+		
+		if (Auth::isAdmin()) {
+			$faqs = DAO::getAll($this->model, "idUser=".Auth::getUser()->getId());
+			$listUser=Gui::select($auteurs,Auth::getUser()->getId(),"Sélectionner l'auteur...");
+		}else{
+			$faqs=DAO::getAll($this->model);
+			$listUser=Gui::select($auteur,null,"Sélectionner l'auteur...");
+		}
+		
+		
 		$listCategorie=Gui::select($categories,null,"Sélectionner une catégorie ...");
-		$listUser=Gui::select($auteur,null,"Sélectionner l'auteur...");
+		
 		$this->loadView("faq/vFilter",array("listCategorie"=>$listCategorie,"listUser"=>$listUser));
 		$this->loadView("faq/vList", array("faqs"=>$faqs));
+
 		echo Jquery::postFormOn('change', '.search', "faqs/filter", "searchForm", ".list");
 	}
 

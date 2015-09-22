@@ -6,7 +6,7 @@ $baseHref=get_class($this); ?>
 	<table class='table table-striped'>
 		<thead><tr><th>Questions</th></tr></thead>
 		<tbody>
-					<?php foreach ($faqs as $faq): ?>
+			<?php foreach ($faqs as $faq): ?>
 				<tr>
 				<td><?php echo $faq->getTitre(); ?></td>
 				<?php if($faq->getUser()->getId() == Auth::getUser()->getId()): ?>
