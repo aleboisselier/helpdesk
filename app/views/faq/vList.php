@@ -1,7 +1,7 @@
-<div class="list">
+<div class="list col-xs-6 col-sm-8 col-md-8">
 <?php $baseHref=get_class($this); ?>
 	<table class='table table-striped'>
-		<thead><tr><th>Questions</th></tr></thead>
+		<thead><tr><th><h3>Questions</h3></th></tr></thead>
 		<tbody>
 			<?php foreach ($faqs as $faq): ?>
 				<tr>
@@ -16,5 +16,5 @@
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-	<a class='btn btn-primary' href='<?php echo $config["siteUrl"].$baseHref."/frm"; ?>'>Ajouter...</a>
+	<a class='btn btn-primary pull-right' href='<?php echo $config["siteUrl"].$baseHref."/frm"; ?>' style="margin-left:2%;">Ajouter...</a>
 </div>

@@ -11,7 +11,7 @@ use micro\js\Jquery;
 class Faqs extends \_DefaultController {
 	public function Faqs(){
 		parent::__construct();
-		$this->title="Foire aux Questions";
+		$this->title="<p style='margin-left:2%'>Foire aux Questions</p>";
 		$this->model="Faq";
 	}
 
