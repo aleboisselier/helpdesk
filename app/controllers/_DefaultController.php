@@ -41,8 +41,6 @@ class _DefaultController extends BaseController {
 		echo "<thead><tr><th>".$this->model."</th></tr></thead>";
 		echo "<tbody>";
 		
-		echo "_DefaultController";
-		
 		foreach ($objects as $object){
 			echo "<tr>";
 			echo "<td>".$object->toString()."</td>";

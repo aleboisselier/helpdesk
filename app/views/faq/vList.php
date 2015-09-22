@@ -1,8 +1,5 @@
 <div class="list">
-<?php 
-// echo count($faqs);
-
-$baseHref=get_class($this); ?>
+<?php $baseHref=get_class($this); ?>
 	<table class='table table-striped'>
 		<thead><tr><th>Questions</th></tr></thead>
 		<tbody>
