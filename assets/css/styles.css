@@ -77,3 +77,12 @@ body{
 .td-center{
 	text-align: center;
 }
+
+/*-------Filtre---------*/
+
+.filtre{
+    background-color: #C7EAEB;
+    color:black;
+    padding-bottom: 5%;
+    padding-top: 1%;
+}

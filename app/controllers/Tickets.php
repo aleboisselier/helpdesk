@@ -15,6 +15,22 @@ class Tickets extends \_DefaultController {
 		$this->model="Ticket";
 	}
 
+	public function index($message=null){
+		global $config;
+		$baseHref=get_class($this);
+		if(isset($message)){
+			if(is_string($message)){
+				$message=new DisplayedMessage($message);
+			}
+			$message->setTimerInterval($this->messageTimerInterval);
+			$this->_showDisplayedMessage($message);
+		}
+		$objects=DAO::getAll($this->model);
+
+		$this->loadView("ticket/vList", array("listName" => "Nouveaux", "tickets" => $objects));
+	}
+
+
 	public function messages($id){
 		$ticket=DAO::getOne("Ticket", $id[0]);
 		if($ticket!=NULL){
