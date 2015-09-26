@@ -13,6 +13,8 @@ class Statut extends Base{
 	private $libelle;
 	private $ordre=0;
 	private $icon;
+	private $statutsSuivant;
+	private $button;
 
 	public function getId() {
 		return $this->id;
@@ -51,6 +53,24 @@ class Statut extends Base{
 
 	public function setIcon($icon) {
 		$this->icon=$icon;
+		return $this;
+	}
+
+	public function getStatutsSuivant(){
+		return $this->statutsSuivant;
+	}
+
+	public function setStatutsSuivant($statuts){
+		$this->statutsSuivant = $statuts;
+		return $this;
+	}
+
+	public function getButton(){
+		return $this->button;
+	}
+
+	public function setButton($nButton){
+		$this->button = $nButton;
 		return $this;
 	}
 

@@ -383,4 +383,8 @@ class DAO {
 		DAO::$db=new Database($dbName,$serverName,$port,$user,$password);
 		DAO::$db->connect();
 	}
+
+	public static function count($className, $condition){
+		return count(DAO::getAll($className, $condition));
+	}
 }

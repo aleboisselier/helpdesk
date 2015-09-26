@@ -25,9 +25,22 @@ class Tickets extends \_DefaultController {
 			$message->setTimerInterval($this->messageTimerInterval);
 			$this->_showDisplayedMessage($message);
 		}
-		$objects=DAO::getAll($this->model);
 
-		$this->loadView("ticket/vList", array("listName" => "Nouveaux", "tickets" => $objects));
+		if (Auth::isAdmin()) {
+			$_SESSION['condition'] = 'idStatut = 1';
+			$condition = $_SESSION['condition'];
+			$page = 1;
+			$nbPerPage = 3;
+
+			$nTickets = DAO::count($this->model, $condition);
+
+			$this->loadView('ticket/vAdmin', array('newTickets' => $nTickets, 'nbPerPage' => $nbPerPage));
+			echo Jquery::executeOn('.link', 'click', '
+				$(".link").parent().removeClass("active");
+				$(this).parent().addClass("active")');
+
+			$this->listTickets($nbPerPage, $page);
+		}	
 	}
 
 
@@ -50,6 +63,7 @@ class Tickets extends \_DefaultController {
 					  $('[data-toggle=\"popover\"]').popover({'trigger':'hover','html':true})
 				})");
 		}
+
 	}
 
 	public function frm($id=NULL){
@@ -118,6 +132,56 @@ class Tickets extends \_DefaultController {
 		exit;
 	}
 
+	public function listTickets($tPerPage, $page){
+		$condition = $_SESSION['condition'];
+		$nbTickets = DAO::count($this->model, $condition);
+		if ($condition == "") {
+			$nCondition = "1 = 1";
+		}else{
+			$nCondition = $condition;
+		}
+		
+		$min = (($page)*$tPerPage)-($tPerPage);
+		$num = $tPerPage;
+		if($min < 0){ 
+			$min = 0;
+		}
+		$nCondition .= ' ORDER BY dateCreation ASC LIMIT '.$min.','. $num;
+		$list=DAO::getAll($this->model, $nCondition);
+		$buttons = array();
+		foreach ($list as $ticket) {
+			$buttons[$ticket->getId()] = $this->getButtonGroup($ticket);
+		}
+		$this->loadView("ticket/vList", array("tickets" => $list, "buttons" => $buttons, 'currPage' => $page, 'tPerPage' => $tPerPage, 'nbTickets' => $nbTickets));
+		echo Jquery::getOn('click', '.chgList', 'tickets/listFromJquery','#list');
+	}
 
+	public function getButtonGroup($ticket){
+		$buttonGroup = "";
+		$statutsSuivant = $ticket->getStatut()->getStatutsSuivant();
+		$listStatutsSuivant = explode(",", $statutsSuivant);
+		foreach ( $listStatutsSuivant as $statut) {
+			if ($statut >0) {
+				$statut = DAO::getOne("Statut", $statut);
+				$buttonGroup .= $statut->getButton();
+			}
+		}
+		return $buttonGroup;
+	}
+
+	// public function listFromURL($params){
+	// 	$this->listTickets($params[0], $params[1], $params[2]);
+	// }
+
+	public function listFromJquery($params){
+		$params = explode(";", $params[0]);
+		$page = $params[0];
+		$tPerPage = $params[1];
+		if (isset($params[2])) {
+			$_SESSION['condition'] = $params[2];
+		}
+		$condition = $_SESSION['condition'];
+		$this->listTickets($tPerPage, $page);
+	}
 
 }

@@ -1,69 +1,86 @@
-<ul class="nav nav-tabs nav-justified">
-	<li class="active"><a>Nouveaux Tickets <span class="badge">42</span></a></li>
-	<li><a>Mes Tickets</a></li>
-</ul>
-<br>
-<div class="panel panel-info" style="font-size:110%;">
-	<div class="panel-heading">
-		<span class="label label-danger">Nouveau</span><b> Titre du ticket de Demande</b>
-		<span class="label label-info pull-right">Demande</span>
-	</div>
-	<div class="panel-body">
-		<div class="col-md-6">
-			<label>Catégorie : </label> Réseau
-		</div>
+<div id="list">
+	<br>
+	<?php foreach ($tickets as $ticket): 
+		$date = date_create($ticket->getDateCreation());
+		?>
+		<?php if ($ticket->getType() == "demande"): ?>
+			<div class="panel panel-info" style="font-size:110%;">
+				<div class="panel-heading">
+					<?php if($ticket->getStatut()->getId() == 1) : ?>
+							<span class="label label-primary"><span class="glyphicon glyphicon-alert"></span> Nouveau</span>
+					<?php endif; ?>
+					<b> <?php echo $ticket->getTitre();?></b> - <?php echo $ticket->getStatut();?>
+					<span class="label label-info pull-right">Demande</span>
+				</div>
+				<div class="panel-body">
+					<div class="col-md-12" >
+						Demande de <label> <?php echo $ticket->getCategorie(); ?></label>, effectuée le  <label> <?php echo $date->format('d.m.Y');?> </label> à <label> <?php echo $date->format('H:i');?></label>, par <label> <?php echo $ticket->getUser()->getLogin(); ?></label>.
+						<?php if($ticket->getStatut()->getId() > 1): ?> 
+							<br>Attribué à : <label><?php echo $ticket->getAdmin()->getLogin(); ?></label>.
+						<?php endif; ?>
+					</div>
+					<div class="clearfix" style="margin-top:2%">&nbsp;</div>
+					<div class="col-md-4">
+						<a href="tickets/frm/<?php echo $ticket->getId(); ?>" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
+					</div>
+					<div class="col-md-8" >
+						<div class="btn-group pull-right" role="group">
+							<?php error_reporting(0);echo Tickets::getButtonGroup($ticket);error_reporting(-1);?>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php else: ?>
+			<div class="panel panel-warning" style="font-size:110%;">
+				<div class="panel-heading">
+					<?php if($ticket->getStatut()->getId() == 1) : ?>
+							<span class="label label-primary"><span class="glyphicon glyphicon-alert"></span> Nouveau</span>
+					<?php endif; ?>
+					<b> <?php echo $ticket->getTitre();?></b> - <?php echo $ticket->getStatut();?>
+					<span class="label label-warning pull-right">Incident</span>
+				</div>
+				<div class="panel-body">
+					<div class="col-md-12" >
+						Problème de <label> <?php echo $ticket->getCategorie(); ?></label>, signalé le  <label> <?php echo $date->format('d.m.Y');?> </label> à <label> <?php echo $date->format('H:i');?></label>, par <label> <?php echo $ticket->getUser()->getLogin(); ?></label>.
+						<?php if($ticket->getStatut()->getId() > 1): ?> 
+							<br>Attribué à : <label><?php echo $ticket->getAdmin()->getLogin(); ?></label>.
+						<?php endif; ?>
+					</div>
+					<div class="clearfix" style="margin-top:2%">&nbsp;</div>
+					<div class="col-md-4">
+						<a href="tickets/frm/<?php echo $ticket->getId(); ?>" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
+					</div>
+					<div class="col-md-8" >
+						<div class="btn-group pull-right" role="group">
+							<?php error_reporting(0);echo Tickets::getButtonGroup($ticket);error_reporting(-1);?>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
+	<?php endforeach; ?>
+
+	<?php 
+		$nbPages = ceil($nbTickets/$tPerPage);
+	?>
+
+	<div class="text-center" id="pagination">
+		<nav>
+			<ul class="pagination">
+				<li <?php if($currPage == 1) :?> class="disabled" <?php else:?> class="chgList" id="<?php echo ($currPage-1).';'.$tPerPage; ?>" <?php endif; ?>>
+					<a aria-label="Précédent">
+						<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+					</a>
+				</li>
+					<?php for($i = 1; $i<=$nbPages; $i++): ?>
+						<li <?php if($i == $currPage):?>class="active"<?php endif;?> id="<?php echo $i.';'.$tPerPage; ?>" class="chgList"><a><?php echo $i; ?></a></li>
+					<?php endfor; ?>
+				<li <?php if($currPage == $nbPages) :?> class="disabled" <?php else:?> class="chgList" id="<?php echo ($currPage+1).';'.$tPerPage; ?>" <?php endif; ?>>
+					<a aria-label="Suivant" >
+						<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
 </div>
-<div class="panel panel-warning">
-	<div class="panel-heading" style="font-size:110%;">
-		<span class="label label-danger">Nouveau</span><b> Titre du ticket d'Incident</b>
-		<span class="label label-warning pull-right">Incident</span>
-	</div>
-	<div class="panel-body">
-		<div class="col-md-12" style="font-size:110%;">
-			<label>Problème de </label> Réseau<label>, signalé le  </label> 29/01/2015 <label>à</label> 12:29 <label>, par </label> admin
-		</div>
-	</div>
-</div>
-
-
-<?php 
-$nb = 7;
-if(floor(($nb/3)) == $nb/3){
-	$res = $nb/3;
-}else{
-	$res = floor(($nb/3)) +1;
-}
-
-//LIMITE INFERIEURE : ((numPage+1)*3)-3
-//LIMITE SUPERIEURE : (numPage+1)*3;
-?>
-<div class="text-center" id="pagination">
-	<nav>
-		<ul class="pagination">
-			<li>
-				<a href="#" aria-label="Précédent">
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-			</li>
-				<?php for($i = 0; $i<$res; $i++): ?>
-					<li><a href=""><?php echo $i+1; ?></a></li>
-				<?php endfor; ?>
-			<li>
-				<a href="#" aria-label="Suivant">
-					<span aria-hidden="true">&raquo;</span>
-				</a>
-			</li>
-		</ul>
-	</nav>
-</div>
-
-Structure de vAdmin (vue par défaut Admin) :
-
-	NavTab
-
-	Liste des Tickets :
-
-		vList (Liste des 3 Tickets)
-
-		Pagination
