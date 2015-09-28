@@ -86,3 +86,21 @@ body{
     padding-bottom: 5%;
     padding-top: 1%;
 }
+
+/*------Message---------*/
+
+.messageAdmin{
+    background-color: teal;
+    padding:3%;
+    width:80%;
+    margin-top: 2%;
+    color:white;
+}
+
+.messageUser{
+    background-color: #7AC5CC;
+    padding:3%;
+    width:80%;
+    margin-top: 2%;
+    color:#006464;
+}

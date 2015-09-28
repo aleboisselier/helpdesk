@@ -53,10 +53,6 @@ class _DefaultController extends BaseController {
 		echo "<a class='btn btn-primary' href='".$config["siteUrl"].$baseHref."/frm'>Ajouter...</a>";
 	}
 
-	public function recherche(){
-		echo "ceci est la fontion recherche";
-	}
-
 	/**
 	 * Retourne une instance de $className<br>
 	 * si $id est nul, un nouvel objet est retourné<br>
