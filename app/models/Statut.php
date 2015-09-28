@@ -14,7 +14,8 @@ class Statut extends Base{
 	private $ordre=0;
 	private $icon;
 	private $statutsSuivant;
-	private $button;
+	private $action;
+	private $cssClass;
 
 	public function getId() {
 		return $this->id;
@@ -65,12 +66,21 @@ class Statut extends Base{
 		return $this;
 	}
 
-	public function getButton(){
-		return $this->button;
+	public function getAction(){
+		return $this->action;
 	}
 
-	public function setButton($nButton){
-		$this->button = $nButton;
+	public function setAction($action){
+		$this->action = $action;
+		return $this;
+	}
+
+	public function getCssClass(){
+		return $this->cssClass;
+	}
+
+	public function setCssClass($cssClass){
+		$this->cssClass = $cssClass;
 		return $this;
 	}
 

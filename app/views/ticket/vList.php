@@ -1,63 +1,51 @@
 <div id="list">
 	<br>
-	<?php foreach ($tickets as $ticket): 
-		$date = date_create($ticket->getDateCreation());
-		?>
-		<?php if ($ticket->getType() == "demande"): ?>
-			<div class="panel panel-info" style="font-size:110%;">
+	<?php 
+		foreach ($tickets as $ticket): 
+			$date = date_create($ticket->getDateCreation());
+			$tPerPage = $_SESSION['nbPerPage'];
+			if ($ticket->getType() == "demande") {
+				$demande = 1;
+			}else{
+				$demande = 0;
+			}
+	?>
+			<div class="panel panel-<?php if($demande): ?>info<?php else: ?>warning<?php endif; ?>" style="font-size:110%;">
 				<div class="panel-heading">
-					<?php if($ticket->getStatut()->getId() == 1) : ?>
+					<?php if($ticket->getStatut()->getId() == 1 && Auth::isAdmin()) : ?>
 							<span class="label label-primary"><span class="glyphicon glyphicon-alert"></span> Nouveau</span>
 					<?php endif; ?>
-					<b> <?php echo $ticket->getTitre();?></b> - <?php echo $ticket->getStatut();?>
-					<span class="label label-info pull-right">Demande</span>
+					<b> <?= $ticket->getTitre();?></b> - <?= $ticket->getStatut();?>
+					<?php if($demande): ?>
+						<span class="label label-info pull-right">Demande</span>
+					<?php else: ?>
+						<span class="label label-warning pull-right">Incident</span>
+					<?php endif; ?>
 				</div>
 				<div class="panel-body">
 					<div class="col-md-12" >
-						Demande de <label> <?php echo $ticket->getCategorie(); ?></label>, effectuée le  <label> <?php echo $date->format('d.m.Y');?> </label> à <label> <?php echo $date->format('H:i');?></label>, par <label> <?php echo $ticket->getUser()->getLogin(); ?></label>.
+						<?php if($demande): ?>
+							Demande de <label> <?= $ticket->getCategorie(); ?></label>, effectuée le  <label> <?= $date->format('d.m.Y');?> </label> à <label> <?= $date->format('H:i');?></label>, par <label> <?= $ticket->getUser()->getLogin(); ?></label>.
+						<?php else: ?>
+							Problème de <label> <?= $ticket->getCategorie(); ?></label>, signalé le  <label> <?= $date->format('d.m.Y');?> </label> à <label> <?= $date->format('H:i');?></label>, par <label> <?= $ticket->getUser()->getLogin(); ?></label>.
+						<?php endif; ?>
 						<?php if($ticket->getStatut()->getId() > 1): ?> 
-							<br>Attribué à : <label><?php echo $ticket->getAdmin()->getLogin(); ?></label>.
+							<br>Attribué à : <label><?= $ticket->getAdmin()->getLogin(); ?></label>.
 						<?php endif; ?>
 					</div>
 					<div class="clearfix" style="margin-top:2%">&nbsp;</div>
-					<div class="col-md-4">
-						<a href="tickets/frm/<?php echo $ticket->getId(); ?>" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
-					</div>
-					<div class="col-md-8" >
-						<div class="btn-group pull-right" role="group">
-							<?php error_reporting(0);echo Tickets::getButtonGroup($ticket);error_reporting(-1);?>
+					<?php if(Auth::isAdmin()): ?>
+						<div class="col-md-8" >
+							<div class="btn-group" role="group">
+								<?php error_reporting(0);echo Tickets::getButtonGroup($ticket);error_reporting(-1);?>
+							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-		<?php else: ?>
-			<div class="panel panel-warning" style="font-size:110%;">
-				<div class="panel-heading">
-					<?php if($ticket->getStatut()->getId() == 1) : ?>
-							<span class="label label-primary"><span class="glyphicon glyphicon-alert"></span> Nouveau</span>
 					<?php endif; ?>
-					<b> <?php echo $ticket->getTitre();?></b> - <?php echo $ticket->getStatut();?>
-					<span class="label label-warning pull-right">Incident</span>
-				</div>
-				<div class="panel-body">
-					<div class="col-md-12" >
-						Problème de <label> <?php echo $ticket->getCategorie(); ?></label>, signalé le  <label> <?php echo $date->format('d.m.Y');?> </label> à <label> <?php echo $date->format('H:i');?></label>, par <label> <?php echo $ticket->getUser()->getLogin(); ?></label>.
-						<?php if($ticket->getStatut()->getId() > 1): ?> 
-							<br>Attribué à : <label><?php echo $ticket->getAdmin()->getLogin(); ?></label>.
-						<?php endif; ?>
-					</div>
-					<div class="clearfix" style="margin-top:2%">&nbsp;</div>
-					<div class="col-md-4">
-						<a href="tickets/frm/<?php echo $ticket->getId(); ?>" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
-					</div>
-					<div class="col-md-8" >
-						<div class="btn-group pull-right" role="group">
-							<?php error_reporting(0);echo Tickets::getButtonGroup($ticket);error_reporting(-1);?>
-						</div>
+					<div class="col-md-4 pull-right">
+						<a href="tickets/frm/<?= $ticket->getId(); ?>" class="btn btn-default pull-right"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
 					</div>
 				</div>
 			</div>
-		<?php endif; ?>
 	<?php endforeach; ?>
 
 	<?php 

@@ -26,21 +26,24 @@ class Tickets extends \_DefaultController {
 			$this->_showDisplayedMessage($message);
 		}
 
+		$_SESSION['page'] = 1;
+		$_SESSION['nbPerPage'] = 3;
+
 		if (Auth::isAdmin()) {
 			$_SESSION['condition'] = 'idStatut = 1';
-			$condition = $_SESSION['condition'];
-			$page = 1;
-			$nbPerPage = 3;
 
-			$nTickets = DAO::count($this->model, $condition);
+			$this->loadView("ticket/vAdmin", array('newTickets' => DAO::count("Ticket", $_SESSION['condition'])));
 
-			$this->loadView('ticket/vAdmin', array('newTickets' => $nTickets, 'nbPerPage' => $nbPerPage));
-			echo Jquery::executeOn('.link', 'click', '
+			$this->listTickets();
+		}else{
+			$_SESSION['condition'] = 'idUser = '.Auth::getUser()->getId();
+			$this->loadView("ticket/vUser");
+			$this->listTickets();
+		}
+
+		echo Jquery::executeOn('.link', 'click', '
 				$(".link").parent().removeClass("active");
 				$(this).parent().addClass("active")');
-
-			$this->listTickets($nbPerPage, $page);
-		}	
 	}
 
 
@@ -132,8 +135,10 @@ class Tickets extends \_DefaultController {
 		exit;
 	}
 
-	public function listTickets($tPerPage, $page){
+	public function listTickets(){
 		$condition = $_SESSION['condition'];
+		$tPerPage = $_SESSION['nbPerPage'];
+		$page=$_SESSION['page'];
 		$nbTickets = DAO::count($this->model, $condition);
 		if ($condition == "") {
 			$nCondition = "1 = 1";
@@ -152,8 +157,9 @@ class Tickets extends \_DefaultController {
 		foreach ($list as $ticket) {
 			$buttons[$ticket->getId()] = $this->getButtonGroup($ticket);
 		}
-		$this->loadView("ticket/vList", array("tickets" => $list, "buttons" => $buttons, 'currPage' => $page, 'tPerPage' => $tPerPage, 'nbTickets' => $nbTickets));
+		$this->loadView("ticket/vList", array("tickets" => $list, "buttons" => $buttons, 'currPage' => $page, 'nbTickets' => $nbTickets));
 		echo Jquery::getOn('click', '.chgList', 'tickets/listFromJquery','#list');
+		echo Jquery::getOn('click', '.updateStatut', 'tickets/updateStatut', '#list');
 	}
 
 	public function getButtonGroup($ticket){
@@ -163,7 +169,7 @@ class Tickets extends \_DefaultController {
 		foreach ( $listStatutsSuivant as $statut) {
 			if ($statut >0) {
 				$statut = DAO::getOne("Statut", $statut);
-				$buttonGroup .= $statut->getButton();
+				$buttonGroup .= "<button type='button' class='updateStatut btn btn-".$statut->getCssClass()."' id='".$statut->getId().";".$ticket->getId()."'>".$statut->getAction()."</button>";
 			}
 		}
 		return $buttonGroup;
@@ -178,10 +184,38 @@ class Tickets extends \_DefaultController {
 		$page = $params[0];
 		$tPerPage = $params[1];
 		if (isset($params[2])) {
-			$_SESSION['condition'] = $params[2];
+			switch ($params[2]) {
+				case 'new':
+					$_SESSION['condition'] = "idStatut = 1";
+					break;
+				case 'my':
+					if (Auth::isAdmin()) {
+						$_SESSION['condition'] = "idAdmin = ".Auth::getUser()->getId();
+					}else{
+						$_SESSION['condition'] = "idUser = ".Auth::getUser()->getId();
+					}
+					break;
+				default:
+					$_SESSION['condition'] = "";
+					break;
+			}
 		}
-		$condition = $_SESSION['condition'];
-		$this->listTickets($tPerPage, $page);
+		$_SESSION['page'] = $page;
+		$_SESSION['nbPerPage'] = $tPerPage;
+		$this->listTickets();
 	}
 
+	public function updateStatut($params){
+		$params = explode(";", $params[0]);
+		$statut = DAO::getOne("Statut", $params[0]);
+		$ticket = DAO::getOne("Ticket", $params[1]);
+		if ($statut->getId() == 2) {
+			$ticket->setAdmin(Auth::getUser());
+		}
+		$ticket->setStatut($statut);
+
+		if (DAO::update($ticket)) {
+			$this->listTickets();
+		}
+	}
 }
