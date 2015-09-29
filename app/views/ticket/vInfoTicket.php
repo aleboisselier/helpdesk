@@ -1,3 +1,4 @@
+<div class="infoTicket">
 <div class="form-group">
 	
 	<input type="hidden" name="id" value="<?php echo $ticket->getId()?>">
@@ -34,3 +35,4 @@
 </div>
 </fieldset>
 </form>
+</div>

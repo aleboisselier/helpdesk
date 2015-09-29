@@ -27,7 +27,7 @@ class Messages extends \_DefaultController {
 	}
 
 	protected function setValuesToObject(&$object){
-		parent::seetValuesToObject($object);
+		parent::setValuesToObject($object);
 		$$ticket=DAO::getOne("ticket", $_POST["idTicket"]);
 		$object->setTicket($ticket);
 		$object->setUser($_SESSION["user"]);

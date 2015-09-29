@@ -1,4 +1,5 @@
-@CHARSET "UTF-8";
+8@CH
+margin:50%;ARSET "UTF-8";
 body{
 	font-weight: 400;
 }
@@ -92,15 +93,13 @@ body{
 .messageAdmin{
     background-color: teal;
     padding:3%;
-    width:80%;
-    margin-top: 2%;
+    margin: 2%;
     color:white;
 }
 
 .messageUser{
     background-color: #7AC5CC;
     padding:3%;
-    width:80%;
-    margin-top: 2%;
+    margin: 2%;
     color:#006464;
 }

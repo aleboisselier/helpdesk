@@ -37,39 +37,11 @@ class Tickets extends \_DefaultController {
 		}
 	}
 
-	public function afficheTicket($params){
-		$paramsE = explode(";",$params[0]);
-		$id = $paramsE[0];
-		$bool = $paramsE[1];
-
-		if ($bool == "false") {
-			$ticket=DAO::getOne("Ticket", $id[0]);
-			$categories=DAO::getAll("Categorie");
-			if($ticket->getCategorie()==null){
-				$cat=-1;
-			}else{
-				$cat=$ticket->getCategorie()->getId();
-			}
-			$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
-			$listType=Gui::select(array("demande","intervention"),$ticket->getType(),"Sélectionner un type ...");
-			
-			$this->loadView("ticket/vInfoTicket",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
-			echo Jquery::execute("
-				CKEDITOR.replace( 'description');
-				$('.montreInfoTicket').attr('id', '".$id.";true');
-				$('.montreInfoTicket').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');");
-		}else{
-			echo Jquery::execute("
-				$('.montreInfoTicket').attr('id', '".$id.";false');
-				$('.montreInfoTicket').toggleClass('glyphicon-chevron-up');
-				$('.montreInfoTicket').toggleClass('glyphicon-chevron-down');
-				$('.infoTicket').toggleClass('invisible')");
-		}
-		
-	}
-
 	public function frm($id=NULL){
 		$ticket=$this->getInstance($id);
+		DAO::getOneToMany($ticket,"messages");
+		$messages=$ticket->getMessages();
+		
 		$categories=DAO::getAll("Categorie");
 		if($ticket->getCategorie()==null){
 			$cat=-1;
@@ -80,19 +52,14 @@ class Tickets extends \_DefaultController {
 		$listType=Gui::select(array("demande","intervention"),$ticket->getType(),"Sélectionner un type ...");
 
 		$this->loadView("ticket/vAdd",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
-		// echo Jquery::executeOn(".montreInfoTicket", "click", "
-		// 	if (!$(this).hasClass('ok')) {
-		// 		$(this).addClass('ok');
-		// 	}");
-		DAO::getOneToMany($ticket,"messages");
-		$messages=$ticket->getMessages();
-		// print_r($ticket->getMessages());
-
-		echo Jquery::execute("CKEDITOR.replace( 'description');");
-		// echo Jquery::getOn("click", ".montreInfoTicket.ok","tickets/afficheTicket",".infoTicket");
-		echo Jquery::getOn("click", ".montreInfoTicket","tickets/afficheTicket",".infoTicket");
+		$this->loadView("ticket/vInfoTicket",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
 		$this->loadView("ticket/vMessage",array("messages"=>$messages));
 
+		echo Jquery::execute("CKEDITOR.replace( 'description'); $('.infoTicket').hide();");
+		echo Jquery::executeOn(".montreInfoTicket","click", 
+				"$('.montreInfoTicket').toggleClass('glyphicon-chevron-up');
+				$('.montreInfoTicket').toggleClass('glyphicon-chevron-down');
+				$('.infoTicket').slideToggle('slow');");
 	}
 
 	/* (non-PHPdoc)
