@@ -13,6 +13,7 @@
 	<div class="ecrireMessage col-md-12 col-xs-12">
 		<form method="POST" action="messages/update">
 			<div class="form-group">
+				<input type="hidden" name="id" value="<?=$message->getId()?>">
 				<input type="hidden" name="idTicket" value="<?=$message->getTicket()->getId()?>">
 				<label for="contenu"><h4> Contenu du message</h4></label>
 				<textarea class="form-control ckeditor" id="contenu" name="contenu">

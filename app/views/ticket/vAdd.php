@@ -1,7 +1,7 @@
 <?php use micro\js\Jquery;?>
 <form method="post" action="tickets/update">
 <fieldset>
-<legend>Ajouter/modifier un ticket</legend>
+<legend>Voir/Modifier un ticket</legend>
 <div class="form-group">
 	<input type="submit" value="Valider" class="btn btn-default">
 	<a class="btn btn-default" href="<?php echo $config["siteUrl"]?>tickets">Annuler</a>
