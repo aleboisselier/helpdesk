@@ -33,6 +33,12 @@ class Messages extends \_DefaultController {
 		$object->setUser($_SESSION["user"]);
 	}
 
+	public function update(){
+		parent::update();
+		// DAO::getAll("Message", 'idTicket = '.$_POST['idTicket']);
+		// $this->loadView("ticket/vMessage",array("messages"=>$messages));
+	}
+
 	public function isValid(){
 		return Auth::isAuth();
 		// codeintel

@@ -3,6 +3,7 @@
 use micro\orm\DAO;
 use micro\js\Jquery;
 use micro\views\Gui;
+use micro\utils\RequestUtils;
 /**
  * Gestion des tickets
  * @author jcheron
@@ -41,7 +42,7 @@ class Tickets extends \_DefaultController {
 		$ticket=$this->getInstance($id);
 		DAO::getOneToMany($ticket,"messages");
 		$messages=$ticket->getMessages();
-		
+
 		$categories=DAO::getAll("Categorie");
 		if($ticket->getCategorie()==null){
 			$cat=-1;
@@ -54,6 +55,7 @@ class Tickets extends \_DefaultController {
 		$this->loadView("ticket/vAdd",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
 		$this->loadView("ticket/vInfoTicket",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
 		$this->loadView("ticket/vMessage",array("messages"=>$messages));
+		echo Jquery::postFormOn("click",".submitMessage","tickets/frm/1","postMessage",".listMessages");
 
 		echo Jquery::execute("CKEDITOR.replace( 'description'); $('.infoTicket').hide();");
 		echo Jquery::executeOn(".montreInfoTicket","click", 
