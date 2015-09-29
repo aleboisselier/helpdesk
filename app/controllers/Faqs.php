@@ -33,7 +33,7 @@ class Faqs extends \_DefaultController {
 			$faqs = DAO::getAll($this->model, "idUser=".Auth::getUser()->getId());
 			$listUser=Gui::select($auteurs,Auth::getUser()->getId(),"Sélectionner l'auteur...");
 		}else{
-			$faqs=DAO::getAll($this->model);
+			$faqs=DAO::getAll($this->model, "published = 1");
 			$listUser=Gui::select($auteurs,null,"Sélectionner l'auteur...");
 		}
 		
@@ -41,10 +41,13 @@ class Faqs extends \_DefaultController {
 		$listCategorie=Gui::select($categories,null,"Sélectionner une catégorie ...");
 		
 		$this->loadView("faq/vFilter",array("listCategorie"=>$listCategorie,"listUser"=>$listUser));
+		echo "<div class='list'>";
 		$this->loadView("faq/vList", array("faqs"=>$faqs));
+		echo "</div>";
 
 		echo Jquery::postFormOn('change', '.search', "faqs/filter", "searchForm", ".list");
 		echo Jquery::postFormOn('keyup', '.search', "faqs/filter", "searchForm", ".list");
+		echo Jquery::getOn('click', '.suspend', 'faqs/suspend', '.list');
 	}
 
 	public function frm($id=NULL){
@@ -80,6 +83,7 @@ class Faqs extends \_DefaultController {
 		}
 		$faqs=DAO::getAll($this->model, $sql);
 		$this->loadView("faq/vList", array("faqs"=>$faqs, "sql"=> $sql));
+		echo Jquery::getOn('click', '.suspend', 'faqs/suspend', '.list');
 	}
 
 	/* (non-PHPdoc)
@@ -91,6 +95,15 @@ class Faqs extends \_DefaultController {
 		$categorie=DAO::getOne("Categorie", $_POST["idCategorie"]);
 		$object->setCategorie($categorie);
 	}
- 
+ 	
+ 	public function suspend($params){
+ 		$params = explode(";", $params[0]);
+ 		$faq = DAO::getOne($this->model, $params[0]);
+ 		$faq->setPublished($params[1]);
+ 		DAO::update($faq);
+ 		echo "<div class='test'></div>";
+ 		echo Jquery::postForm('faqs/filter', 'searchForm', '.list');
+ 		
+ 	}
 
 }

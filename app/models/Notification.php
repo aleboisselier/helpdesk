@@ -19,6 +19,12 @@ class Notification extends Base{
 	 */
 	private $user;
 
+	/**
+	 * @ManyToOne
+	 * @JoinColumn(name="idMessage",className="Message",nullable=true)
+	 */
+	private $message;
+
 	public function getTicket(){
 		return $this->ticket;
 	}
@@ -37,8 +43,16 @@ class Notification extends Base{
 		return $this;
 	}
 
+		public function getMessage() {
+		return $this->message;
+	}
+
+	public function setMessage($message) {
+		$this->message=$message;
+		return $this;
+	}
+
 	public function toString(){
 		return "Nouveau message sur le Ticket : ".$this->ticket->getTitre();
 	}
-
 }
