@@ -96,13 +96,13 @@ class Tickets extends \_DefaultController {
 		");
 		echo Jquery::postFormOn("click",".submitMessage","messages/update","frm",".contentMessages");
 
-		echo Jquery::execute("$('.infoTicket').hide();");
+		echo Jquery::execute("$('.panel-body.infoTicket').hide();");
 		echo "</div>";
 		
 		echo Jquery::executeOn(".montreInfoTicket","click", 
 				"$('.montreInfoTicket').toggleClass('glyphicon-chevron-up');
 				$('.montreInfoTicket').toggleClass('glyphicon-chevron-down');
-				$('.infoTicket').slideToggle('slow');");
+				$('.panel-body.infoTicket').slideToggle('slow');");
 	}
 
 	/* (non-PHPdoc)

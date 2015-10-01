@@ -1,6 +1,11 @@
-<form method="post" action="tickets/update">
-<fieldset>
-<legend>Ajouter/Modifier un ticket</legend>
-<div class="alert alert-info">Ticket : <?php echo $ticket->toString()?> 
-	<div class='btn btn-primary pull-right glyphicon glyphicon-chevron-down montreInfoTicket' style='margin-top:-1%' id="<?php echo $ticket->getId()?>;false"></div>";
-</div>
+
+<legend>Ajout/Modification/Affichage d'un ticket</legend>
+
+<div class="panel <?php if ($ticket->getType() == 'demande') : ?> panel-info <?php else: ?> panel-warning <?php endif; ?>">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			Ticket : <?php echo $ticket->toString()?>
+			<span class="pull-right glyphicon glyphicon-chevron-down montreInfoTicket" id="<?php echo $ticket->getId()?>;false"></span>
+		</h3>
+	</div>
+	<div class="panel-body infoTicket">
