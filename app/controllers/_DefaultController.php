@@ -98,12 +98,6 @@ class _DefaultController extends BaseController {
 	 */
 	public function update(){
 		if(RequestUtils::isPost()){
-			$this->updateNotForward();
-			$this->forward(get_class($this),"index",$msg);
-		}
-	}
-
-	public function updateNotForward(){
 			$className=$this->model;
 			$object=new $className();
 			$this->setValuesToObject($object);
@@ -122,7 +116,9 @@ class _DefaultController extends BaseController {
 					$msg=new DisplayedMessage("Impossible d'ajouter l'instance de ".$this->model,"danger");
 				}
 			}
-	} 
+			$this->forward(get_class($this),"index",$msg);
+		}
+	}
 
 	/**
 	 * Supprime l'instance dont l'id est $id dans la BDD

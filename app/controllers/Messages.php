@@ -7,8 +7,6 @@
  */
 
 use micro\orm\DAO;
-use micro\utils\RequestUtils;
-use micro\js\Jquery;
 
 class Messages extends \_DefaultController {
 	public function Messages(){
@@ -36,20 +34,9 @@ class Messages extends \_DefaultController {
 	}
 
 	public function update(){
-		if(RequestUtils::isPost()){
-			parent::updateNotForward();
-			$ticket = DAO::getOne("Ticket",$_POST['idTicket']);
-			$messages = DAO::getAll("Message", 'idTicket = '.$_POST['idTicket']);
-			$this->loadView("ticket/vMessage",array("messages"=>$messages, "ticket" => $ticket));
-			Jquery::execute("CKEDITOR.replace('contenu');");
-			Jquery::executeOn('.submitMessage', "click", "
-			for ( instance in CKEDITOR.instances )
-        		CKEDITOR.instances[instance].updateElement();
-			");
-			Jquery::postFormOn("click",".submitMessage","messages/update","frm",".contentMessages");
-			echo Jquery::compile();
-			
-		}
+		parent::update();
+		// DAO::getAll("Message", 'idTicket = '.$_POST['idTicket']);
+		// $this->loadView("ticket/vMessage",array("messages"=>$messages));
 	}
 
 	public function isValid(){

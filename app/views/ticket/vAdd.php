@@ -1,3 +1,4 @@
+<?php use micro\js\Jquery;?>
 <form method="post" action="tickets/update">
 <fieldset>
 <legend>Ajouter/Modifier un ticket</legend>
