@@ -96,6 +96,7 @@ class Tickets extends \_DefaultController {
 		// $this->loadView("ticket/vMessage",array("messages"=>$messages));
 	}
 
+
 	/* (non-PHPdoc)
 	 * @see _DefaultController::setValuesToObject()
 	 */
