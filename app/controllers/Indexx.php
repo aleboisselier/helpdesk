@@ -23,7 +23,10 @@ class Indexx extends micro\controllers\BaseController {
 
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
 		if(Auth::isAuth()){
-			$this->loadView("main/vDefault");
+
+			$notifs = DAO::getAll("Notification", "idUser = ".Auth::getUser()->getId());
+			$this->loadView("main/vDefault", array("notifs" => $notifs));
+
 		}else{
 			$this->loadView("main/vLogin");
 		}

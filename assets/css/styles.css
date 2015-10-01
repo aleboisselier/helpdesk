@@ -103,3 +103,21 @@ body{
     margin: 2%;
     color:#006464;
 }
+/*-------NavTabs---------*/
+
+.nav-tabs>.active{
+    border: 1px solid #ddd;
+    border-bottom-color: #fff;
+    border-radius: 4px 4px 0 0;
+
+}
+.nav-tabs{
+    border: 0 0 0 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/*-------Pagination---------*/
+
+.chgList{
+    cursor: pointer;
+}

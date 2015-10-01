@@ -6,6 +6,23 @@
 	}
 	$_SESSION['logStatus'] = null;
 ?>
+
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="text-center">Bienvenue sur HelpDesk DOA</h1>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="panel panel-primary">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bell"></span> Notifications <span class="badge"><?= count($notifs); ?></span></div>
+		  <ul class="list-group">
+			<?php foreach($notifs as $notif): ?>
+				<a href="<?= $config['siteUrl'] ?>tickets/frm/<?= $notif->getTicket()->getId() ?>#<?= $notif->getMessage()->getId()?>" class="list-group-item"><?= $notif; ?></a>
+			<?php endforeach;?>
+		  </ul>
+		</div>
+	</div>
 	<div class="well well-lg">
 		<div id="main">
 			<fieldset>

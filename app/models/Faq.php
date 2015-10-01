@@ -26,6 +26,7 @@ class Faq extends Base{
 	 */
 	private $user;
 	private $version;
+	private $published;
 
 	public function getId() {
 		return $this->id;
@@ -100,6 +101,15 @@ class Faq extends Base{
 
 	public function setPopularity($popularity) {
 		$this->popularity=$popularity;
+		return $this;
+	}
+
+	public function getPublished(){
+		return $this->published;
+	}
+
+	public function setPublished($published){
+		$this->published = $published;
 		return $this;
 	}
 
