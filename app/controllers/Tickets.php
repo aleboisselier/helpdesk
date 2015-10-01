@@ -87,14 +87,22 @@ class Tickets extends \_DefaultController {
 			$cat=$ticket->getCategorie()->getId();
 		}
 		$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
-		$listType=Gui::select(array("demande","intervention"),$ticket->getType(),"Sélectionner un type ...");
+		$listType=Gui::select(array("demande","incident"),$ticket->getType(),"Sélectionner un type ...");
 
 		$this->loadView("ticket/vAdd",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
 		$this->loadView("ticket/vInfoTicket",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
-		$this->loadView("ticket/vMessage",array("messages"=>$messages));
-		echo Jquery::postFormOn("click",".submitMessage","tickets/frm/1","postMessage",".listMessages");
+		
+		echo "<div class='container contentMessages'>";
+		$this->loadView("ticket/vMessage",array("messages"=>$messages, "ticket" => $ticket));
+		echo Jquery::executeOn('.submitMessage', "click", "
+			for ( instance in CKEDITOR.instances )
+        		CKEDITOR.instances[instance].updateElement();
+		");
+		echo Jquery::postFormOn("click",".submitMessage","messages/update","frm",".contentMessages");
 
-		echo Jquery::execute("CKEDITOR.replace( 'description'); $('.infoTicket').hide();");
+		echo Jquery::execute("$('.infoTicket').hide();");
+		echo "</div>";
+		
 		echo Jquery::executeOn(".montreInfoTicket","click", 
 				"$('.montreInfoTicket').toggleClass('glyphicon-chevron-up');
 				$('.montreInfoTicket').toggleClass('glyphicon-chevron-down');
