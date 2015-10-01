@@ -29,10 +29,6 @@
 	<input type="hidden" name="idStatut" value="<?php echo $ticket->getStatut()->getId()?>">
 	<input type="hidden" name="idUser" value="<?php echo $ticket->getUser()->getId()?>">
 </div>
-<div class="form-group">
-	<input type="submit" value="Valider" class="btn btn-default">
-	<a class="btn btn-default" href="<?php echo $config["siteUrl"]?>tickets">Annuler</a>
-</div>
 </fieldset>
 </form>
 </div>
