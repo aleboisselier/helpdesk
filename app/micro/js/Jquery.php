@@ -378,6 +378,7 @@ class Jquery {
 		foreach (Jquery::$codes as $c){
 			$result.=$c->getCode();
 		}
+		$result="$(document).ready(function(){".$result."});";
 		return Jquery::addScript($result);
 	}
 
