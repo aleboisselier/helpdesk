@@ -27,12 +27,9 @@ class Tickets extends \_DefaultController {
 			$message->setTimerInterval($this->messageTimerInterval);
 			$this->_showDisplayedMessage($message);
 		}
-		$objects=DAO::getAll($this->model);
 		
 		$_SESSION['page'] = 1;
 		$_SESSION['nbPerPage'] = 3;
-
-		$this->loadView("ticket/vList", array("listName" => "Nouveaux", "tickets" => $objects));
 
 		if (Auth::isAdmin()) {
 			$_SESSION['condition'] = 'idStatut = 1';
@@ -49,7 +46,6 @@ class Tickets extends \_DefaultController {
 		echo Jquery::executeOn('.link', 'click', '
 				$(".link").parent().removeClass("active");
 				$(this).parent().addClass("active")');
-		echo "<pre>".print_r($_SESSION)."</pre>";
 	}
 
 
