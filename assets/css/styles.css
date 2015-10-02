@@ -92,16 +92,19 @@ body{
 
 .messageAdmin{
     background-color: teal;
-    padding:3%;
+/*    padding:3%;
     margin: 2%;
-    color:white;
+    color:white;*/
 }
 
-.messageUser{
+.panel-user>.panel-heading{
     background-color: #7AC5CC;
-    padding:3%;
-    margin: 2%;
+/*    padding:3%;
+    margin: 2%;*/
     color:#006464;
+}
+.panel-user{
+    border-color:#7AC5CC;
 }
 /*-------NavTabs---------*/
 
