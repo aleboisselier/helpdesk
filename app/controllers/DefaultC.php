@@ -56,6 +56,7 @@ class DefaultC extends BaseController {
 				'disabled' => true
 		);
 		$this->index();
+		echo "ôuet";
 	}
 
 	/**

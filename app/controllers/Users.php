@@ -1,4 +1,6 @@
 <?php
+use micro\orm\DAO;
+use micro\views\Gui;
 /**
  * Gestion des users
  * @author jcheron
@@ -11,6 +13,16 @@ class Users extends \_DefaultController {
 		parent::__construct();
 		$this->title="Utilisateurs";
 		$this->model="User";
+	}
+
+	public function index(){
+		if(Auth::isAdmin()){
+			$users=DAO::getAll("User");
+			$this->loadView("user/vList",array("users"=>$users));
+		}else{
+			$user=DAO::getOne("user",$id=Auth::getUser()->getId());
+			$this->loadView("user/vAdd",array("user"=>$user));
+		}		
 	}
 
 	public function frm($id=NULL){
