@@ -8,6 +8,16 @@
 class Notification extends Base{
 
 	/**
+	 * @Id
+	 */
+	private $idTicket;
+
+	/**
+	 * @Id
+	 */
+	private $idUser;
+
+	/**
 	 * @ManyToOne
 	 * @JoinColumn(name="idTicket",className="Ticket",nullable=false)
 	 */
@@ -24,6 +34,8 @@ class Notification extends Base{
 	 * @JoinColumn(name="idMessage",className="Message",nullable=true)
 	 */
 	private $message;
+
+	private $date;
 
 	public function getTicket(){
 		return $this->ticket;
@@ -54,5 +66,31 @@ class Notification extends Base{
 
 	public function toString(){
 		return "Nouveau message sur le Ticket : ".$this->ticket->getTitre();
+	}
+		public function getIdTicket(){
+		return $this->idTicket;
+	}
+
+	public function setIdTicket($ticket) {
+		$this->idTicket=$ticket;
+		return $this;
+	}
+
+	public function getIdUser() {
+		return $this->idUser;
+	}
+
+	public function setIdUser($user) {
+		$this->idUser=$user;
+		return $this;
+	}
+
+	public function getDate(){
+		return $this->date;
+	}
+
+	public function setDate($date){
+		$this->date=$date;
+		return $this;
 	}
 }

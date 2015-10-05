@@ -18,7 +18,7 @@
 		  <div class="panel-heading"><span class="glyphicon glyphicon-bell"></span> Notifications <span class="badge"><?= count($notifs); ?></span></div>
 		  <ul class="list-group">
 			<?php foreach($notifs as $notif): ?>
-				<a href="<?= $config['siteUrl'] ?>tickets/frm/<?= $notif->getTicket()->getId() ?>#<?= $notif->getMessage()->getId()?>" class="list-group-item"><?= $notif; ?></a>
+				<a href="<?= $config['siteUrl'] ?>tickets/frm/<?= $notif->getTicket()->getId() ?>#<?php if($notif->getMessage() != null){ echo $notif->getMessage()->getId();}?>" class="list-group-item"><?= $notif; ?></a>
 			<?php endforeach;?>
 		  </ul>
 		</div>

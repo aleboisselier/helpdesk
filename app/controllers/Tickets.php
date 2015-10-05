@@ -76,6 +76,11 @@ class Tickets extends \_DefaultController {
 		DAO::getOneToMany($ticket,"messages");
 		$messages=$ticket->getMessages();
 
+		$notif = DAO::getOne("Notification", 'idUser = '.Auth::getUser()->getId().' AND idTicket = '.$ticket->getId());
+		if ($notif != null) {
+			DAO::delete($notif);
+		}
+
 		$categories=DAO::getAll("Categorie");
 		if($ticket->getCategorie()==null){
 			$cat=-1;
