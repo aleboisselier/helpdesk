@@ -26,8 +26,12 @@ class Users extends \_DefaultController {
 	}
 
 	public function frm($id=NULL){
-		$user=$this->getInstance($id);
-		$this->loadView("user/vAdd",array("user"=>$user));
+		if(Auth::isAdmin()){
+			$user=$this->getInstance($id);
+			$this->loadView("user/vAdd",array("user"=>$user));
+		}else{
+			$this->forward("users");
+		}
 	}
 
 	/* (non-PHPdoc)
