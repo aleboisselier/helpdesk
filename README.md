@@ -1,5 +1,6 @@
 ![HelpDesk](http://angular.kobject.net/git/phalconist/helpdesk.png "HelpDesk")
 # HelpDesk DOA
+(https://travis-ci.org/aleboisselier/helpdesk.svg)
 A Helpdesk Application for educational purposes using a micro-framework.
 # How To : 
 
