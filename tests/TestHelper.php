@@ -12,3 +12,6 @@ require_once ROOT.'micro/controllers/Autoloader.php';
 Autoloader::register();
  
 include __DIR__ . "/../vendor/autoload.php";
+
+include __DIR__ . "/support/WebDriverAssertions.php";
+include __DIR__ . "/support/WebDriverDevelop.php";

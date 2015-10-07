@@ -311,17 +311,6 @@ class Jquery {
 		return Jquery::bindToElement($element, $event,Jquery::_postForm($url,$form,$responseElement,$validation,$function,$attr));
 	}
 
-	public static function postFormOnDelay($event,$element,$url,$form,$responseElement="",$delay=0,$validation=false,$function=NULL,$attr="id"){
-		$post=Jquery::_postForm($url,$form,$responseElement,$validation,$function,$attr);
-			if($delay!=0){
-				$ret="setTimeout(function(){".$post."},".$delay.");";
-				$ret=Jquery::bindToElement($element,$event,$ret);
-			}else{
-				$ret=Jquery::bindToElement($element,$event,$post);
-			}
-		return $ret;
-	}
-
 	/**
 	 * Modifie la valeur de $elementToModify et lui affecte $valeur sur l'évènement $event de $element
 	 * @param string $event
@@ -378,7 +367,6 @@ class Jquery {
 		foreach (Jquery::$codes as $c){
 			$result.=$c->getCode();
 		}
-		$result="$(document).ready(function(){".$result."});";
 		return Jquery::addScript($result);
 	}
 
