@@ -20,6 +20,6 @@ class SeleniumTest extends AjaxUnitTest
 				break;
 			}
 		}
-		$this->assertTrue($doIt);
+		$this->assertFalse($doIt);
 	}
 }
