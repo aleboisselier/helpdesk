@@ -13,7 +13,8 @@ use micro\utils\RequestUtils;
 class Tickets extends \_DefaultController {
 	public function Tickets(){
 		parent::__construct();
-		$this->title="Tickets";
+		global $config;
+		$this->title="Tickets <a class='btn btn-primary' href='".$config['siteUrl']."tickets/frm' style='margin-left:2%;'>Ajouter...</a>";
 		$this->model="Ticket";
 	}
 
@@ -73,13 +74,15 @@ class Tickets extends \_DefaultController {
 
 	public function frm($id=NULL){
 		$ticket=$this->getInstance($id);
+		if ($ticket->getTitre() != "") {
+			$notif = DAO::getOne("Notification", 'idUser = '.Auth::getUser()->getId().' AND idTicket = '.$ticket->getId());
+			if ($notif != null) {
+				DAO::delete($notif);
+			}
+		}
+		
 		DAO::getOneToMany($ticket,"messages");
 		$messages=$ticket->getMessages();
-
-		$notif = DAO::getOne("Notification", 'idUser = '.Auth::getUser()->getId().' AND idTicket = '.$ticket->getId());
-		if ($notif != null) {
-			DAO::delete($notif);
-		}
 
 		$categories=DAO::getAll("Categorie");
 		if($ticket->getCategorie()==null){
@@ -87,6 +90,7 @@ class Tickets extends \_DefaultController {
 		}else{
 			$cat=$ticket->getCategorie()->getId();
 		}
+		
 		$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
 		$listType=Gui::select(array("demande","incident"),$ticket->getType(),"Sélectionner un type ...");
 
@@ -101,7 +105,7 @@ class Tickets extends \_DefaultController {
 		");
 		echo Jquery::postFormOn("click",".submitMessage","messages/update","frm",".contentMessages");
 
-		echo Jquery::execute("$('.panel-body.infoTicket').hide();");
+		if($ticket->getTitre() != "") echo Jquery::execute("$('.panel-body.infoTicket').hide();");
 		echo "</div>";
 		
 		echo Jquery::executeOn(".montreInfoTicket","click", 
