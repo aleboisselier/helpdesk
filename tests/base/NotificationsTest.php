@@ -30,11 +30,8 @@ class NotificationsTest extends AjaxUnitTest {
         $this->wait();
         //Is the Notification Here ?
         $notifItem = $this->getElementsBySelector(".list-group-item.notif");
-        foreach ($notifItem as $btn) {
-            $btn->click();
-            $this->wait();
-            break;
-        }
+        $notifItem[0]->click();
+        $this->wait();
 
         DAO::delete($notif);
     }

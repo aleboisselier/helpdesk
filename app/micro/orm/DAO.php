@@ -80,7 +80,7 @@ class DAO {
 
 					$obj=DAO::getOne($annot->className, $kv,false);
 					if($obj!=null){
-						//\Logger::log("getOneManyToOne", "Chargement de ".$member->getName()." pour l'objet ".$class);
+						\Logger::log("getOneManyToOne", "Chargement de ".$member->getName()." pour l'objet ".$class);
 						$accesseur="set".ucfirst($member->getName());
 						if(method_exists($instance,$accesseur)){
 							$instance->$accesseur($obj);
