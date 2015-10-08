@@ -87,7 +87,7 @@ abstract class AjaxUnitTest extends \PHPUnit_Framework_TestCase {
         $this->assertContains($text, self::$webDriver->getPageSource());
     }
 
-    public function wait($seconds = 5){
+    public function wait($seconds = 10){
         self::$webDriver->manage()->timeouts()->implicitlyWait($seconds);
     }
 
