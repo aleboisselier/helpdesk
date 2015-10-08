@@ -83,7 +83,7 @@ class NotificationsTest extends AjaxUnitTest {
         global $config;
         DAO::connect($config["database"]['dbName']);
 
-        //Loading Index
+        //Loading Index 
         $this->get("Indexx/asUser");
         $this->wait();
         //Is the Notification Here ?
