@@ -16,7 +16,7 @@
 // 	// 			$btn->click();
 // 	// 			$this->wait();
 // 	// 			$doIt = true;
-// 	// 			$thiq->assertPageContainsText("Utilisateurs");
+// 	// 			$this->assertPageContainsText("Utilisateurs");
 // 	// 			break;
 // 	// 		}
 // 	// 	}

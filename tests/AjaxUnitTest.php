@@ -78,6 +78,15 @@ abstract class AjaxUnitTest extends \PHPUnit_Framework_TestCase {
     public function getElementsBySelector($css_selector){
         return self::$webDriver->findElements(\WebDriverBy::cssSelector($css_selector));
     }
+
+    /**
+     * Returns the given elements by xPath
+     * @param string $xPath
+     * @return RemoteWebElement
+     */
+    public function getElementsByXPath($xPath){
+        return self::$webDriver->findElements(\WebDriverBy::xpath($xPath));
+    }
  
     /**
      * Return true if the actual page contains $text
