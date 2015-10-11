@@ -2,7 +2,7 @@
 use micro\orm\DAO;
 class NotificationsTest extends AjaxUnitTest {
 
-
+    //Test de la présence et de la suppression d'une notification
     public function testNotificationAdmin(){
         global $config;
         DAO::connect($config["database"]['dbName']);
@@ -35,7 +35,7 @@ class NotificationsTest extends AjaxUnitTest {
 
         $this->assertPageContainsText($ticket->getTitre());
 
-        DAO::delete($notif);
+        //DAO::delete($notif);
 
         $notifB = DAO::getOne("Notification", "idUser = ".Auth::getUser()->getId()." AND idTicket = ".$ticket->getId());
         $this->assertNull($notifB);
