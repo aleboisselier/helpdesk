@@ -1,13 +1,13 @@
 <div class="clearfix" style="margin-top:3%;"></div>
-
+<div class="response"></div>
 <script type="text/javascript">	
 $(document).ready(function(){
 	var jqxhr = $.ajax( "Faqs/index" )
   .done(function(data) {
-    $('body').append("<div class='data'>"+data+"</div>");
+    $('.response').html(data);
   })
   .fail(function(error) {
-    $('body').append("<div class='error'>"+error+"</div>");
+    $('.response').html(error);
   }); 
 });
 </script>
