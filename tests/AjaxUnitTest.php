@@ -100,4 +100,8 @@ abstract class AjaxUnitTest extends \PHPUnit_Framework_TestCase {
         self::$webDriver->manage()->timeouts()->implicitlyWait($seconds);
     }
 
+    public function setField($element, $value){
+        $this->getElementBySelector($element)->sendkeys($value);
+    }
+
 }

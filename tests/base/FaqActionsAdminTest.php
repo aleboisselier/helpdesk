@@ -126,5 +126,31 @@ class FaqActionsAdminTest extends AjaxUnitTest {
 
     }
 
+    public function testAddFAQ(){
+        global $config;
+        DAO::connect($config["database"]['dbName']);
+        
+        $_SESSION["user"]=DAO::getOne("User", "admin=1");
+        $_SESSION['KCFINDER'] = array(
+                'disabled' => false
+        );
+        $_SESSION['logStatus'] = 'success';
+        //Connecting Admin
+        $this->get("Indexx/asAdmin");
+
+        //Loading List
+        $this->get("Faqs/index");
+        //$this->wait();
+
+        $faqAddLink = $this->getElementById("faqAddBtn");
+        $faqAddLink->click();
+
+        $this->setField("#titre", "TEST");
+        $test = 
+        $test->‌​click();
+        sleep(5);
+
+    }
+
 
 }
