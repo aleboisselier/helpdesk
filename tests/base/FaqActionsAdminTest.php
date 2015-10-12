@@ -33,7 +33,7 @@ class FaqActionsAdminTest extends AjaxUnitTest {
         $faqSuspendLink = $this->getElementById($faq->getId().";0");
         $faqSuspendLink->click();
 
-        sleep(20);
+        sleep(3);
 
         $faqItems = $this->getElementsBySelector(".faq-items");
         $this->assertNotNull($faqItems);
@@ -75,7 +75,7 @@ class FaqActionsAdminTest extends AjaxUnitTest {
         $faqSuspendLink = $this->getElementById($faq->getId().";1");
         $faqSuspendLink->click();
 
-        sleep(20);
+        sleep(3);
 
         $faqItems = $this->getElementsBySelector(".faq-items");
         $this->assertNotNull($faqItems);

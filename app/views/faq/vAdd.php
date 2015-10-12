@@ -4,8 +4,14 @@
 	} else{
 		$creator = 0;
 	}
+
+	if ( $faq->getTitre() != null){
+		$newFaq = 0;
+	}else{
+		$newFaq = 1;
+	}
 ?>
-<form method="post" action="faqs/update">
+<form method="post" action="faqs/update" id="faqForm">
 	<fieldset>
 		<legend>Ajouter/Modifier une Question</legend>
 		<?php if($creator): ?>
@@ -31,12 +37,16 @@
 		<div class="form-group">
 			
 			<label>Rédacteur</label>
-			<div class="form-control" disabled><?php echo $faq->getUser()?></div>
+			<?php if ( $newFaq == 0): ?>
+				<div class="form-control" disabled><?php echo $faq->getUser()?></div>
+				<label for="dateCreation">Date de création</label>
+				<input type="text" name="dateCreation" id="dateCreation" value="<?php echo $faq->getDateCreation()?>" disabled class="form-control">
+			<?php else: ?>
+				<div class="form-control" disabled><?php echo Auth::getUser()?></div>
+			<?php endif; ?>
 			
-			<label for="dateCreation">Date de création</label>
-			<input type="text" name="dateCreation" id="dateCreation" value="<?php echo $faq->getDateCreation()?>" disabled class="form-control">
 			
-			<input type="hidden" name="idUser" value="<?php echo $faq->getUser()->getId()?>">
+			<input type="hidden" name="idUser" value="<?php echo Auth::getUser()->getId();?>">
 		</div>
 		<?php if($creator): ?>
 			<div class="form-group">
