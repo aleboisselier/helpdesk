@@ -3,7 +3,7 @@
 <?php  foreach($messages as $message):
 	$date = date_create($ticket->getDateCreation());
  ?>
-<div class="col-md-9 <?php if(!$message->getUser()->getAdmin()) : ?>pull-right<?php endif; ?> message">
+<div class="col-md-9 <?php if(!$message->getUser()->getAdmin()) : ?>pull-right<?php endif; ?> message" id="<?=$message->getId() ?>">
 	<div class="panel <?php if($message->getUser()->getAdmin()) : ?>panel-primary<?php else: ?>panel-user<?php endif; ?>">
 		<div class="panel-heading">
 			<h3 class="panel-title">

@@ -15,7 +15,9 @@ class MessageTest extends AjaxUnitTest {
         $this->get("Indexx/asUser");
         $this->get("Tickets/index");
         $this->wait();
-        //Is the FAQ Here ?
+        //Is the Ticket Here ?
+
+        ///////TEST IF TICKET LOADED, WAS THE SELECTED TICKET////////
         $ticketItem = $this->getElementsBySelector(".detailTicket");
         $ticketItem = $ticketItem[0];
 
@@ -28,11 +30,23 @@ class MessageTest extends AjaxUnitTest {
         $ticketItem->click();
 
         $input = $this->getElementBySelector(".panel-title");
-
+        //Test if titles are egual
         $this->assertContains($ticket->getTitre(), $input->getText());
-
+        
+        ///////TEST IF THE MESSAGE LOADED, ARE MESSAGES ASSOCIATED TO TICKET////////
+        //recovers message of the page
         $messageItem = $this->getElementsBySelector(".message");
+        //recovrers the first message
         $messageItem = $messageItem[0];
-        $this->assertContains($messageItem->getText(),".contentMessages");
+        //recovers id of the message
+        $idMessage = $messageItem->getAttribute("id");
+
+        //recovers the messages of the BDD associated to selected ticket
+        $messageTicket=DAO::getOneToMany($ticket,"messages");
+        //recovers the id of the first message
+        $message=$messageTicket[0]->getId();
+        //test if good messages recovered
+        //test the equality of ids
+        $this->assertEquals($message,$idMessage);
     }
 }
