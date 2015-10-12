@@ -10,11 +10,11 @@
     $('.response').html(error);
   }); 
 });*/
-$(document).ready(function(){
+//$(document).ready(function(){
 	$.get("Faqs/index").done(function( data ){
 		$('.response').html(data);
 	});
-});
+//});
 </script>
 </body>
 </html>
