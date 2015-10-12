@@ -146,8 +146,7 @@ class FaqActionsAdminTest extends AjaxUnitTest {
         $faqAddLink->click();
 
         $this->setField("#titre", "TEST");
-        $test = 
-        $test->‌​click();
+
         sleep(5);
 
     }
