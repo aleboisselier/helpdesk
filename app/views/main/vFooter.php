@@ -4,7 +4,7 @@
 $(document).ready(function(){
 	var jqxhr = $.ajax( "Faqs/index" )
   .done(function(data) {
-    $('body').append(data);
+    $('body').append("<div class='data'>"+data+"</div>");
   })
   .fail(function(error) {
     $('body').append("<div class='error'>"+error+"</div>");

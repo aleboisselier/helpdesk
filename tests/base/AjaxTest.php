@@ -9,5 +9,7 @@ class AjaxTest extends AjaxUnitTest
 		sleep(10);
 		$div = $this->getElementBySelector('.error');
 		$this->assertNotNull($div);
+		$divB = $this->getElementBySelector('.data');
+		$this->assertNotNull($divB);
 	}
 }
