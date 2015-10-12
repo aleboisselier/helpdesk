@@ -10,6 +10,6 @@ class AjaxTest extends AjaxUnitTest
 		//$div = $this->getElementBySelector('.error');
 		//$this->assertNotNull($div);
 		$divB = $this->getElementBySelector('.response');
-		$this->assertContains("Questions", $divB);
+		$this->assertContains("Questions", $divB->getText());
 	}
 }
