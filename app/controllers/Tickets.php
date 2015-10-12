@@ -81,9 +81,11 @@ class Tickets extends \_DefaultController {
 			}
 		}
 		
+		//recuperer les message associé au ticket
 		DAO::getOneToMany($ticket,"messages");
 		$messages=$ticket->getMessages();
 
+		//recuperer la ou les catégorie(s) du ticket
 		$categories=DAO::getAll("Categorie");
 		if($ticket->getCategorie()==null){
 			$cat=-1;
@@ -91,18 +93,25 @@ class Tickets extends \_DefaultController {
 			$cat=$ticket->getCategorie()->getId();
 		}
 		
+		//permet la séléction d'une catégorie
 		$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
 		$listType=Gui::select(array("demande","incident"),$ticket->getType(),"Sélectionner un type ...");
 
+		//affiche la vue vAdd du ticket
 		$this->loadView("ticket/vAdd",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
+		//affiche la vue permettant l'affichage des information du ticket
 		$this->loadView("ticket/vInfoTicket",array("ticket"=>$ticket,"listCat"=>$listCat,"listType"=>$listType));
 		
+		//div contenant les messages
 		echo "<div class='container contentMessages'>";
+		//charge les messages et les affiches
 		$this->loadView("ticket/vMessage",array("messages"=>$messages, "ticket" => $ticket));
+		//instancie CKEditor
 		echo Jquery::executeOn('.submitMessage', "click", "
 			for ( instance in CKEDITOR.instances )
         		CKEDITOR.instances[instance].updateElement();
 		");
+		//lors du clic sur le bouton submitMessage, éxécute l'update du message et l'affiche
 		echo Jquery::postFormOn("click",".submitMessage","messages/update","frm",".contentMessages");
 
 		if($ticket->getTitre() != "") echo Jquery::execute("$('.panel-body.infoTicket').hide();");
