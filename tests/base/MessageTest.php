@@ -1,6 +1,6 @@
 <?php
 use micro\orm\DAO;
-class FaqsTest extends AjaxUnitTest {
+class MessageTest extends AjaxUnitTest {
     public function testMessage(){
         global $config;
         DAO::connect($config["database"]['dbName']);
@@ -13,11 +13,11 @@ class FaqsTest extends AjaxUnitTest {
 
         //Loading Index
         $this->get("Indexx/asUser");
-        $this->get("Ticket/index");
+        $this->get("Tickets/index");
         $this->wait();
         //Is the FAQ Here ?
         $ticketItem = $this->getElementsBySelector(".detailTicket");
-        $ticketItem = $faqItem[0];
+        $ticketItem = $ticketItem[0];
 
         $idTicket = $ticketItem->getAttribute("href");
         $idTicket = explode("/", $idTicket);
@@ -25,10 +25,14 @@ class FaqsTest extends AjaxUnitTest {
 
         $ticket = DAO::getOne("Ticket", $idTicket);
 
-        $faqItem->click();
+        $ticketItem->click();
 
-        $input = $this->getElementBySelector("#titre");
+        $input = $this->getElementBySelector(".panel-title");
 
-        $this->assertEquals($ticket->getTitre(), $input->getAttribute("value"));
+        $this->assertContains($ticket->getTitre(), $input->getText());
+
+        $messageItem = $this->getElementsBySelector(".message");
+        $messageItem = $messageItem[0];
+        $this->assertContains($messageItem->getText(),".contentMessages");
     }
 }
