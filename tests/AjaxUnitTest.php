@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * Class AjaxUnitTest
  */
@@ -100,8 +100,10 @@ abstract class AjaxUnitTest extends \PHPUnit_Framework_TestCase {
         self::$webDriver->manage()->timeouts()->implicitlyWait($seconds);
     }
 
-    public function setField($element, $value){
-        $this->getElementBySelector($element)->sendkeys($value);
+    public function setFieldReplace($element, $value){
+        $elt = $this->getElementBySelector($element);
+        $elt->sendkeys("\xEE\x80\x89+a");
+        $elt->sendkeys($value);
     }
 
 }

@@ -31,8 +31,8 @@
 			<?php echo $listCat;?>
 			</select>
 			
-			<label for="description">Description</label>
-			<textarea name="description" id="description" placeholder="Entrez la description" class="form-control" class="ckeditor" <?php if(!$creator): ?> disabled <?php endif; ?> ><?php echo $faq->getContenu()?></textarea>
+			<label for="description">Contenu</label>
+			<textarea name="contenu" id="contenu" placeholder="Entrez la description" class="form-control" class="" <?php if(!$creator): ?> disabled <?php endif; ?> ><?php echo $faq->getContenu()?></textarea>
 		</div>
 		<div class="form-group">
 			

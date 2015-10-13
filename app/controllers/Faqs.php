@@ -52,6 +52,8 @@ class Faqs extends \_DefaultController {
 	}
 
 	public function frm($id=NULL){
+		global $config;
+
 		$faq=$this->getInstance($id);
 
 		$categories=DAO::getAll("Categorie");
@@ -63,7 +65,7 @@ class Faqs extends \_DefaultController {
 		$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
 
 		$this->loadView("faq/vAdd",array("faq"=>$faq,"listCat"=>$listCat));
-		echo Jquery::execute("CKEDITOR.replace('#description');");
+		if(!$config["test"]) echo Jquery::execute("CKEDITOR.replace('#description');");
 	}
 
 	public function filter(){

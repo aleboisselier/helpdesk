@@ -140,14 +140,25 @@ class FaqActionsAdminTest extends AjaxUnitTest {
 
         //Loading List
         $this->get("Faqs/index");
-        //$this->wait();
 
         $faqAddLink = $this->getElementById("faqAddBtn");
         $faqAddLink->click();
 
-        $this->setField("#titre", "TEST");
+        $this->setFieldReplace("#titre", "AutoTest");
+        $list = $this->getElementBySelector(".element#element1");
+        $list->click();
+        $this->setFieldReplace("#contenu", "AutoTest");
 
-        sleep(5);
+        $btn = $this->getElementBySelector("input[value=Valider]");
+        $btn->click();
+
+        $faq = DAO::getOne("Faq", "titre = 'AutoTest' AND contenu = 'AutoTest' ");
+        $this->assertNotNull($faq);
+
+        $divFaq = $this->getElementBySelector('.faq-items');
+        $this->assertNotNull($divFaq);
+
+        DAO::delete($faq);
 
     }
 
