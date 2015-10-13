@@ -1,5 +1,5 @@
 <?php
-/*use micro\orm\DAO;
+use micro\orm\DAO;
 class MessageTest extends AjaxUnitTest {
     public function testMessage(){
         global $config;
