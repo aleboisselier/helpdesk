@@ -2,20 +2,26 @@
 use micro\orm\DAO;
 class FaqActionsAdminTest extends AjaxUnitTest {
 
+    public static function setUpBeforeClass() {
+        parent::setUpBeforeClass();
+        $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => 'firefox',\WebDriverCapabilityType::VERSION=>'41.0');
+        self::$webDriver = \RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities);
 
-    //Test de la suspension d'un article
-    public function testSuspend(){
         global $config;
         DAO::connect($config["database"]['dbName']);
-        
+
         $_SESSION["user"]=DAO::getOne("User", "admin=1");
         $_SESSION['KCFINDER'] = array(
                 'disabled' => false
         );
         $_SESSION['logStatus'] = 'success';
         //Connecting Admin
-        $this->get("Indexx/asAdmin");
 
+    }
+
+    //Test de la suspension d'un article
+    public function testSuspend(){
+        $this->get("Indexx/asAdmin");
         //Inserting New Article
         $faq = new Faq();
         $faq->setCategorie(DAO::getOne("Categorie", "1=1"));
@@ -47,15 +53,6 @@ class FaqActionsAdminTest extends AjaxUnitTest {
     }
 
     public function testPublish(){
-        global $config;
-        DAO::connect($config["database"]['dbName']);
-        
-        $_SESSION["user"]=DAO::getOne("User", "admin=1");
-        $_SESSION['KCFINDER'] = array(
-                'disabled' => false
-        );
-        $_SESSION['logStatus'] = 'success';
-        //Connecting Admin
         $this->get("Indexx/asAdmin");
 
         //Inserting New Article
@@ -89,15 +86,6 @@ class FaqActionsAdminTest extends AjaxUnitTest {
     }
 
     public function testDelete(){
-        global $config;
-        DAO::connect($config["database"]['dbName']);
-        
-        $_SESSION["user"]=DAO::getOne("User", "admin=1");
-        $_SESSION['KCFINDER'] = array(
-                'disabled' => false
-        );
-        $_SESSION['logStatus'] = 'success';
-        //Connecting Admin
         $this->get("Indexx/asAdmin");
 
         //Inserting New Article
@@ -127,15 +115,6 @@ class FaqActionsAdminTest extends AjaxUnitTest {
     }
 
     public function testAddFAQ(){
-        global $config;
-        DAO::connect($config["database"]['dbName']);
-        
-        $_SESSION["user"]=DAO::getOne("User", "admin=1");
-        $_SESSION['KCFINDER'] = array(
-                'disabled' => false
-        );
-        $_SESSION['logStatus'] = 'success';
-        //Connecting Admin
         $this->get("Indexx/asAdmin");
 
         //Loading List
