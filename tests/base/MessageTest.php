@@ -1,5 +1,6 @@
 <?php/*
 use micro\orm\DAO;
+use micro\db\Database;
 class MessageTest extends AjaxUnitTest {
     public function testMessage(){
         global $config;
@@ -48,5 +49,29 @@ class MessageTest extends AjaxUnitTest {
         //test if good messages recovered
         //test the equality of ids
         $this->assertEquals($message,$idMessage);
+
+        //Inserting New Message
+        $lastMessage=$this->getElementsBySelector(".message");
+        $lastMessage=count($lastMessage);
+
+        sleep(2);
+        $messageArea=$this->getElementBySelector("#contenu")->sendkeys("contenu");
+        $submitMessage=$this->getElementBySelector(".submitMessage");
+        
+        $submitMessage->click();
+        sleep(2);
+
+        $postMessage=$this->getElementsBySelector(".message");
+        $postMessage=count($postMessage);
+        $lastMessage+=1;
+        $this->assertEquals($postMessage,$lastMessage);
+
+        $messages=DAO::getAll('message');
+        foreach ($messages as $message) {
+            $id=$message->getId();
+            $id=$id;
+        }
+        $lastPostMessage=DAO::getOne("Message",$id);
+        DAO::delete($lastPostMessage);
     }
 }*/
