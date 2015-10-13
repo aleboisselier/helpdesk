@@ -11,13 +11,13 @@
 		$newFaq = 1;
 	}
 ?>
-<form method="post" action="faqs/update" id="faqForm">
+<form method="post" action="Faqs/update" id="faqForm">
 	<fieldset>
 		<legend>Ajouter/Modifier une Question</legend>
 		<?php if($creator): ?>
 			<div class="form-group">
 				<input type="submit" value="Valider" class="btn btn-default">
-				<a class="btn btn-default" href="<?php echo $config["siteUrl"]?>faqs">Annuler</a>
+				<a class="btn btn-default" href="<?php echo $config["siteUrl"]?>Faqs">Annuler</a>
 			</div>
 		<?php endif; ?>
 		<div class="form-group">
@@ -51,7 +51,7 @@
 		<?php if($creator): ?>
 			<div class="form-group">
 				<input type="submit" value="Valider" class="btn btn-default">
-				<a class="btn btn-default" href="<?php echo $config["siteUrl"]?>faqs">Annuler</a>
+				<a class="btn btn-default" href="<?php echo $config["siteUrl"]?>Faqs">Annuler</a>
 			</div>
 		<?php endif; ?>
 	</fieldset>
