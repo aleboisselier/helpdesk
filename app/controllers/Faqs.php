@@ -51,6 +51,15 @@ class Faqs extends \_DefaultController {
 
 	}
 
+	public function view($id=NULL){
+		$faq=$this->getInstance($id);
+		if ($faq->getPublished() || $faq->getUser()->getId() == Auth::getUser()->getId()) {
+			$this->loadView("faq/vView",array("faq"=>$faq));
+		}else{
+			$this->forward("Faqs/index");
+		}
+	}
+
 	public function frm($id=NULL){
 		global $config;
 
@@ -65,7 +74,7 @@ class Faqs extends \_DefaultController {
 		$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
 
 		$this->loadView("faq/vAdd",array("faq"=>$faq,"listCat"=>$listCat));
-		if(!$config["test"]) echo Jquery::execute("CKEDITOR.replace('#description');");
+		if(!$config["test"]) echo Jquery::execute("CKEDITOR.replace('contenu');");
 	}
 
 	public function filter(){

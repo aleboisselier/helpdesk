@@ -234,6 +234,13 @@ class Tickets extends \_DefaultController {
 						$_SESSION['condition'] = "idUser = ".Auth::getUser()->getId();
 					}
 					break;
+				case 'closed' :
+					if (Auth::isAdmin()) {
+						$_SESSION['condition'] = "idStatut = 5";
+					}else{
+						$_SESSION['condition'] = "idUser = ".Auth::getUser()->getId()." AND idStatut = 5";
+					}
+					break;
 				default:
 					$_SESSION['condition'] = "";
 					break;

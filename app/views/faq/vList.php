@@ -1,12 +1,21 @@
 <div class="col-md-8 faq-items">
 <?php $baseHref=get_class($this); ?>
 	<table class='table table-striped'>
-		<thead><tr><th colspan="4"><h3>Questions</h3></th></tr></thead>
+		<thead>
+			<tr>
+				<?php if(Auth::isAdmin()): ?>
+					<th colspan="3"><h3>Questions</h3></th>
+					<th><a class='btn btn-primary pull-right' href='<?php echo $config["siteUrl"].$baseHref."/frm"; ?>' style="margin-left:2%;" id="faqAddBtn">Ajouter...</a></th>
+				<?php else: ?>
+					<th colspan="4"><h3>Questions</h3></th>
+				<?php endif; ?>
+			</tr>
+		</thead>
 		<tbody>
 			<?php foreach ($faqs as $faq): ?>
 				<tr class="faq-item" id="<?php echo $faq->getId(); ?>">
 					<td class="titreFaq" ><?php echo $faq->getTitre(); ?></td>
-					<td class='td-center voirFaq'><a class='btn btn-primary btn-xs btnVoirFaq' href='<?php echo $baseHref."/frm/".$faq->getId(); ?>'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
+					<td class='td-center voirFaq'><a class='btn btn-primary btn-xs btnVoirFaq' href='<?php echo $baseHref."/view/".$faq->getId(); ?>'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a></td>
 					<?php if($faq->getUser()->getId() == Auth::getUser()->getId()): ?>
 						<td class='td-center'><a class='btn btn-danger btn-xs' href='<?php echo $baseHref."/delete/".$faq->getId(); ?>' id="del-<?php echo $faq->getId(); ?>"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>
 						<?php if($faq->getPublished()): ?>
@@ -19,5 +28,4 @@
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-	<a class='btn btn-primary pull-right' href='<?php echo $config["siteUrl"].$baseHref."/frm"; ?>' style="margin-left:2%;" id="faqAddBtn">Ajouter...</a>
 </div>
