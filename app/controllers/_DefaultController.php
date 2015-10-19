@@ -98,7 +98,7 @@ class _DefaultController extends BaseController {
 	 */
 	public function update(){
 		if(RequestUtils::isPost()){
-			$this->updateNotForward();
+			$msg = $this->updateNotForward();
 			$this->forward(get_class($this),"index",$msg);
 		}
 	}
@@ -122,6 +122,7 @@ class _DefaultController extends BaseController {
 					$msg=new DisplayedMessage("Impossible d'ajouter l'instance de ".$this->model,"danger");
 				}
 			}
+			return $msg;
 	} 
 
 	/**

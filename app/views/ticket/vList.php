@@ -42,7 +42,7 @@
 						</div>
 					<?php endif; ?>
 					<div class="col-md-4 pull-right">
-						<a href="tickets/frm/<?= $ticket->getId(); ?>" class="btn btn-default pull-right"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
+						<a href="tickets/frm/<?= $ticket->getId(); ?>" class="btn btn-default pull-right detailTicket"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
 					</div>
 				</div>
 			</div>
@@ -72,3 +72,4 @@
 		</nav>
 	</div>
 </div>
+

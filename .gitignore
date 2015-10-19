@@ -52,3 +52,4 @@ Temporary Items
 #Config
 app/config.php
 *.php-tmp
+*.sublime-workspace

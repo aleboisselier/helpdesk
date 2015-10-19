@@ -384,41 +384,8 @@ class DAO {
 		DAO::$db->connect();
 	}
 
-	public static function count($className, $condition){
-		return count(DAO::getAll($className, $condition));
-	}
-
-	/**
-	 * Retourne la dernière instance de $className depuis la base de données, à  partir des valeurs $keyValues de la clé primaire
-	 * @param String $className nom de la classe du model à charger
-	 * @param Array,string $keyValues valeurs des clés primaires ou condition
-	 */
-		public static function getMax($className,$condition='',$loadManyToOne=true){
-			$objects=array();
-			$membersManyToOne=Reflexion::getMembersWithAnnotation($className, "ManyToOne");
-			$tableName=OrmUtils::getTableName($className);
-			if($condition!='')
-				$condition=" WHERE ".$condition;
-			$query=DAO::$db->query("SELECT MAX(date) FROM ".$tableName.$condition);
-			\Logger::log("getAll","SELECT MAX(date) FROM ".$tableName.$condition);
-			foreach ($query as $row){
-				//Pour chaque enregistrement : instanciation d'un objet
-				$o=new $className();
-				$objects[]=$o;
-				foreach ($row as $k=>$v){
-					//Modificateur et test de son existance
-					if(!is_numeric($k)){
-						$accesseur="set".ucfirst($k);
-						if(method_exists($o,$accesseur)){
-							$o->$accesseur($v);
-						}
-						if($loadManyToOne===true && OrmUtils::isMemberInManyToOne($className,$membersManyToOne, $k)) {
-							DAO::getOneManyToOne($o, array($k=>$v), $membersManyToOne);
-						}
-					}
-				}
-				DAO::addInstanceInObjects($o);
-			}
-			return $objects;
+	public static function count($className,$condition='',$loadManyToOne=true){
+		$objects = DAO::getAll($className,$condition,$loadManyToOne);
+		return count($objects);
 	}
 }
