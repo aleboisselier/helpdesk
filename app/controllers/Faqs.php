@@ -45,6 +45,7 @@ class Faqs extends \_DefaultController {
 		$this->loadView("faq/vList", array("faqs"=>$faqs));
 		echo "</div>";
 
+		echo JQuery::execute("$('[data-toggle=\"tooltip\"]').tooltip()");
 		echo Jquery::postFormOn('change', '.search', "Faqs/filter", "searchForm", ".list");
 		echo Jquery::postFormOn('keyup', '.search', "Faqs/filter", "searchForm", ".list");
 		echo Jquery::getOn('click', '.suspend', 'Faqs/suspend', '.list');
@@ -95,7 +96,9 @@ class Faqs extends \_DefaultController {
 				$sql .= "idUser = ".$_POST['idUser'];
 		}
 		$faqs=DAO::getAll($this->model, $sql);
+
 		$this->loadView("faq/vList", array("faqs"=>$faqs, "sql"=> $sql));
+		echo JQuery::execute("$('[data-toggle=\"tooltip\"]').tooltip()");
 		echo Jquery::getOn('click', '.suspend', 'Faqs/suspend', '.list');
 	}
 
