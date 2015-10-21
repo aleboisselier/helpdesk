@@ -27,8 +27,12 @@ class FaqsTest extends AjaxUnitTest {
 
         $faqItem->click();
 
-        $input = $this->getElementBySelector("#titre");
+        $this->assertPageContainsText($faq->getTitre());
 
+        $btnModif = $this->getElementBySelector(".btnModifFaq");
+        $btnModif->click();
+
+        $input = $this->getElementBySelector("#titre");
         $this->assertEquals($faq->getTitre(), $input->getAttribute("value"));
 
 
@@ -61,10 +65,7 @@ class FaqsTest extends AjaxUnitTest {
 
         $faqItem->click();
 
-        $input = $this->getElementBySelector("#titre");
-
-        $this->assertEquals($faq->getTitre(), $input->getAttribute("value"));
-
+        $this->assertPageContainsText($faq->getTitre());
 
         $this->wait();
     }

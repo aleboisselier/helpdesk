@@ -2,8 +2,8 @@
 	<h2 class="text-info"><?=$faq->getTitre()?></h2>
 	<small><i>par <b><?=$faq->getUser()?></b></i></small>
 	<div>
-		<?php if($faq->getUser()->getId() == Auth::getUser()->getId()):?>
-			<a class='btn btn-primary btn-sm btnVoirFaq' href='<?php echo "Faqs/frm/".$faq->getId(); ?>'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Modifier </a>
+		<?php if(Auth::isAdmin()):?>
+			<a class='btn btn-primary btn-sm btnModifFaq' href='<?php echo "Faqs/frm/".$faq->getId(); ?>'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Modifier </a>
 		<?php endif; ?>
 	</div>
 </div>
