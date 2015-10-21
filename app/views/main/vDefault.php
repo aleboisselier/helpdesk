@@ -17,9 +17,13 @@
 		<div class="panel panel-primary panel-notifications">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-bell"></span> Notifications <span class="badge"><?= count($notifs); ?></span></div>
 		  <ul class="list-group">
-			<?php foreach($notifs as $notif): ?>
-				<a href="<?= $config['siteUrl'] ?>Tickets/frm/<?= $notif->getTicket()->getId() ?>#<?php if($notif->getMessage() != null){ echo $notif->getMessage()->getId();}?>" class="list-group-item notif"><?= $notif; ?></a>
-			<?php endforeach;?>
+		  	<?php if(count($notifs) > 0): ?>
+				<?php foreach($notifs as $notif): ?>
+					<a href="<?= $config['siteUrl'] ?>Tickets/frm/<?= $notif->getTicket()->getId() ?>#<?php if($notif->getMessage() != null){ echo $notif->getMessage()->getId();}?>" class="list-group-item notif"><?= $notif; ?></a>
+				<?php endforeach;?>
+			<?php else:?>
+				<li class="list-group-item">Aucune notification...</li>
+			<?php endif;?>
 		  </ul>
 		</div>
 	</div>
