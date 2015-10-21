@@ -45,10 +45,20 @@ class Faqs extends \_DefaultController {
 		$this->loadView("faq/vList", array("faqs"=>$faqs));
 		echo "</div>";
 
+		echo JQuery::execute("$('[data-toggle=\"tooltip\"]').tooltip()");
 		echo Jquery::postFormOn('change', '.search', "Faqs/filter", "searchForm", ".list");
 		echo Jquery::postFormOn('keyup', '.search', "Faqs/filter", "searchForm", ".list");
 		echo Jquery::getOn('click', '.suspend', 'Faqs/suspend', '.list');
 
+	}
+
+	public function view($id=NULL){
+		$faq=$this->getInstance($id);
+		if ($faq->getPublished() || $faq->getUser()->getId() == Auth::getUser()->getId()) {
+			$this->loadView("faq/vView",array("faq"=>$faq));
+		}else{
+			$this->forward("Faqs/index");
+		}
 	}
 
 	public function frm($id=NULL){
@@ -65,7 +75,7 @@ class Faqs extends \_DefaultController {
 		$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
 
 		$this->loadView("faq/vAdd",array("faq"=>$faq,"listCat"=>$listCat));
-		if(!$config["test"]) echo Jquery::execute("CKEDITOR.replace('#description');");
+		if(!$config["test"]) echo Jquery::execute("CKEDITOR.replace('contenu');");
 	}
 
 	public function filter(){
@@ -86,7 +96,9 @@ class Faqs extends \_DefaultController {
 				$sql .= "idUser = ".$_POST['idUser'];
 		}
 		$faqs=DAO::getAll($this->model, $sql);
+
 		$this->loadView("faq/vList", array("faqs"=>$faqs, "sql"=> $sql));
+		echo JQuery::execute("$('[data-toggle=\"tooltip\"]').tooltip()");
 		echo Jquery::getOn('click', '.suspend', 'Faqs/suspend', '.list');
 	}
 

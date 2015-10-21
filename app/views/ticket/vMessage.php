@@ -1,25 +1,30 @@
 <legend>Messages</legend>
 
-<?php  foreach($messages as $message):
-	$date = date_create($ticket->getDateCreation());
- ?>
-<div class="col-md-9 <?php if(!$message->getUser()->getAdmin()) : ?>pull-right<?php endif; ?> message" id="<?=$message->getId() ?>">
-	<div class="panel <?php if($message->getUser()->getAdmin()) : ?>panel-primary<?php else: ?>panel-user<?php endif; ?>">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				<?php echo $message->getUser() ?> 
-			</h3>
-		</div>
-		<div class="panel-body">
-			<?= $message->getContenu(); ?>
-		</div>
-		<div class="panel-footer">
-			<small class="">&nbsp;</small>
-			<small class="pull-right"><i> Envoyé le <?php echo $date->format('d.m.Y à H:i');?></i></small> 
+<?php if (count($messages) == 0): ?>
+	<p class="text-info">Aucun message encore envoyé sur ce ticket...</p>
+<?php else:
+	foreach($messages as $message):
+		$date = date_create($ticket->getDateCreation());
+?>
+	<div class="col-md-9 <?php if(!$message->getUser()->getAdmin()) : ?>pull-right<?php endif; ?> message" id="<?=$message->getId() ?>">
+		<div class="panel <?php if($message->getUser()->getAdmin()) : ?>panel-primary<?php else: ?>panel-user<?php endif; ?>">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<?php echo $message->getUser() ?> 
+				</h3>
+			</div>
+			<div class="panel-body">
+				<?= $message->getContenu(); ?>
+			</div>
+			<div class="panel-footer">
+				<small class="">&nbsp;</small>
+				<small class="pull-right"><i> Envoyé le <?php echo $date->format('d.m.Y à H:i');?></i></small> 
+			</div>
 		</div>
 	</div>
-</div>
-<?php endforeach; ?>
+<?php 	endforeach; 
+	endif;
+?>
 
 <legend>Nouveau Message</legend>
 <div class="ecrireMessage col-md-12 col-xs-12">

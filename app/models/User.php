@@ -65,6 +65,6 @@ class User extends Base{
 		if($this->admin){
 			$uType="Administrateur";
 		}
-		return $this->mail. "-".$this->login." (".$uType.")";
+		return /*$this->mail. "-".*/$this->login." (".$uType.")";
 	}
 }

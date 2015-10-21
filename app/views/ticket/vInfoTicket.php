@@ -1,23 +1,29 @@
+<?php if(Auth::getUser()->getId() == $ticket->getUser()->getId() && $ticket->getStatut()->getId() == 1){
+	$editable = true;
+}else{
+	$editable = false;
+} 
+?>
 <form method="post" action="tickets/update">
 	<div class="infoTicket">
 		<div class="form-group col-md-12">
 			<input type="hidden" name="id" value="<?php echo $ticket->getId()?>">
 			
 			<label for="type">Type</label>
-			<select class="form-control" name="type">
+			<select class="form-control" name="type" <?php if(!$editable): ?>disabled<?php endif; ?>>
 				<?php echo $listType;?>
 			</select>
 			
 			<label for="idCategorie">Catégorie</label>
-			<select class="form-control" name="idCategorie">
+			<select class="form-control" name="idCategorie" <?php if(!$editable): ?>disabled<?php endif; ?>>
 				<?php echo $listCat;?>
 			</select>
 			
 			<label for="titre">Titre</label>
-			<input type="text" name="titre" id="titre" value="<?php echo $ticket->getTitre()?>" placeholder="Entrez le titre" class="form-control">
+			<input type="text" name="titre" id="titre" value="<?php echo $ticket->getTitre()?>" placeholder="Entrez le titre" class="form-control" <?php if(!$editable): ?>disabled<?php endif; ?>>
 			
 			<label for="description">Description</label>
-			<textarea name="description" id="description" placeholder="Entrez la description" class="form-control ckeditor"><?php echo $ticket->getDescription()?></textarea>
+			<textarea name="description" id="description" placeholder="Entrez la description" class="form-control ckeditor" <?php if(!$editable): ?>disabled<?php endif; ?>><?php echo $ticket->getDescription()?></textarea>
 		</div>
 		<div class="form-group col-md-6">
 			<label>Statut</label>
