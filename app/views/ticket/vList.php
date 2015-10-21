@@ -13,7 +13,7 @@
 					$demande = 0;
 				}
 		?>
-				<div class="panel panel-<?php if($demande): ?>info<?php else: ?>warning<?php endif; ?>" style="font-size:110%;">
+				<div class="panel panel-<?php if($demande): ?>info<?php else: ?>warning<?php endif; ?>" style="font-size:110%;" id="s<?= $ticket->getId();?>">
 					<div class="panel-heading">
 						<?php if($ticket->getStatut()->getId() == 1 && Auth::isAdmin()) : ?>
 								<span class="label label-primary"><span class="glyphicon glyphicon-alert"></span> Nouveau</span>
@@ -45,7 +45,7 @@
 							</div>
 						<?php endif; ?>
 						<div class="col-md-4 pull-right">
-							<a href="tickets/frm/<?= $ticket->getId(); ?>" class="btn btn-default pull-right detailTicket"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
+							<a href="Tickets/frm/<?= $ticket->getId(); ?>" class="btn btn-default pull-right detailTicket"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
 						</div>
 					</div>
 				</div>

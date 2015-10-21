@@ -112,7 +112,7 @@ class Tickets extends \_DefaultController {
         		CKEDITOR.instances[instance].updateElement();
 		");
 		//lors du clic sur le bouton submitMessage, éxécute l'update du message et l'affiche
-		echo Jquery::postFormOn("click",".submitMessage","messages/update","frm",".contentMessages");
+		echo Jquery::postFormOn("click",".submitMessage","Messages/update","frm",".contentMessages");
 
 		if($ticket->getTitre() != "") echo Jquery::execute("$('.panel-body.infoTicket').hide();");
 		echo "</div>";
@@ -197,8 +197,8 @@ class Tickets extends \_DefaultController {
 			$buttons[$ticket->getId()] = $this->getButtonGroup($ticket);
 		}
 		$this->loadView("ticket/vList", array("tickets" => $list, "buttons" => $buttons, 'currPage' => $page, 'nbTickets' => $nbTickets));
-		echo Jquery::getOn('click', '.chgList', 'tickets/listFromJquery','#list');
-		echo Jquery::getOn('click', '.updateStatut', 'tickets/updateStatut', '#list');
+		echo Jquery::getOn('click', '.chgList', 'Tickets/listFromJquery','#list');
+		echo Jquery::getOn('click', '.updateStatut', 'Tickets/updateStatut', '#list');
 	}
 
 	public function getButtonGroup($ticket){
