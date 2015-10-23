@@ -1,0 +1,126 @@
+<?php
+use micro\orm\DAO;
+
+class TicketStatusTest extends AjaxUnitTest {
+
+    public static function setUpBeforeClass() {
+        parent::setUpBeforeClass();
+        session_start();
+
+        global $config;
+        DAO::connect($config["database"]['dbName']);
+
+        $_SESSION["user"]=DAO::getOne("User", "admin=1");
+        $_SESSION['KCFINDER'] = array(
+                'disabled' => false
+        );
+        $_SESSION['logStatus'] = 'success';
+
+
+    }
+
+    public function testNewTickets(){
+        $this->get("Indexx/asAdmin");
+        sleep(1);
+        $this->get("Tickets/index");
+
+        $badge = $this->getElementBySelector(".badge");
+
+        $tickets = DAO::getAll("Ticket", "idStatut = 1");
+
+        $this->assertEquals(count($tickets), $badge->getText());
+                
+        sleep(2);
+        $pagesBtn = $this->getElementBySelector(".nextPage");
+
+        $ticketsOnCurrPage = $this->getElementsBySelector(".panel-ticket");
+        $nbTickets = count($ticketsOnCurrPage);
+
+        while ( $pagesBtn->getAttribute("class") != "disabled nextPage") {
+            $pagesBtn->click();
+            sleep(2);
+            
+            $ticketsOnCurrPage = $this->getElementsBySelector(".panel-ticket");
+            $nbTickets += count($ticketsOnCurrPage);
+
+            $pagesBtn = $this->getElementBySelector(".nextPage");
+
+        }
+
+        $this->assertEquals(count($tickets), $nbTickets);
+
+    }
+
+    public function testMyTickets(){
+        $this->get("Indexx/asAdmin");
+        sleep(1);
+        $this->get("Tickets/index");
+
+        sleep(1);
+        $btnMyTickets = $this->getElementById("1;3;my");
+        $btnMyTickets->click();
+
+        $tickets = DAO::getAll("Ticket", "idAdmin = ".Auth::getUser()->getId());
+        
+        sleep(2);
+        $pagesBtn = $this->getElementBySelector(".nextPage");
+
+        $ticketsOnCurrPage = $this->getElementsBySelector(".panel-ticket");
+        $nbTickets = count($ticketsOnCurrPage);
+
+        while ( $pagesBtn->getAttribute("class") != "disabled nextPage") {
+            $pagesBtn->click();
+            sleep(2);
+            
+            $ticketsOnCurrPage = $this->getElementsBySelector(".panel-ticket");
+            $nbTickets += count($ticketsOnCurrPage);
+
+            $pagesBtn = $this->getElementBySelector(".nextPage");
+
+        }
+
+        $this->assertEquals(count($tickets), $nbTickets);
+
+    }
+
+    public function testMyTicketsUser(){
+        $this->get("Indexx/disconnect");
+        sleep(1);
+        $_SESSION["user"]=DAO::getOne("User", "admin=0");
+        $_SESSION['KCFINDER'] = array(
+                'disabled' => true
+        );
+        $_SESSION['logStatus'] = 'success';
+        $this->get("Indexx/asUser");
+        sleep(1);
+        $this->get("Tickets/index");
+
+        sleep(1);
+        $btnMyTickets = $this->getElementById("1;3;my");
+        $btnMyTickets->click();
+
+        $tickets = DAO::getAll("Ticket", "idUser = ".Auth::getUser()->getId());
+        
+        sleep(2);
+        $pagesBtn = $this->getElementBySelector(".nextPage");
+
+        $ticketsOnCurrPage = $this->getElementsBySelector(".panel-ticket");
+        $nbTickets = count($ticketsOnCurrPage);
+
+        while ( $pagesBtn->getAttribute("class") != "disabled nextPage") {
+            $pagesBtn->click();
+            sleep(2);
+            
+            $ticketsOnCurrPage = $this->getElementsBySelector(".panel-ticket");
+            $nbTickets += count($ticketsOnCurrPage);
+
+            $pagesBtn = $this->getElementBySelector(".nextPage");
+
+        }
+
+        $this->assertEquals(count($tickets), $nbTickets);
+
+    } 
+
+
+}

@@ -5,8 +5,6 @@ class TicketStatusTest extends AjaxUnitTest {
 
     public static function setUpBeforeClass() {
         parent::setUpBeforeClass();
-        $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => 'firefox',\WebDriverCapabilityType::VERSION=>'41.0');
-        self::$webDriver = \RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities);
         session_start();
 
         global $config;
