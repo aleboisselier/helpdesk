@@ -10,5 +10,5 @@ return array(
 				"password"=>""
 		],
 		"directories"=>["my","tests"],
-		"test"=>false
+		"test"=>true
 );

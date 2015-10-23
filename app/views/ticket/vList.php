@@ -13,7 +13,7 @@
 					$demande = 0;
 				}
 		?>
-				<div class="panel panel-<?php if($demande): ?>info<?php else: ?>warning<?php endif; ?>" style="font-size:110%;">
+				<div class="panel panel-<?php if($demande): ?>info<?php else: ?>warning<?php endif; ?> panel-ticket" style="font-size:110%;" id="s<?= $ticket->getId();?>">
 					<div class="panel-heading">
 						<?php if($ticket->getStatut()->getId() == 1 && Auth::isAdmin()) : ?>
 								<span class="label label-primary"><span class="glyphicon glyphicon-alert"></span> Nouveau</span>
@@ -45,7 +45,7 @@
 							</div>
 						<?php endif; ?>
 						<div class="col-md-4 pull-right">
-							<a href="tickets/frm/<?= $ticket->getId(); ?>" class="btn btn-default pull-right detailTicket"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
+							<a href="Tickets/frm/<?= $ticket->getId(); ?>" class="btn btn-default pull-right detailTicket"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Afficher les détails</a>
 						</div>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 		<div class="text-center" id="pagination">
 			<nav>
 				<ul class="pagination">
-					<li <?php if($currPage == 1) :?> class="disabled" <?php else:?> class="chgList" id="<?php echo ($currPage-1).';'.$tPerPage; ?>" <?php endif; ?>>
+					<li <?php if($currPage == 1) :?> class="disabled" <?php else:?> class="chgList prevPage" id="<?php echo ($currPage-1).';'.$tPerPage; ?>" <?php endif; ?>>
 						<a aria-label="Précédent">
 							<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
 						</a>
@@ -66,7 +66,7 @@
 						<?php for($i = 1; $i<=$nbPages; $i++): ?>
 							<li <?php if($i == $currPage):?>class="active"<?php endif;?> id="<?php echo $i.';'.$tPerPage; ?>" class="chgList"><a><?php echo $i; ?></a></li>
 						<?php endfor; ?>
-					<li <?php if($currPage == $nbPages) :?> class="disabled" <?php else:?> class="chgList" id="<?php echo ($currPage+1).';'.$tPerPage; ?>" <?php endif; ?>>
+					<li <?php if($currPage == $nbPages) :?> class="disabled nextPage" <?php else:?> class="chgList nextPage" id="<?php echo ($currPage+1).';'.$tPerPage; ?>" <?php endif; ?>>
 						<a aria-label="Suivant" >
 							<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</a>
