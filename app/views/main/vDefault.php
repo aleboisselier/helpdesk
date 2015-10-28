@@ -1,12 +1,6 @@
 
 <div class="container">
-<?php
-	if($_SESSION['logStatus'] == 'success'){
-		$this->_showMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
-	}
-	$_SESSION['logStatus'] = null;
-?>
-
+<?php if(isset($message)) echo $message; ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h1 class="text-center">Bienvenue sur HelpDesk DOA</h1>

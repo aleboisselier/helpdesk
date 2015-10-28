@@ -10,5 +10,13 @@ return array(
 				"password"=>""
 		],
 		"directories"=>["my","tests"],
-		"test"=>true
+		"test"=>false,
+		"mails"=>[
+				"smtp"=> "smtp.gmail.com",
+				"smtpAuth" => true,
+				"username"=> "gmailID@gmail.com",
+				"password"=> "GmailPassword",
+				"port" => 587,
+				"secure"=>"tls"
+		]
 );
