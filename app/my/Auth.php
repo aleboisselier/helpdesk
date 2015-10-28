@@ -60,7 +60,7 @@ class Auth {
 							</ul>
 						</div>';
 
-			$infoUser='<a href="Indexx/login" class="btn btn-'.$style.'">Se Connecter</a>';
+			//$infoUser='<a href="Indexx/login" class="btn btn-'.$style.'">Se Connecter</a>';
 		}
 		return $infoUser;
 	}

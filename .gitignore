@@ -55,3 +55,5 @@ app/config.php
 *.sublime-workspace
 
 server
+app/config.php
+app/config.php

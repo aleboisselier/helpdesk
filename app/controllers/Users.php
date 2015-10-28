@@ -40,6 +40,7 @@ class Users extends \_DefaultController {
 	protected function setValuesToObject(&$object) {
 		parent::setValuesToObject($object);
 		$object->setAdmin(isset($_POST["admin"]));
+		$object->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
 	}
 
 	public function tickets(){

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 01 Octobre 2015 à 11:01
+-- Généré le :  Mer 28 Octobre 2015 à 18:39
 -- Version du serveur :  5.6.21
 -- Version de PHP :  5.6.3
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `Faq` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `Faq`
+-- Contenu de la table `faq`
 --
 
 INSERT INTO `Faq` (`id`, `titre`, `contenu`, `dateCreation`, `idCategorie`, `idUser`, `version`, `popularity`, `published`) VALUES
@@ -78,7 +78,7 @@ INSERT INTO `Faq` (`id`, `titre`, `contenu`, `dateCreation`, `idCategorie`, `idU
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Message`
+-- Structure de la table `message`
 --
 
 CREATE TABLE IF NOT EXISTS `Message` (
@@ -87,10 +87,10 @@ CREATE TABLE IF NOT EXISTS `Message` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `idUser` int(11) NOT NULL,
   `idTicket` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `Message`
+-- Contenu de la table `message`
 --
 
 INSERT INTO `Message` (`id`, `contenu`, `date`, `idUser`, `idTicket`) VALUES
@@ -106,16 +106,9 @@ INSERT INTO `Message` (`id`, `contenu`, `date`, `idUser`, `idTicket`) VALUES
 CREATE TABLE IF NOT EXISTS `Notification` (
   `idUser` int(11) NOT NULL,
   `idTicket` int(11) NOT NULL,
-  `idMessage` int(11) NOT NULL
+  `idMessage` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Contenu de la table `Notification`
---
-
-INSERT INTO `Notification` (`idUser`, `idTicket`, `idMessage`) VALUES
-(1, 1, 1),
-(1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -128,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `Statut` (
   `libelle` varchar(30) NOT NULL,
   `ordre` int(11) NOT NULL,
   `icon` varchar(20) NOT NULL,
-  `StatutsSuivant` varchar(50) NOT NULL,
+  `statutsSuivant` varchar(50) NOT NULL,
   `action` varchar(255) NOT NULL,
   `cssClass` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
@@ -139,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `Statut` (
 
 INSERT INTO `Statut` (`id`, `libelle`, `ordre`, `icon`, `StatutsSuivant`, `action`, `cssClass`) VALUES
 (1, 'Nouveau', 0, 'flag', '2', '', ''),
-(2, 'Attribué', 1, 'User', '3,4,5', 'S''Attribuer', 'primary'),
+(2, 'Attribué', 1, 'user', '3,4,5', 'S''Attribuer', 'primary'),
 (3, 'En attente', 2, 'hourglass', '4,5', 'Mettre en attente', 'warning'),
 (4, 'Résolu', 3, 'check', '5', 'Résoudre', 'success'),
 (5, 'Clos', 5, 'off', '0', 'Clore', 'danger');
@@ -160,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `Ticket` (
   `idUser` int(11) NOT NULL,
   `dateCreation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idAdmin` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `Ticket`
@@ -168,12 +161,26 @@ CREATE TABLE IF NOT EXISTS `Ticket` (
 
 INSERT INTO `Ticket` (`id`, `type`, `idCategorie`, `titre`, `description`, `idStatut`, `idUser`, `dateCreation`, `idAdmin`) VALUES
 (1, 'incident', 8, 'Ecran bleu', 'Ecran bleu sur ouverture session windows', 4, 2, '2015-05-10 16:27:29', 1),
-(2, 'incident', 12, 'impossible de se connecter', 'Impossible de se connecter à mon compte :\r\nLe Message affiché est "Les informations de compte n''ont pas permis votre authentification".\r\n\r\nJe n''ai pas trouvé la procédure de récupération de mot de passe.', 2, 3, '2015-05-14 10:40:40', 1),
-(3, 'incident', 3, 'Test de Ticket', 'Ceci est un test de Ticket', 1, 2, '2015-09-22 21:31:27', 0),
-(4, 'demande', 10, 'Test de Ticket 2', 'Ceci est un test de Ticket', 1, 2, '2015-09-22 21:31:27', 0),
+(2, 'incident', 12, 'impossible de se connecter', 'Impossible de se connecter à mon compte :\r\nLe message affiché est "Les informations de compte n''ont pas permis votre authentification".\r\n\r\nJe n''ai pas trouvé la procédure de récupération de mot de passe.', 1, 3, '2015-05-14 10:40:40', 0),
+(3, 'incident', 3, 'Test de Ticket', 'Ceci est un test de ticket', 1, 2, '2015-09-22 21:31:27', 0),
+(4, 'demande', 10, 'Test de Ticket 2', 'Ceci est un test de ticket', 1, 2, '2015-09-22 21:31:27', 0),
 (5, 'incident', 4, 'Ticket Test 3', 'Ticket Test 3', 3, 2, '2015-09-26 19:19:34', 1),
 (6, 'demande', 10, 'Ticket Test 4', 'Ticket Test 4', 4, 3, '2015-09-26 19:19:34', 1),
 (7, 'demande', 4, 'Ticket Test 5', 'Ticket Test 5', 5, 3, '2015-09-26 19:19:54', 1);
+-- Structure de la table `token`
+--
+
+CREATE TABLE IF NOT EXISTS `token` (
+  `token` varchar(32) COLLATE utf8_bin NOT NULL,
+  `idUser` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `token`
+--
+
+INSERT INTO `token` (`token`, `idUser`) VALUES
+('c76533fa2b6a56a8cbb4ade31ce3b1e5', 4);
 
 -- --------------------------------------------------------
 
@@ -184,7 +191,7 @@ INSERT INTO `Ticket` (`id`, `type`, `idCategorie`, `titre`, `description`, `idSt
 CREATE TABLE IF NOT EXISTS `User` (
 `id` int(11) NOT NULL,
   `login` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(60) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
@@ -193,11 +200,11 @@ CREATE TABLE IF NOT EXISTS `User` (
 -- Contenu de la table `User`
 --
 
-INSERT INTO `User` (`id`, `login`, `password`, `mail`, `admin`) VALUES
-(1, 'admin', 'admin', 'admin@local.fr', 1),
-(2, 'user', 'user', 'user@local.fr', 0),
-(3, 'autreUser', 'autreUser', 'autreUser@local.fr', 0),
-(4, 'moi', '123456789', 'moi@local.fr', 0);
+INSERT INTO `user` (`id`, `login`, `password`, `mail`, `admin`) VALUES
+(1, 'admin', '$2y$10$cwj0qBqiBSxyE7nI9mpNoeO2fI6bMl9sEkivyKoq9KtUcP59Mx4a.', 'admin@local.fr', 1),
+(2, 'user', '$2y$10$wSSIwuac4n6ZI68jj1QkCeILm.K4gU/hJgQQG55KUzBzQPpMfQVtq', 'user@local.fr', 0),
+(3, 'autreUser', '$2y$10$rWyNDY9Hs6f043OGsKgz8.AsgGvit8Idin8xDOXR0h0sAPRV8yrc6', 'autreuser@local.fr', 0),
+(4, 'moi', '$2y$10$y3sGWSpxe1EuSIHAW4YlL.3ipxDHxLYbsRGtz581pxwHGM7jaE9u.', 'contact@aleboisselier.fr', 0);
 
 --
 -- Index pour les tables exportées
@@ -222,9 +229,15 @@ ALTER TABLE `Message`
  ADD PRIMARY KEY (`id`), ADD KEY `idUser` (`idUser`), ADD KEY `idTicket` (`idTicket`);
 
 --
--- Index pour la table `Statut`
+-- Index pour la table `notification`
 --
-ALTER TABLE `Statut`
+ALTER TABLE `notification`
+ ADD PRIMARY KEY (`idUser`,`idTicket`);
+
+--
+-- Index pour la table `statut`
+--
+ALTER TABLE `statut`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -234,7 +247,13 @@ ALTER TABLE `Ticket`
  ADD PRIMARY KEY (`id`), ADD KEY `idCategorie` (`idCategorie`), ADD KEY `idStatut` (`idStatut`,`idUser`), ADD KEY `idUser` (`idUser`);
 
 --
--- Index pour la table `User`
+-- Index pour la table `token`
+--
+ALTER TABLE `token`
+ ADD PRIMARY KEY (`token`);
+
+--
+-- Index pour la table `user`
 --
 ALTER TABLE `User`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login` (`login`);
@@ -256,54 +275,54 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `Message`
 --
-ALTER TABLE `Message`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+ALTER TABLE `message`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT pour la table `Statut`
+-- AUTO_INCREMENT pour la table `statut`
 --
-ALTER TABLE `Statut`
+ALTER TABLE `statut`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT pour la table `Ticket`
+-- AUTO_INCREMENT pour la table `ticket`
 --
-ALTER TABLE `Ticket`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+ALTER TABLE `ticket`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT pour la table `User`
+-- AUTO_INCREMENT pour la table `user`
 --
-ALTER TABLE `User`
+ALTER TABLE `user`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Contraintes pour les tables exportées
 --
 
 --
--- Contraintes pour la table `Categorie`
+-- Contraintes pour la table `categorie`
 --
-ALTER TABLE `Categorie`
-ADD CONSTRAINT `Categorie_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `Categorie` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+ALTER TABLE `categorie`
+ADD CONSTRAINT `categorie_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Contraintes pour la table `Faq`
+-- Contraintes pour la table `faq`
 --
-ALTER TABLE `Faq`
-ADD CONSTRAINT `Faq_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `Categorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-ADD CONSTRAINT `Faq_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `User` (`id`);
+ALTER TABLE `faq`
+ADD CONSTRAINT `faq_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+ADD CONSTRAINT `faq_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
 
 --
--- Contraintes pour la table `Message`
+-- Contraintes pour la table `message`
 --
-ALTER TABLE `Message`
-ADD CONSTRAINT `Message_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `Message_ibfk_2` FOREIGN KEY (`idTicket`) REFERENCES `Ticket` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `message`
+ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`idTicket`) REFERENCES `ticket` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `Ticket`
+-- Contraintes pour la table `ticket`
 --
-ALTER TABLE `Ticket`
-ADD CONSTRAINT `Ticket_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `Categorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `Ticket_ibfk_2` FOREIGN KEY (`idStatut`) REFERENCES `Statut` (`id`),
-ADD CONSTRAINT `Ticket_ibfk_3` FOREIGN KEY (`idUser`) REFERENCES `User` (`id`) ON UPDATE CASCADE;
+ALTER TABLE `ticket`
+ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`idStatut`) REFERENCES `statut` (`id`),
+ADD CONSTRAINT `ticket_ibfk_3` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

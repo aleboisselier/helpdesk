@@ -33,6 +33,9 @@ class Indexx extends micro\controllers\BaseController {
 			case 'success':
 				$message = $this->_showMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
 				break;
+			default:
+				$message = null;
+				break;
 		}
 		$_SESSION['logStatus'] = null;
 
@@ -43,6 +46,7 @@ class Indexx extends micro\controllers\BaseController {
 		}else{
 			$this->loadView("main/vLogin");
 		}
+
 		$this->loadView("main/vFooter");
 	}
 
@@ -84,6 +88,7 @@ class Indexx extends micro\controllers\BaseController {
 			return;
 		}
 
+		echo "token : ".$token->getToken();
 		$_SESSION['resetPass'] = array('idUser' => $token->getUser()->getId(), "token" => $token->getToken());
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
 		$this->loadView("pass/vResetPass");
@@ -95,7 +100,7 @@ class Indexx extends micro\controllers\BaseController {
 	public function updatePass(){
 		$user = DAO::getOne("User", "id = ".$_SESSION['resetPass']['idUser']);
 		if ($_POST['pass'] == $_POST['pass']) {
-			$user->setPassword($_POST['pass']);
+			$user->setPassword(password_hash($_POST['pass'], PASSWORD_BCRYPT));
 			DAO::update($user);
 			return $this->_showMessage("Votre mot de passe a été correctement modifié. ".Auth::getInfoUser(), 'success');
 
@@ -125,8 +130,8 @@ class Indexx extends micro\controllers\BaseController {
 
 	public function login(){
 		if (isset($_POST["email"]) && isset($_POST['pass'])) {
-			$user = DAO::getOne("User", "mail='".$_POST["email"]."' AND password='".$_POST['pass']."'");
-			if ($user != null) {
+			$user = DAO::getOne("User", "mail='".$_POST["email"]."'");
+			if (password_verify($_POST['pass'], $user->getPassword())) {
 				$_SESSION["user"] = $user;
 				$_SESSION['KCFINDER'] = array(
 					'disabled' => true
@@ -137,7 +142,7 @@ class Indexx extends micro\controllers\BaseController {
 			}
 		}
 
-		$this->index();
+		$this->forward("Indexx");
 	}
 
 		/**
