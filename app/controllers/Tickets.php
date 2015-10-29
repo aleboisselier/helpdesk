@@ -18,6 +18,13 @@ class Tickets extends \_DefaultController {
 		$this->model="Ticket";
 	}
 
+	/* (non-PHPdoc)
+	 * @see BaseController::isValid()
+	 */
+	public function isValid() {
+		return Auth::isAuth();
+	}
+
 	public function index($message=null){
 		global $config;
 		$baseHref=get_class($this);
@@ -157,24 +164,7 @@ class Tickets extends \_DefaultController {
 	}
 
 
-	/* (non-PHPdoc)
-	 * @see BaseController::isValid()
-	 */
-	public function isValid() {
-		return Auth::isAuth();
-	}
-
-	/* (non-PHPdoc)
-	 * @see BaseController::onInvalidControl()
-	 */
-	public function onInvalidControl() {
-		$this->initialize();
-		$this->messageDanger("<strong>Autorisation refusée</strong>,<br>Merci de vous connecter pour accéder à ce module.&nbsp;".Auth::getInfoUser("danger"));
-		$this->finalize();
-		exit;
-	}
-
-	public function listTickets(){
+	protected function listTickets(){
 		$condition = $_SESSION['condition'];
 		$tPerPage = $_SESSION['nbPerPage'];
 		$page=$_SESSION['page'];
@@ -213,11 +203,7 @@ class Tickets extends \_DefaultController {
 		}
 		return $buttonGroup;
 	}
-
-	// public function listFromURL($params){
-	// 	$this->listTickets($params[0], $params[1], $params[2]);
-	// }
-
+	
 	public function listFromJquery($params){
 		$params = explode(";", $params[0]);
 		$page = $params[0];

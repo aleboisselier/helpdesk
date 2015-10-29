@@ -15,6 +15,12 @@ class User extends Base{
 	private $mail="";
 	private $admin=false;
 
+	/**
+	 * @ManyToOne
+	 * @JoinColumn(name="idGroupe",className="Groupe",nullable=false)
+	 */
+	private $groupe;
+
 	public function getId() {
 		return $this->id;
 	}
@@ -60,11 +66,21 @@ class User extends Base{
 		return $this;
 	}
 
+	public function getGroupe(){
+		return $this->groupe;
+	}
+
+	public function setGroupe($groupe) {
+		$this->groupe=$groupe;
+		return $this;
+	}
+
 	public function toString(){
 		$uType="Utilisateur";
 		if($this->admin){
 			$uType="Administrateur";
 		}
-		return /*$this->mail. "-".*/$this->login." (".$uType.")";
+		return $this->login." (".$this->groupe.")";
+
 	}
 }

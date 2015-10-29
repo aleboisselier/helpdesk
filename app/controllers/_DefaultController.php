@@ -222,4 +222,14 @@ class _DefaultController extends BaseController {
 		$this->_showMessage($message,"info",$timerInterval,$dismissable);
 	}
 
+		/* (non-PHPdoc)
+	 * @see BaseController::onInvalidControl()
+	 */
+	public function onInvalidControl() {
+		$this->initialize();
+		$this->messageDanger("<strong>Autorisation refusée</strong>,<br>Merci de vous connecter pour accéder à ce module.&nbsp;".Auth::getInfoUser("danger"));
+		$this->finalize();
+		exit;
+	}
+
 }

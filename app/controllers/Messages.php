@@ -16,6 +16,11 @@ class Messages extends \_DefaultController {
 		$this->title="Messages";
 		$this->model="Message";
 	}
+
+	public function isValid(){
+		return Auth::isAuth();
+	}
+
 	public function frm($id = NULL){
 		$message=$this->getInstance($id);
 		if(isset($id)){
@@ -75,14 +80,4 @@ class Messages extends \_DefaultController {
 		}
 	}
 
-	public function isValid(){
-		return Auth::isAuth();
-	}
-
-	public function onInvalidControl(){
-		$this->initialize();
-		$this->messageWarning("Vous devez vous connecter !");
-		$this->finalize();
-		exit;
-	}
 }
