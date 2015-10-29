@@ -18,9 +18,6 @@ class Indexx extends micro\controllers\BaseController {
 	 * @see BaseController::index()
 	 */
 	public function index() {
-		if(!isset($_SESSION['logStatus']))
-			$_SESSION['logStatus'] = null;
-
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
 
 		switch ($_SESSION['logStatus']) {
@@ -55,10 +52,12 @@ class Indexx extends micro\controllers\BaseController {
 	 */
 	public function disconnect(){
 		$_SESSION = array();
+		unset($_SESSION);
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => true
 		);
 		$_SESSION['logStatus'] = 'disconnected';
+		unset($_COOKIE);
 		$this->index();
 	}
 
@@ -67,6 +66,7 @@ class Indexx extends micro\controllers\BaseController {
 	}
 
 	public function login(){
+		global $config;
 		if (isset($_POST["email"]) && isset($_POST['pass'])) {
 			$user = DAO::getOne("User", "mail='".$_POST["email"]."'");
 			if (password_verify($_POST['pass'], $user->getPassword())) {
@@ -75,6 +75,11 @@ class Indexx extends micro\controllers\BaseController {
 					'disabled' => true
 				);
 				$_SESSION['logStatus'] = 'success';
+
+				if (isset($_POST['remember'])) {
+					setcookie('user', $user->getId(), $config['cookies']['user']['lifetime']);
+				}
+
 			}else{
 				$_SESSION['logStatus'] = 'fail';
 			}
