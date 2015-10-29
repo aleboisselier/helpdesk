@@ -11,7 +11,7 @@
 				<div class="form-group">
 					<label for="password">Mot de passe</label>
 					<input type="password" class="form-control" id="password" placeholder="Password" name="pass">
-					<div><a href="Indexx/lostPassword" id="lostPass">Mot de passe oublié ?</a></div>
+					<div><a href="Support/index" id="lostPass">Mot de passe oublié ?</a></div>
 				</div>
 				<div class="text-center"><button type="submit" class="btn btn-default" id="submitLogin">Connexion</button></div>
 			</form>	
