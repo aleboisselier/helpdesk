@@ -182,11 +182,7 @@ class Tickets extends \_DefaultController {
 		}
 		$nCondition .= ' ORDER BY dateCreation ASC LIMIT '.$min.','. $num;
 		$list=DAO::getAll($this->model, $nCondition);
-		$buttons = array();
-		foreach ($list as $ticket) {
-			$buttons[$ticket->getId()] = $this->getButtonGroup($ticket);
-		}
-		$this->loadView("ticket/vList", array("tickets" => $list, "buttons" => $buttons, 'currPage' => $page, 'nbTickets' => $nbTickets));
+		$this->loadView("ticket/vList", array("tickets" => $list, 'currPage' => $page, 'nbTickets' => $nbTickets));
 		echo Jquery::getOn('click', '.chgList', 'Tickets/listFromJquery','#list');
 		echo Jquery::getOn('click', '.updateStatut', 'Tickets/updateStatut', '#list');
 	}
@@ -196,7 +192,23 @@ class Tickets extends \_DefaultController {
 		$statutsSuivant = $ticket->getStatut()->getStatutsSuivant();
 		$listStatutsSuivant = explode(",", $statutsSuivant);
 		foreach ( $listStatutsSuivant as $statut) {
-			if ($statut >0) {
+			if ($statut == 2 && Auth::getUser()->getGroupe()->getId() == 1) {
+				$statut = DAO::getOne("Statut", $statut);
+				$buttonGroup .= '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    '.$statut->getAction().' <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu">
+								    <li class="dropdown-header">TECHNICIENS</li>';
+				$techs = DAO::getAll("User", "idGroupe = 3");
+				foreach ($techs as $tech) {
+					$buttonGroup .= '<li class="updateStatut" id="'.$statut->getId().';'.$ticket->getId().';'.$tech->getId().'"><a>'.$tech->getLogin().'</a></li>';
+				}
+				$admins = DAO::getAll("User", "idGroupe = 1");
+				$buttonGroup .= '<li class="dropdown-header">ADMINISTRATEURS</li>';
+				foreach ($admins as $admin) {
+					$buttonGroup .= '<li class="updateStatut" id="'.$statut->getId().';'.$ticket->getId().';'.$admin->getId().'"><a>'.$admin->getLogin().'</a></li>';
+				}
+			}elseif($statut > 2) {
 				$statut = DAO::getOne("Statut", $statut);
 				$buttonGroup .= "<button type='button' class='updateStatut btn btn-".$statut->getCssClass()."' id='".$statut->getId().";".$ticket->getId()."'>".$statut->getAction()."</button>";
 			}
@@ -242,7 +254,7 @@ class Tickets extends \_DefaultController {
 		$statut = DAO::getOne("Statut", $params[0]);
 		$ticket = DAO::getOne("Ticket", $params[1]);
 		if ($statut->getId() == 2) {
-			$ticket->setAdmin(Auth::getUser());
+			$ticket->setAdmin(DAO::getOne("User", "id=".$params[2]));
 		}
 		$ticket->setStatut($statut);
 
