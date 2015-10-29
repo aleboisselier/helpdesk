@@ -20,4 +20,18 @@ class Statuts extends \_DefaultController {
 		$list=Gui::select($icons,$object->getIcon(),"Sélectionner une icône...");
 		$this->loadView("statut/vAdd",array("select"=>$list,"statut"=>$object));
 	}
+
+	public function isValid() {
+		return Auth::isAuth();
+	}
+
+	/* (non-PHPdoc)
+	 * @see BaseController::onInvalidControl()
+	 */
+	public function onInvalidControl() {
+		$this->initialize();
+		$this->messageDanger("<strong>Autorisation refusée</strong>,<br>Merci de vous connecter pour accéder à ce module.&nbsp;".Auth::getInfoUser("danger"));
+		$this->finalize();
+		exit;
+	}
 }

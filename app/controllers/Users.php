@@ -46,4 +46,18 @@ class Users extends \_DefaultController {
 	public function tickets(){
 		$this->forward("tickets");
 	}
+
+	public function isValid() {
+		return Auth::isAuth();
+	}
+
+	/* (non-PHPdoc)
+	 * @see BaseController::onInvalidControl()
+	 */
+	public function onInvalidControl() {
+		$this->initialize();
+		$this->messageDanger("<strong>Autorisation refusée</strong>,<br>Merci de vous connecter pour accéder à ce module.&nbsp;".Auth::getInfoUser("danger"));
+		$this->finalize();
+		exit;
+	}
 }
