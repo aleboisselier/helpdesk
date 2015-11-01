@@ -58,3 +58,4 @@ server
 app/config.php
 app/config.php
 app/config.php
+*.prefs

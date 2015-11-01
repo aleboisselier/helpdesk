@@ -1,6 +1,5 @@
 <?php
-use micro\orm\DAO;
-use micro\views\Gui;
+
 /**
  * Gestion des catégories
  * @author jcheron

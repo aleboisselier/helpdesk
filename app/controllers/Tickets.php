@@ -3,7 +3,6 @@
 use micro\orm\DAO;
 use micro\js\Jquery;
 use micro\views\Gui;
-use micro\utils\RequestUtils;
 /**
  * Gestion des tickets
  * @author jcheron

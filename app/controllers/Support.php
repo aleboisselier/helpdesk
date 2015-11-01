@@ -1,7 +1,6 @@
 <?php
 use micro\orm\DAO;
 use micro\js\Jquery;
-use micro\views\Gui;
 /**
  * Gestion des tickets
  * @author ALeboisselier

@@ -1,7 +1,5 @@
 <?php
 use micro\orm\DAO;
-use micro\js\Jquery;
-use micro\views\Gui;
 /**
  * Gestion des tickets
  * @author ALeboisselier
@@ -19,22 +17,25 @@ class Indexx extends micro\controllers\BaseController {
 	 */
 	public function index() {
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
-
-		switch ($_SESSION['logStatus']) {
-			case 'fail':
-				$message = $this->_showMessage("ERREUR : Couple identifiant/mot de passe inconnu.", "danger");
-				break;
-			case 'disconnected':
-				$message = $this->_showMessage("Vous avez été correctement déconnecté. <b>Au revoir...</b>", "success");
-				break;
-			case 'success':
-				$message = $this->_showMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
-				break;
-			default:
-				$message = null;
-				break;
+		
+		$message = null;
+		if (isset($_SESSION['logStatus'])){
+			switch ($_SESSION['logStatus']) {
+				case 'fail':
+					$message = $this->_showMessage("ERREUR : Couple identifiant/mot de passe inconnu.", "danger");
+					break;
+				case 'disconnected':
+					$message = $this->_showMessage("Vous avez été correctement déconnecté. <b>Au revoir...</b>", "success");
+					break;
+				case 'success':
+					$message = $this->_showMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
+					break;
+				default:
+					$message = null;
+					break;
+			}
+			$_SESSION['logStatus'] = null;
 		}
-		$_SESSION['logStatus'] = null;
 
 		if(Auth::isAuth()){
 			$notifs = DAO::getAll("Notification", "idUser = ".Auth::getUser()->getId());
