@@ -19,8 +19,8 @@ class Auth {
 		$user=null;
 		if(array_key_exists("user", $_SESSION)){
 			$user=$_SESSION["user"];
-		}else if (isset($_COOKIE)) {
-			if (array_key_exists("user", $_COOKIE)) {
+		}else if (isset($_COOKIE) && $_SESSION['logStatus'] != 'disconnected') {
+			if (array_key_exists("user", $_COOKIE) && $_COOKIE['user'] != null) {
 				$_SESSION["user"] = DAO::getOne('User', 'id='.$_COOKIE['user']);
 				$user=$_SESSION["user"];
 				setcookie('user', $_COOKIE['user'], $config['cookies']['user']['lifetime']);
@@ -61,7 +61,7 @@ class Auth {
 		if(isset($user)){
 			$infoUser="<a class='btn btn-primary' href='indexx/disconnect'>Déconnexion <span class='label label-success'>".$user."</span></a>";
 		}else{
-			$infoUser='<a href="Indexx/index" class="btn btn-'.$style.'">Se Connecter</a>';
+			$infoUser='<a href="Indexx" class="btn btn-'.$style.'">Se Connecter</a>';
 		}
 		return $infoUser;
 	}

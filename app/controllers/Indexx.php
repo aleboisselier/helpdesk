@@ -53,12 +53,14 @@ class Indexx extends micro\controllers\BaseController {
 	 */
 	public function disconnect(){
 		$_SESSION = array();
-		unset($_SESSION);
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => true
 		);
 		$_SESSION['logStatus'] = 'disconnected';
-		unset($_COOKIE);
+		if (isset($_COOKIE['user'])){
+            setcookie('user', '', time()-60*60*24*90, '/', '', 0, 0);
+            unset($_COOKIE['user']);
+        }
 		$this->index();
 	}
 
@@ -93,11 +95,13 @@ class Indexx extends micro\controllers\BaseController {
 	 * Connecte le premier administrateur trouvé dans la BDD
 	 */
 	public function asAdmin(){
+		global $config;
 		$_SESSION["user"]=DAO::getOne("User", "admin=1");
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => false
 		);
 		$_SESSION['logStatus'] = 'success';
+		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime']);
 		$this->index();
 	}
 
@@ -105,11 +109,13 @@ class Indexx extends micro\controllers\BaseController {
 	 * Connecte le premier utilisateur (non admin) trouvé dans la BDD
 	 */
 	public function asUser(){
+		global $config;
 		$_SESSION["user"]=DAO::getOne("User", "admin=0");
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => true
 		);
 		$_SESSION['logStatus'] = 'success';
+		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime']);
 		$this->index();
 	}
 

@@ -37,5 +37,9 @@ class Token extends Base{
 	public function toString(){
 		return $this->token;
 	}
+	
+	public function getId(){
+		return $this->token;
+	}
 
 }

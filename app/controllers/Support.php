@@ -68,11 +68,11 @@ class Support extends micro\controllers\BaseController {
 		if ($_POST['pass'] == $_POST['pass']) {
 			$user->setPassword(password_hash($_POST['pass'], PASSWORD_BCRYPT));
 			DAO::update($user);
-			return $this->_showMessage("Votre mot de passe a été correctement modifié. ".Auth::getInfoUser(), 'success');
-
-			$token = DAO::getOne('Token', "token = '".$_SESSION['resetPass']['token']."'");
+			
+			$token = DAO::getOne('Token', $_SESSION['resetPass']['token']);
 			DAO::delete($token);
 			$_SESSION['resetPass'] = null;
+			return $this->_showMessage("Votre mot de passe a été correctement modifié. ".Auth::getInfoUser(), 'success');
 		}else{
 			return $this->_showMessage("Mots de passe différents !", 'warning');
 		}

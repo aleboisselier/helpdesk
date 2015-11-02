@@ -2,7 +2,7 @@
 
 /**
  * Gestion des catégories
- * @author jcheron
+ * @author aleboisselier
  * @version 1.1
  * @package helpdesk.controllers
  */
