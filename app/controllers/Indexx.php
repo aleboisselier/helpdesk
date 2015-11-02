@@ -22,13 +22,13 @@ class Indexx extends micro\controllers\BaseController {
 		if (isset($_SESSION['logStatus'])){
 			switch ($_SESSION['logStatus']) {
 				case 'fail':
-					$message = $this->_showMessage("ERREUR : Couple identifiant/mot de passe inconnu.", "danger");
+					$message=new DisplayedMessage("ERREUR : Couple identifiant/mot de passe inconnu.", "danger");
 					break;
 				case 'disconnected':
-					$message = $this->_showMessage("Vous avez été correctement déconnecté. <b>Au revoir...</b>", "success");
+					$message=new DisplayedMessage("Vous avez été correctement déconnecté. <b>Au revoir...</b>", "success");
 					break;
 				case 'success':
-					$message = $this->_showMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
+					$message=new DisplayedMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
 					break;
 				default:
 					$message = null;
@@ -39,12 +39,10 @@ class Indexx extends micro\controllers\BaseController {
 
 		if(Auth::isAuth()){
 			$notifs = DAO::getAll("Notification", "idUser = ".Auth::getUser()->getId());
-			$this->loadView("main/vDefault", array("notifs" => $notifs, "message"=>$message));
-
+			$this->loadView("main/vDefault", array("notifs" => $notifs, "message" => $message));
 		}else{
 			$this->loadView("main/vLogin");
 		}
-
 		$this->loadView("main/vFooter");
 	}
 
@@ -64,8 +62,11 @@ class Indexx extends micro\controllers\BaseController {
 		$this->index();
 	}
 
-	protected function _showMessage($message,$type="success",$timerInterval=0,$dismissable=true,$visible=true){
-		$this->loadView("main/vInfo",array("message"=>$message,"type"=>$type,"dismissable"=>$dismissable,"timerInterval"=>$timerInterval,"visible"=>$visible));
+	protected function _showMessage($message,$type="success",$timerInterval=0,$dismissable=true,$visible=true, $asString = false){
+		$this->loadView("main/vInfo", array("message"=>$message,"type"=>$type,"dismissable"=>$dismissable,"timerInterval"=>$timerInterval,"visible"=>$visible), $asString);
+	}
+	public function _showDisplayedMessage($message){
+		$this->_showMessage($message->getContent(),$message->getType(),$message->getTimerInterval(),$message->getDismissable());
 	}
 
 	public function login(){

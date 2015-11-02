@@ -1,21 +1,22 @@
 
 <div class="container">
-<?php if(isset($message)) echo $message; ?>
+<?php if(isset($message)) echo $this->_showDisplayedMessage($message); ?>
 	<div class="row">
-		<div class="panel panel-primary panel-notifications">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-bell"></span> Notifications <span class="badge"><?= count($notifs); ?></span></div>
-		  <ul class="list-group">
-		  	<?php if(count($notifs) > 0): ?>
-				<?php foreach($notifs as $notif): ?>
-					<a href="<?= $config['siteUrl'] ?>Tickets/frm/<?= $notif->getTicket()->getId() ?>#<?php if($notif->getMessage() != null){ echo $notif->getMessage()->getId();}?>" class="list-group-item notif"><?= $notif; ?></a>
-				<?php endforeach;?>
-			<?php else:?>
-				<li class="list-group-item">Aucune notification...</li>
-			<?php endif;?>
-		  </ul>
+		<div class="col-md-12">
+			<div class="panel panel-primary panel-notifications">
+			  <div class="panel-heading"><span class="glyphicon glyphicon-bell"></span> Notifications <span class="badge"><?= count($notifs); ?></span></div>
+			  <ul class="list-group">
+			  	<?php if(count($notifs) > 0): ?>
+					<?php foreach($notifs as $notif): ?>
+						<a href="<?= $config['siteUrl'] ?>Tickets/frm/<?= $notif->getTicket()->getId() ?>#<?php if($notif->getMessage() != null){ echo $notif->getMessage()->getId();}?>" class="list-group-item notif"><?= $notif; ?></a>
+					<?php endforeach;?>
+				<?php else:?>
+					<li class="list-group-item">Aucune notification...</li>
+				<?php endif;?>
+			  </ul>
+			</div>
 		</div>
 	</div>
-
 <?php if (Auth::getUser()->getGroupe()->getId() == 2):?>
 	<div class="row">
 		<div class="col-md-6">
