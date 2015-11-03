@@ -235,7 +235,7 @@ class DAO {
 	/**
 	 * Retourne une instance de $className depuis la base de données, à  partir des valeurs $keyValues de la clé primaire
 	 * @param String $className nom de la classe du model à charger
-	 * @param Array,string $keyValues valeurs des clés primaires ou condition
+	 * @param Array|string $keyValues valeurs des clés primaires ou condition
 	 */
 	public static function getOne($className,$keyValues,$loadManyToOne=true){
 		if(!is_array($keyValues)){
@@ -382,5 +382,10 @@ class DAO {
 	public static function connect($dbName,$serverName="127.0.0.1",$port="3306",$user="root",$password=""){
 		DAO::$db=new Database($dbName,$serverName,$port,$user,$password);
 		DAO::$db->connect();
+	}
+
+	public static function count($className,$condition='',$loadManyToOne=true){
+		$objects = DAO::getAll($className,$condition,$loadManyToOne);
+		return count($objects);
 	}
 }

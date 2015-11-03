@@ -1,7 +1,6 @@
 <?php
 use micro\orm\DAO;
 use micro\js\Jquery;
-use micro\utils\StrUtils;
 use micro\views\Gui;
 class Sample extends \_DefaultController {
 	public function ajaxSample(){

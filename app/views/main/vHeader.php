@@ -27,7 +27,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#" target="_self">HelpDesk</a>
+					<a class="navbar-brand" href="#" target="_self">HelpDesk DOA</a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,9 +36,9 @@
 						<li id='mainNav-navzone-1-li-1'><a id='mainNav-navzone-1-link-1'
 							href="#">Créer un ticket</a></li>
 						<li id='mainNav-navzone-1-li-2'><a id='mainNav-navzone-1-link-2'
-							href="#">Tickets</a></li>
+							href="<?=$config['siteUrl']?>tickets">Tickets</a></li>
 						<li id='mainNav-navzone-1-li-3'><a id='mainNav-navzone-1-link-3'
-							href="#">Foire aux questions</a></li>
+							href="<?=$config['siteUrl']?>faqs">Foire aux questions</a></li>
 					</ul>
 				</div>
 			
@@ -50,7 +50,7 @@
 	<div class="bs-docs-header">
 		<div class="container">
 			<div class="header">
-				<h1>HelpDesk</h1>
+				<h1>HelpDesk DOA</h1>
 				<p>Assistance, support et gestion des incidents.</p>
 				<?php //if($uAuth): ?>
 					<div class="pull-right">

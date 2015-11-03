@@ -1,15 +1,32 @@
-<div class="row listMessages">
-	<?php  foreach($messages as $message): ?>
-		<div class='<?php if($message->getUser()->getAdmin()) : ?>messageAdmin pull-left col-md-10 col-xs-10 <?php else: ?>messageUser pull-right col-md-10 col-xs-10 <?php endif; ?>' id="<?=$message->getId(); ?>">
-			<h4><?= $message->getUser(); ?></h4>
-			<br>
-			<?= $message->getContenu(); ?>
-		</div>
-		<br>
-	<?php endforeach; ?>
-</div>
+<legend>Messages</legend>
 
-<?php if(isset($message)):?>
+<?php if (count($messages) == 0): ?>
+	<p class="text-info">Aucun message encore envoyé sur ce ticket...</p>
+<?php else:
+	foreach($messages as $message):
+		$date = date_create($ticket->getDateCreation());
+?>
+	<div class="col-md-9 <?php if(!$message->getUser()->getAdmin()) : ?>pull-right<?php endif; ?> message" id="<?=$message->getId() ?>">
+		<div class="panel <?php if($message->getUser()->getAdmin()) : ?>panel-primary<?php else: ?>panel-user<?php endif; ?>">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<?php echo $message->getUser() ?> 
+				</h3>
+			</div>
+			<div class="panel-body">
+				<?= $message->getContenu(); ?>
+			</div>
+			<div class="panel-footer">
+				<small class="">&nbsp;</small>
+				<small class="pull-right"><i> Envoyé le <?php echo $date->format('d.m.Y à H:i');?></i></small> 
+			</div>
+		</div>
+	</div>
+<?php 	endforeach; 
+	endif;
+?>
+
+<legend>Nouveau Message</legend>
 <div class="ecrireMessage col-md-12 col-xs-12">
 	<form method="POST" name="frm" id="frm" onsubmit="return false;">
 		<div class="form-group">
@@ -17,6 +34,7 @@
 			<input type="hidden" name="idTicket" value="<?= $ticket->getId() ?>">
 			<label for="contenu"><h4>Contenu du message</h4></label>
 			<textarea class="form-control ckeditor" id="contenu" name="contenu" > </textarea>
+			<!--<textarea class="form-control" id="contenu" name="contenu" > </textarea> -->
 			<input type="hidden" name="idUser" value="<?= Auth::getUser()->getId() ?>">
 		</div>
 		<div class="form-group">
@@ -24,4 +42,3 @@
 		</div>
 	</form>
 </div>
-<?php endif; ?>

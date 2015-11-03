@@ -1,7 +1,5 @@
 <?php
 use micro\orm\DAO;
-use micro\js\Jquery;
-use micro\views\Gui;
 /**
  * Gestion des tickets
  * @author ALeboisselier
@@ -18,18 +16,33 @@ class Indexx extends micro\controllers\BaseController {
 	 * @see BaseController::index()
 	 */
 	public function index() {
-		if(!isset($_SESSION['logStatus']))
-			$_SESSION['logStatus'] = null;
-
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
+		$message = null;
+		if (isset($_SESSION['logStatus'])){
+			switch ($_SESSION['logStatus']) {
+				case 'fail':
+					$message=new DisplayedMessage("ERREUR : Couple identifiant/mot de passe inconnu.", "danger");
+					break;
+				case 'disconnected':
+					$message=new DisplayedMessage("Vous avez été correctement déconnecté. <b>Au revoir...</b>", "success");
+					break;
+				case 'success':
+					$message=new DisplayedMessage("Bienvenue ".Auth::getUser()->getLogin().".", "success");
+					break;
+				default:
+					$message = null;
+					break;
+			}
+			$_SESSION['logStatus'] = null;
+		}
+
 		if(Auth::isAuth()){
-			$this->loadView("main/vDefault");
+			$notifs = DAO::getAll("Notification", "idUser = ".Auth::getUser()->getId());
+			$this->loadView("main/vDefault", array("notifs" => $notifs, "message" => $message));
 		}else{
 			$this->loadView("main/vLogin");
 		}
 		$this->loadView("main/vFooter");
-		Jquery::getOn("click", ".btAjax", "sample/ajaxSample","#response");
-		echo Jquery::compile();
 	}
 
 	/**
@@ -41,39 +54,54 @@ class Indexx extends micro\controllers\BaseController {
 				'disabled' => true
 		);
 		$_SESSION['logStatus'] = 'disconnected';
+		if (isset($_COOKIE['user'])){
+            setcookie('user', '', time()-60*60*24*90, '/', '', 0, 0);
+            unset($_COOKIE['user']);
+        }
 		$this->index();
 	}
 
-	public function _showMessage($message,$type="success",$timerInterval=0,$dismissable=true,$visible=true){
-		$this->loadView("main/vInfo",array("message"=>$message,"type"=>$type,"dismissable"=>$dismissable,"timerInterval"=>$timerInterval,"visible"=>$visible));
+	protected function _showMessage($message,$type="success",$timerInterval=0,$dismissable=true,$visible=true, $asString = false){
+		$this->loadView("main/vInfo", array("message"=>$message,"type"=>$type,"dismissable"=>$dismissable,"timerInterval"=>$timerInterval,"visible"=>$visible), $asString);
+	}
+	public function _showDisplayedMessage($message){
+		$this->_showMessage($message->getContent(),$message->getType(),$message->getTimerInterval(),$message->getDismissable());
 	}
 
 	public function login(){
+		global $config;
 		if (isset($_POST["email"]) && isset($_POST['pass'])) {
-			$user = DAO::getOne("User", "mail='".$_POST["email"]."' AND password='".$_POST['pass']."'");
-			if ($user != null) {
+			$user = DAO::getOne("User", "mail='".$_POST["email"]."'");
+			if (password_verify($_POST['pass'], $user->getPassword())) {
 				$_SESSION["user"] = $user;
 				$_SESSION['KCFINDER'] = array(
 					'disabled' => true
 				);
 				$_SESSION['logStatus'] = 'success';
+
+				if (isset($_POST['remember'])) {
+					setcookie('user', $user->getId(), $config['cookies']['user']['lifetime']);
+				}
+
 			}else{
 				$_SESSION['logStatus'] = 'fail';
 			}
 		}
 
-		$this->index();
+		$this->forward("Indexx");
 	}
 
 		/**
 	 * Connecte le premier administrateur trouvé dans la BDD
 	 */
 	public function asAdmin(){
+		global $config;
 		$_SESSION["user"]=DAO::getOne("User", "admin=1");
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => false
 		);
 		$_SESSION['logStatus'] = 'success';
+		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime']);
 		$this->index();
 	}
 
@@ -81,14 +109,18 @@ class Indexx extends micro\controllers\BaseController {
 	 * Connecte le premier utilisateur (non admin) trouvé dans la BDD
 	 */
 	public function asUser(){
+		global $config;
 		$_SESSION["user"]=DAO::getOne("User", "admin=0");
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => true
 		);
 		$_SESSION['logStatus'] = 'success';
+		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime']);
 		$this->index();
 	}
-
-
+	
+	public function getInfoUser(){
+		echo Auth::getInfoUser();
+	}
 
 }

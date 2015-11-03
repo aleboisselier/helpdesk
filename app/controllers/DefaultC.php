@@ -2,7 +2,7 @@
 use micro\orm\DAO;
 use micro\js\Jquery;
 use micro\controllers\BaseController;
-use micro\views\Gui;
+
 /**
  * Contrôleur par défaut (défini dans config => documentRoot)
  * @author jcheron
@@ -56,6 +56,7 @@ class DefaultC extends BaseController {
 				'disabled' => true
 		);
 		$this->index();
+		echo "ôuet";
 	}
 
 	/**

@@ -1,4 +1,6 @@
 <?php
+use micro\orm\DAO;
+
 /**
  * Classe de gestion de l'authentification
  * @author jcheron
@@ -12,9 +14,18 @@ class Auth {
 	 * @return User
 	 */
 	public static function getUser(){
+		global $config;
+
 		$user=null;
-		if(array_key_exists("user", $_SESSION))
+		if(array_key_exists("user", $_SESSION)){
 			$user=$_SESSION["user"];
+		}else if (isset($_COOKIE) && isset($_SESSION['logStatus'])) {
+			if (array_key_exists("user", $_COOKIE) && $_COOKIE['user'] != null && $_SESSION['logStatus'] != 'disconnected') {
+				$_SESSION["user"] = DAO::getOne('User', 'id='.$_COOKIE['user']);
+				$user=$_SESSION["user"];
+				setcookie('user', $_COOKIE['user'], $config['cookies']['user']['lifetime']);
+			}
+		}
 		return $user;
 	}
 
@@ -50,15 +61,7 @@ class Auth {
 		if(isset($user)){
 			$infoUser="<a class='btn btn-primary' href='indexx/disconnect'>Déconnexion <span class='label label-success'>".$user."</span></a>";
 		}else{
-			$infoUser='<div class="btn-group">
-							<button type="button" class="btn btn-'.$style.' dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								Connexion en tant que... <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="indexx/asAdmin"><span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp;Administrateur</a></li>
-								<li><a href="indexx/asUser"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Utilisateur</a></li>
-							</ul>
-						</div>';
+			$infoUser='<a href="Indexx" class="btn btn-'.$style.'">Se Connecter</a>';
 		}
 		return $infoUser;
 	}

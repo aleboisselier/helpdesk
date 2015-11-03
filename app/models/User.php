@@ -14,6 +14,19 @@ class User extends Base{
 	private $password="";
 	private $mail="";
 	private $admin=false;
+	private $key;
+
+	/**
+	 * @ManyToOne
+	 * @JoinColumn(name="idAuthProvider",className="AuthProvider",nullable=true)
+	 */
+	private $authProvider;
+
+	/**
+	 * @ManyToOne
+	 * @JoinColumn(name="idGroupe",className="Groupe",nullable=false)
+	 */
+	private $groupe;
 
 	public function getId() {
 		return $this->id;
@@ -60,11 +73,45 @@ class User extends Base{
 		return $this;
 	}
 
+	public function getGroupe(){
+		return $this->groupe;
+	}
+
+	public function setGroupe($groupe) {
+		$this->groupe=$groupe;
+		return $this;
+	}
+
 	public function toString(){
 		$uType="Utilisateur";
+		$p="";
 		if($this->admin){
 			$uType="Administrateur";
 		}
-		return $this->mail. "-".$this->login." (".$uType.")";
+		if($this->authProvider!=null){
+			$p="<span class='".$this->authProvider->getIcon()."' aria-hidden='true'></span>&nbsp;";
+		}
+		$result = $p." ".$this->login." (".$this->groupe.")";
+		return $result;
 	}
+
+	public function getKey() {
+		return $this->key;
+	}
+
+	public function setKey($key) {
+		$this->key=$key;
+		return $this;
+	}
+
+	public function getAuthProvider() {
+		return $this->authProvider;
+	}
+
+	public function setAuthProvider($authProvider) {
+		$this->authProvider=$authProvider;
+		return $this;
+	}
+
+
 }

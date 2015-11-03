@@ -39,6 +39,12 @@ class Ticket extends Base{
 	 */
 	private $messages;
 
+	/**
+	 * @ManyToOne
+	 * @JoinColumn(name="idAdmin",className="User",nullable=true)
+	 */
+	private $admin;
+
 	public function getId() {
 		return $this->id;
 	}
@@ -139,5 +145,13 @@ class Ticket extends Base{
 		return $this;
 	}
 
+	public function getAdmin(){
+		return $this->admin;
+	}
+
+	public function setAdmin($admin){
+		$this->admin = $admin;
+		return $this;
+	}
 
 }

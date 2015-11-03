@@ -98,7 +98,7 @@ class _DefaultController extends BaseController {
 	 */
 	public function update(){
 		if(RequestUtils::isPost()){
-			$this->updateNotForward();
+			$msg = $this->updateNotForward();
 			$this->forward(get_class($this),"index",$msg);
 		}
 	}
@@ -122,6 +122,7 @@ class _DefaultController extends BaseController {
 					$msg=new DisplayedMessage("Impossible d'ajouter l'instance de ".$this->model,"danger");
 				}
 			}
+			return $msg;
 	} 
 
 	/**
@@ -219,6 +220,16 @@ class _DefaultController extends BaseController {
 	 */
 	public function messageInfo($message,$timerInterval=0,$dismissable=true){
 		$this->_showMessage($message,"info",$timerInterval,$dismissable);
+	}
+
+		/* (non-PHPdoc)
+	 * @see BaseController::onInvalidControl()
+	 */
+	public function onInvalidControl() {
+		$this->initialize();
+		$this->messageDanger("<strong>Autorisation refusée</strong>,<br>Merci de vous connecter pour accéder à ce module.&nbsp;".Auth::getInfoUser("danger"));
+		$this->finalize();
+		exit;
 	}
 
 }
