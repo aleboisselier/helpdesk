@@ -9,6 +9,7 @@ use micro\js\Jquery;
  * @package helpdesk.controllers
  */
 class Faqs extends \_DefaultController {
+	
 	public function Faqs(){
 		parent::__construct();
 		$this->title="<p style='margin-left:2%'>Foire aux Questions</p>";

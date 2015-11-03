@@ -1,28 +1,27 @@
 <?php
 use micro\orm\DAO;
 use micro\views\Gui;
+use micro\js\Jquery;
 /**
  * Gestion des catégories
  * @author jcheron
  * @version 1.1
  * @package helpdesk.controllers
  */
-class Genericfield extends \_DefaultController {
+class GenericFields extends \_DefaultController {
 
-	public function GenericField(){
+	public function GenericFields(){
 		parent::__construct();
 		$this->title="Ajout d'un champs";
-		$this->model="genericField";
+		$this->model="GenericField";
 	}
 	
-	public function isValid() {
-		return Auth::isAuth() && Auth::isAdmin();
-	}
+	// public function isValid() {
+	// 	return Auth::isAuth() && Auth::isAdmin();
+	// }
 
 	public function frm($message=NULL){
-		$object=$this->getInstance($id);
-		$genericField=DAO::getAll("genericfield");
-		echo $genericField->getLibelle();
+		$genericField=DAO::getAll("GenericField");
 	}
 
 	/* (non-PHPdoc)

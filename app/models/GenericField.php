@@ -5,7 +5,7 @@
  * @version 1.1
  * @package helpdesk.controllers
  */
-class Genericfield extends Base{
+class GenericField extends Base{
 	/**
 	 * @Id
 	 */
@@ -30,26 +30,20 @@ class Genericfield extends Base{
 		return $this;
 	}
 
-    public function getPropriete()
-    {
+    public function getPropriete(){
         return $this->propriete;
     }
-    private function setPropriete($propriete)
-    {
-        $this->propriete = $propriete;
-
+    public function setPropriete($propriete){
+        $this->propriete=$propriete;
         return $this;
     }
 
-    public function getBaseHtml()
-    {
+    public function getBaseHtml(){
         return $this->baseHtml;
     }
-    private function setBaseHtml($baseHtml)
-    {
-        $this->baseHtml = $baseHtml;
-
-        return $this;
+    public function setBaseHtml($baseHtml){
+        $this->baseHtml=$baseHtml;
+		return $this;
     }
 
 	public function toString(){
