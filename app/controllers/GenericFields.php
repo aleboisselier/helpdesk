@@ -20,8 +20,9 @@ class GenericFields extends \_DefaultController {
 	// 	return Auth::isAuth() && Auth::isAdmin();
 	// }
 
-	public function frm($message=NULL){
-		$genericField=DAO::getAll("GenericField");
+	public function index($message=NULL){
+		$genericFields=DAO::getAll("GenericField");
+		$this->loadView("genericField/vSelect", array("genericFields"=>$genericFields));
 	}
 
 	/* (non-PHPdoc)
