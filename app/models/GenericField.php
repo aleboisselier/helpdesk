@@ -1,11 +1,11 @@
 <?php
 /**
- * Représente un champs custom
- * @author nBrossault
+ * Represente l'ajout d'un champs personnalisé
+ * @author nbrossault
  * @version 1.1
- * @package helpdesk.models
+ * @package helpdesk.controllers
  */
-class champsCustom extends Base{
+class Genericfield extends Base{
 	/**
 	 * @Id
 	 */
@@ -54,8 +54,8 @@ class champsCustom extends Base{
 
 	public function toString(){
 		$parent="";
-		if(isset($this->champsCustom))
-			$parent=" (".$this->champsCustom.")";
+		if(isset($this->genericfield))
+			$parent=" (".$this->genericfield.")";
 		return $this->libelle.$parent;
 	}
 }

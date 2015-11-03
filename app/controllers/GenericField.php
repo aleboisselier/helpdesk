@@ -7,21 +7,22 @@ use micro\views\Gui;
  * @version 1.1
  * @package helpdesk.controllers
  */
-class Categories extends \_DefaultController {
+class Genericfield extends \_DefaultController {
 
-	public function Categories(){
+	public function GenericField(){
 		parent::__construct();
 		$this->title="Ajout d'un champs";
-		$this->model="ChampsCustom";
+		$this->model="genericField";
 	}
 	
 	public function isValid() {
 		return Auth::isAuth() && Auth::isAdmin();
 	}
 
-	public function frm($id=NULL){
+	public function frm($message=NULL){
 		$object=$this->getInstance($id);
-		$this->loadView("categorie/vAdd",array("select"=>$list,"categorie"=>$object));
+		$genericField=DAO::getAll("genericfield");
+		echo $genericField->getLibelle();
 	}
 
 	/* (non-PHPdoc)
