@@ -4,8 +4,4 @@
 
 require_once __DIR__ . '/composer' . '/autoload_real.php';
 
-<<<<<<< HEAD
 return ComposerAutoloaderInitaa62b662a85f4f18488321de92519bd7::getLoader();
-=======
-return ComposerAutoloaderInit7bb03488d25a8ea08674c770e306a597::getLoader();
->>>>>>> refs/remotes/jcheron/tests

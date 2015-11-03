@@ -2,7 +2,6 @@
 namespace micro\controllers;
 use micro\orm\DAO;
 use micro\utils\StrUtils;
-use micro\controllers\Autoloader;
 use micro\views\engine\TemplateEngine;
 class Startup{
 	private $urlParts;

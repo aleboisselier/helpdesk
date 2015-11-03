@@ -19,8 +19,8 @@ class Auth {
 		$user=null;
 		if(array_key_exists("user", $_SESSION)){
 			$user=$_SESSION["user"];
-		}else if (isset($_COOKIE) && $_SESSION['logStatus'] != 'disconnected') {
-			if (array_key_exists("user", $_COOKIE) && $_COOKIE['user'] != null) {
+		}else if (isset($_COOKIE) && isset($_SESSION['logStatus'])) {
+			if (array_key_exists("user", $_COOKIE) && $_COOKIE['user'] != null && $_SESSION['logStatus'] != 'disconnected') {
 				$_SESSION["user"] = DAO::getOne('User', 'id='.$_COOKIE['user']);
 				$user=$_SESSION["user"];
 				setcookie('user', $_COOKIE['user'], $config['cookies']['user']['lifetime']);

@@ -91,7 +91,8 @@ class User extends Base{
 		if($this->authProvider!=null){
 			$p="<span class='".$this->authProvider->getIcon()."' aria-hidden='true'></span>&nbsp;";
 		}
-		return $p.$this->login." (".$this->groupe.")";
+		$result = $p." ".$this->login." (".$this->groupe.")";
+		return $result;
 	}
 
 	public function getKey() {
