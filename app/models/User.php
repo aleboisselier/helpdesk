@@ -14,6 +14,13 @@ class User extends Base{
 	private $password="";
 	private $mail="";
 	private $admin=false;
+	private $key;
+
+	/**
+	 * @ManyToOne
+	 * @JoinColumn(name="idAuthProvider",className="AuthProvider",nullable=true)
+	 */
+	private $authProvider;
 
 	/**
 	 * @ManyToOne
@@ -77,10 +84,33 @@ class User extends Base{
 
 	public function toString(){
 		$uType="Utilisateur";
+		$p="";
 		if($this->admin){
 			$uType="Administrateur";
 		}
-		return $this->login." (".$this->groupe.")";
-
+		if($this->authProvider!=null){
+			$p="<span class='".$this->authProvider->getIcon()."' aria-hidden='true'></span>&nbsp;";
+		}
+		return $p.$this->login." (".$this->groupe.")";
 	}
+
+	public function getKey() {
+		return $this->key;
+	}
+
+	public function setKey($key) {
+		$this->key=$key;
+		return $this;
+	}
+
+	public function getAuthProvider() {
+		return $this->authProvider;
+	}
+
+	public function setAuthProvider($authProvider) {
+		$this->authProvider=$authProvider;
+		return $this;
+	}
+
+
 }

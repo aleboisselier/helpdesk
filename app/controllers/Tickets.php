@@ -10,7 +10,7 @@ use micro\views\Gui;
  * @package helpdesk.controllers
  */
 class Tickets extends \_DefaultController {
-	public function Tickets(){
+	public function __construct(){
 		parent::__construct();
 		global $config;
 		$this->title="Tickets <a class='btn btn-primary' href='".$config['siteUrl']."tickets/frm' style='margin-left:2%;'>Ajouter...</a>";

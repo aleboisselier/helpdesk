@@ -1,5 +1,7 @@
 {
     "require": {
-        "phpmailer/phpmailer": "^5.2"
-    }
+        "phpmailer/phpmailer": "^5.2",
+        "hybridauth/hybridauth": "~2.5.1",
+        "twig/twig": "~1.0"
+    },
 }
