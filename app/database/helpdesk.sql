@@ -25,6 +25,10 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `authprovider`
 --
+DROP DATABASE IF EXISTS helpdeskdoa;
+CREATE DATABASE helpdeskdoa;
+USE helpdeskdoa;
+
 
 CREATE TABLE IF NOT EXISTS `authprovider` (
 `id` int(11) NOT NULL,
