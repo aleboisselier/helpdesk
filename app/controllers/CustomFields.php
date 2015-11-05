@@ -4,16 +4,16 @@ use micro\views\Gui;
 use micro\js\Jquery;
 /**
  * Gestion des catégories
- * @author jcheron
+ * @author nbrossault
  * @version 1.1
  * @package helpdesk.controllers
  */
-class GenericFields extends \_DefaultController {
+class CustomFields extends \_DefaultController {
 
-	public function GenericFields(){
+	public function CustomFields(){
 		parent::__construct();
 		$this->title="Ajout d'un champ";
-		$this->model="GenericField";
+		$this->model="CustomField";
 	}
 	
 	public function isValid() {
@@ -24,13 +24,12 @@ class GenericFields extends \_DefaultController {
 		$select=$this->getInstance($id);
 		$genericFields=DAO::getAll("GenericField");
 		if($select->getLibelle()==null){
-			$champ=-1;
+			$libelle=-1;
 		}else{
-			$champ=$select->getLibelle()->getId();
+			$libelle=$select->getLibelle()->getId();
 		}
-		$listGenericField=Gui::select($genericFields,$champ,"Sélectionner un champ ...");
-		// $this->loadView("genericField/vSelect", array("genericFields"=>$genericFields));
-		// if(){};
+		$listGenericField=Gui::select($genericFields,$libelle,"Sélectionner un nouveau champ ...");
+		$this->loadView("customField/vSelect", array("listGenericField"=>$listGenericField));
 	}
 
 	protected function setValuesToObject(&$object) {
