@@ -11,7 +11,7 @@ use micro\utils\RequestUtils;
 use micro\js\Jquery;
 
 class Messages extends \_DefaultController {
-	public function Messages(){
+	public function __construct(){
 		parent::__construct();
 		$this->title="Messages";
 		$this->model="Message";

@@ -23,5 +23,18 @@ return array(
         		"lifetime"=>time()+60*60*24*7
         	]
         ],
-        "test"=>false
+        "test"=>false,
+		"onStartup"=>function($action){
+			if(!Auth::isAuth() && $action[0]!=="UserAuth" && @$action[1]!=="disconnect"){
+				if(array_key_exists("autoConnect", $_COOKIE)){
+					$_SESSION["action"]=$action;
+					$ctrl=new UserAuth();
+					$ctrl->initialize();
+					$ctrl->signin_with_hybridauth(array($_COOKIE["autoConnect"]));
+					$ctrl->finalize();
+					die();
+				}
+			}
+		},
+		"templateEngine"=>'micro\views\engine\Twig',
 );

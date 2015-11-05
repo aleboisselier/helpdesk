@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 30 Octobre 2015 à 07:47
+-- Généré le :  Jeu 05 Novembre 2015 à 09:04
 -- Version du serveur :  5.6.21
 -- Version de PHP :  5.6.3
 
@@ -19,6 +19,25 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `helpdesk`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `authprovider`
+--
+
+CREATE TABLE IF NOT EXISTS `authprovider` (
+`id` int(11) NOT NULL,
+  `name` varchar(50) COLLATE utf8_bin NOT NULL,
+  `icon` varchar(50) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `authprovider`
+--
+
+INSERT INTO `authprovider` (`id`, `name`, `icon`) VALUES
+(1, 'GitHub', 'pe-so-github');
 
 -- --------------------------------------------------------
 
@@ -202,14 +221,6 @@ CREATE TABLE IF NOT EXISTS `token` (
   `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Contenu de la table `token`
---
-
-INSERT INTO `token` (`token`, `idUser`) VALUES
-('208999558d5ab51778ce2bd66b06c6d8', 4),
-('c76533fa2b6a56a8cbb4ade31ce3b1e5', 4);
-
 -- --------------------------------------------------------
 
 --
@@ -222,22 +233,31 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(60) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `admin` tinyint(1) NOT NULL,
-  `idGroupe` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `idGroupe` int(11) NOT NULL,
+  `idAuthProvider` int(11) DEFAULT NULL,
+  `key` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `user`
 --
 
-INSERT INTO `user` (`id`, `login`, `password`, `mail`, `admin`, `idGroupe`) VALUES
-(1, 'admin', '$2y$10$0QTBrMN.NI6/h0Y0h2/pO.BPzG.MraWt9Wy7Hck3eqxh8jdZe2SSm', 'admin@local.fr', 1, 1),
-(2, 'user', '$2y$10$wSSIwuac4n6ZI68jj1QkCeILm.K4gU/hJgQQG55KUzBzQPpMfQVtq', 'user@local.fr', 0, 2),
-(3, 'autreUser', '$2y$10$rWyNDY9Hs6f043OGsKgz8.AsgGvit8Idin8xDOXR0h0sAPRV8yrc6', 'autreuser@local.fr', 0, 3),
-(4, 'moi', '$2y$10$e61sNouFKc9Lawuxd726SOUG1nuTftxo.YEgIyiBx0HjZBNKktah2', 'contact@aleboisselier.fr', 0, 3);
+INSERT INTO `user` (`id`, `login`, `password`, `mail`, `admin`, `idGroupe`, `idAuthProvider`, `key`) VALUES
+(1, 'admin', '$2y$10$0QTBrMN.NI6/h0Y0h2/pO.BPzG.MraWt9Wy7Hck3eqxh8jdZe2SSm', 'admin@local.fr', 1, 1, NULL, ''),
+(2, 'user', '$2y$10$wSSIwuac4n6ZI68jj1QkCeILm.K4gU/hJgQQG55KUzBzQPpMfQVtq', 'user@local.fr', 0, 2, NULL, ''),
+(3, 'autreUser', '$2y$10$rWyNDY9Hs6f043OGsKgz8.AsgGvit8Idin8xDOXR0h0sAPRV8yrc6', 'autreuser@local.fr', 0, 3, NULL, ''),
+(4, 'moi', '$2y$10$0dYwBluYRBocAcR0ody5f.XVYOXrWEHQhLQp6sUy0jEewh8UglHRe', 'contact@aleboisselier.fr', 0, 3, NULL, ''),
+(6, 'Antoine LEBOISSELIER', '', '', 0, 2, 1, '14269716');
 
 --
 -- Index pour les tables exportées
 --
+
+--
+-- Index pour la table `authprovider`
+--
+ALTER TABLE `authprovider`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `categorie`
@@ -298,6 +318,11 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT pour la table `authprovider`
+--
+ALTER TABLE `authprovider`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
@@ -331,7 +356,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Contraintes pour les tables exportées
 --

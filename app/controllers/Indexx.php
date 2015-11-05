@@ -17,7 +17,6 @@ class Indexx extends micro\controllers\BaseController {
 	 */
 	public function index() {
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
-		
 		$message = null;
 		if (isset($_SESSION['logStatus'])){
 			switch ($_SESSION['logStatus']) {
@@ -118,6 +117,10 @@ class Indexx extends micro\controllers\BaseController {
 		$_SESSION['logStatus'] = 'success';
 		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime']);
 		$this->index();
+	}
+	
+	public function getInfoUser(){
+		echo Auth::getInfoUser();
 	}
 
 }
