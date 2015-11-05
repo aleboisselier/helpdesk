@@ -12,25 +12,29 @@ class GenericFields extends \_DefaultController {
 
 	public function GenericFields(){
 		parent::__construct();
-		$this->title="Ajout d'un champs";
+		$this->title="Ajout d'un champ";
 		$this->model="GenericField";
 	}
 	
-	// public function isValid() {
-	// 	return Auth::isAuth() && Auth::isAdmin();
-	// }
-
-	public function index($message=NULL){
-		$genericFields=DAO::getAll("GenericField");
-		$this->loadView("genericField/vSelect", array("genericFields"=>$genericFields));
+	public function isValid() {
+		return Auth::isAuth() && Auth::isAdmin();
 	}
 
-	/* (non-PHPdoc)
-	 * @see _DefaultController::setValuesToObject()
-	 */
+	public function index($id=NULL){
+		$select=$this->getInstance($id);
+		$genericFields=DAO::getAll("GenericField");
+		if($select->getLibelle()==null){
+			$champ=-1;
+		}else{
+			$champ=$select->getLibelle()->getId();
+		}
+		$listGenericField=Gui::select($genericFields,$champ,"Sélectionner un champ ...");
+		// $this->loadView("genericField/vSelect", array("genericFields"=>$genericFields));
+		// if(){};
+	}
+
 	protected function setValuesToObject(&$object) {
 		parent::setValuesToObject($object);
 
 	}
-
 }
