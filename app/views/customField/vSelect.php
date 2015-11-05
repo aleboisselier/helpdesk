@@ -1,14 +1,17 @@
 <form action="CustomFields/filter" method="post" name="selectFieldForm" id="selectFieldForm">
 	<label for="idField">Liste des champ ajoutable :</label>
 	<select class="form-control select" name="idField">
-		<?php echo $listGenericField;?>
+		<?php foreach ($genericFields as $field): ?>
+		<option value="<?=$field?>"><?=$field?></option>
+		<?php endforeach;?>
+		<!--<?echo $listGenericField;?>-->
 	</select>
 	<button type="submit">Valider</button>
 </form>
 
-<?php if(isset($_POST['idField'])):
-	echo $pouet; ?>
+<?php if(isset($_POST['idField'])):?>
 	<div class="selectedField">
-		<?="<".$selectField->getBaseHtml." ".$selectField->getPropriete." >"; ?>
+		<?="<br> sql : ".$sql;?>
+		<?="<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >"; ?>
 	</div>
 <?php endif ?>

@@ -100,7 +100,7 @@ class Faqs extends \_DefaultController {
 				$sql .= "idUser = ".$_POST['idUser'];
 		}
 		$faqs=DAO::getAll($this->model, $sql);
-
+		echo $_POST['idCategorie'];
 		$this->loadView("faq/vList", array("faqs"=>$faqs, "sql"=> $sql));
 		echo JQuery::execute("$('[data-toggle=\"tooltip\"]').tooltip()");
 		echo Jquery::getOn('click', '.suspend', 'Faqs/suspend', '.list');
