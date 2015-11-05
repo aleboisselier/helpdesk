@@ -321,6 +321,10 @@ INSERT INTO `user` (`id`, `login`, `password`, `mail`, `admin`, `idGroupe`, `idA
 --
 ALTER TABLE `authprovider`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `categorie`
+--
 ALTER TABLE `categorie`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idCategorie` (`idCategorie`);
