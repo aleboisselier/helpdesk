@@ -4,14 +4,13 @@
 		<?php foreach ($genericFields as $field): ?>
 		<option value="<?=$field?>"><?=$field?></option>
 		<?php endforeach;?>
-		<!--<?echo $listGenericField;?>-->
 	</select>
 	<button type="submit">Valider</button>
 </form>
 
 <?php if(isset($_POST['idField'])):?>
+	<?php echo "newField : ".$newField;?>
 	<div class="selectedField">
-		<?="<br> sql : ".$sql;?>
 		<?="<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >"; ?>
 	</div>
 <?php endif ?>
