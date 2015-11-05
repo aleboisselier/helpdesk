@@ -27,7 +27,7 @@
 			<input type="text" name="titre" id="titre" value="<?php echo $faq->getTitre()?>" placeholder="Entrez le titre" class="form-control" <?php if(!$creator): ?> disabled <?php endif; ?>>
 
 			<label for="idCategorie">Catégorie</label>
-			<select class="form-control" name="idCategorie" id="categorie"> <?php if(!$creator): ?> disabled <?php endif; ?>>
+			<select class="form-control" name="idCategorie" id="categorie"> <?php if(!$creator): ?> disabled <?php endif; ?>
 			<?php echo $listCat;?>
 			</select>
 			
