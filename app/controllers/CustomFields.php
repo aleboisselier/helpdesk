@@ -30,19 +30,19 @@ class CustomFields extends \_DefaultController {
 		}
 		$listGenericField=Gui::select($genericFields,$libelle,"Sélectionner un nouveau champ ...");
 		$this->loadView("customField/vSelect", array("listGenericField"=>$listGenericField));
-		echo Jquery::postFormOn('change', '.select', "CustomFields/filter", "selectFieldFrom", ".seletedField");
+		echo Jquery::postFormOn('change', '.select', "CustomFields/filter", "selectFieldForm", ".selectedField");
 	}
 
 	public function filter(){
-		$pouet="pouet";
+		echo $pouet="pouet";
 		$sql = "";
 		if (isset($_POST['idField']) && $_POST['idField'] !="Sélectionner un nouveau champ ...") {
 			$sql = "idGenericField = ".$_POST['idField'];
 		}
 		echo $selectField=DAO::getAll($this->model, $sql);
 
-		// $this->loadView("customField/vSelect", array("pouet"=>$pouet));
-		$this->loadView("customField/vSelect", array("selectField"=>$selectField, "sql"=>$sql, "pouet"=>$pouet));
+		$this->loadView("customField/vSelect", array("pouet"=>$pouet));
+		// $this->loadView("customField/vSelect", array("selectField"=>$selectField, "sql"=>$sql, "pouet"=>$pouet));
 	}
 
 	protected function setValuesToObject(&$object) {
