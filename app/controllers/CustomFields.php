@@ -23,18 +23,18 @@ class CustomFields extends \_DefaultController {
 	public function index($id=NULL){
 		$select=$this->getInstance($id);
 		$genericFields=DAO::getAll("GenericField");
-		$this->loadView("customField/vSelect", array("genericFields"=>$genericFields));
+		$fieldList = Gui::select($genericFields, null, "Sélectionner un champ...");
+		$this->loadView("customField/vSelect", array("fieldList"=>$fieldList));
 		echo Jquery::postFormOn('change', '.select', "CustomFields/filter", "selectFieldForm", ".selectedField");
 	}
 
 	public function filter(){
-		$sql = "";
 		if (isset($_POST['idField']) && $_POST['idField'] !="Sélectionner un nouveau champ ...") {
-			$sql = 'libelle = "'.$_POST['idField'].'"';
+			$selectField=DAO::getOne("GenericField", $_POST['idField']);
+			echo "<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >";
 		}
-		$selectField=DAO::getAll($this->model, $sql);
-		// $newField="<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >";
-		$this->loadView("customField/vSelect", array("genericFields"=>$genericFields, "selectField"=>$selectField, "sql"=>$sql));
+		
+		//$this->loadView("customField/vSelect", array("genericFields"=>$genericFields, "selectField"=>$selectField, "sql"=>$sql));
 		// $this->loadView("customField/vSelect", array("sql"=>$sql, "newField"=>$newField));
 	}
 

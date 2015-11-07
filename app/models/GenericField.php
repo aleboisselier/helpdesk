@@ -47,9 +47,6 @@ class GenericField extends Base{
     }
 
 	public function toString(){
-		$parent="";
-		if(isset($this->genericfield))
-			$parent=" (".$this->genericfield.")";
-		return $this->libelle.$parent;
+		return $this->libelle;
 	}
 }
