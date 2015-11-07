@@ -1,4 +1,4 @@
-<?
+<?php
 use micro\orm\DAO;
 use micro\views\Gui;
 use micro\js\Jquery;
