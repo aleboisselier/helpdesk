@@ -4,13 +4,15 @@
 	<p class="text-info">Aucun message encore envoyé sur ce ticket...</p>
 <?php else:
 	foreach($messages as $message):
-		$date = date_create($ticket->getDateCreation());
+		$date = date_create($message->getDate());
 ?>
-	<div class="col-md-9 <?php if(!$message->getUser()->getAdmin()) : ?>pull-right<?php endif; ?> message" id="<?=$message->getId() ?>">
+	<div class="col-md-9 <?php if(!$message->getUser()->getAdmin()) : ?>pull-right<?php else: ?>pull-left<?php endif; ?> message" id="<?=$message->getId() ?>">
 		<div class="panel <?php if($message->getUser()->getAdmin()) : ?>panel-primary<?php else: ?>panel-user<?php endif; ?>">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<?php echo $message->getUser() ?> 
+					<?php 
+						echo $message->getUser();
+					?> 
 				</h3>
 			</div>
 			<div class="panel-body">
@@ -26,8 +28,9 @@
 	endif;
 ?>
 
-<legend>Nouveau Message</legend>
 <div class="ecrireMessage col-md-12 col-xs-12">
+<legend>Nouveau Message</legend>
+
 	<form method="POST" name="frm" id="frm" onsubmit="return false;">
 		<div class="form-group">
 			<input type="hidden" name="id" value="">

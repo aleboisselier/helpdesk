@@ -87,10 +87,12 @@ class Tickets extends \_DefaultController {
 			}
 		}
 		
-		//recuperer les message associé au ticket
-		DAO::getOneToMany($ticket,"messages");
-		$messages=$ticket->getMessages();
-
+		$messages = DAO::getAll("Message", "idTicket = ".$ticket->getId());
+		
+		foreach ($messages as $message){
+			$message->setUser(DAO::getAll("User", "id=".$message->getUser()->getId())[0]);
+		}
+		
 		//recuperer la ou les catégorie(s) du ticket
 		$categories=DAO::getAll("Categorie");
 		if($ticket->getCategorie()==null){
