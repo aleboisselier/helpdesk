@@ -1,9 +1,9 @@
-<?php
+<?
 use micro\orm\DAO;
 use micro\views\Gui;
 use micro\js\Jquery;
 /**
- * Gestion des catégories
+ * Gestion des champs
  * @author nbrossault
  * @version 1.1
  * @package helpdesk.controllers
@@ -24,7 +24,7 @@ class CustomFields extends \_DefaultController {
 		$select=$this->getInstance($id);
 		$genericFields=DAO::getAll("GenericField");
 		$this->loadView("customField/vSelect", array("genericFields"=>$genericFields));
-		echo Jquery::postFormOn('prepend', '.select', "CustomFields/filter", "selectFieldForm", ".selectedField");
+		echo Jquery::postFormOn('change', '.select', "CustomFields/filter", "selectFieldForm", ".selectedField");
 	}
 
 	public function filter(){
@@ -33,9 +33,9 @@ class CustomFields extends \_DefaultController {
 			$sql = 'libelle = "'.$_POST['idField'].'"';
 		}
 		$selectField=DAO::getAll($this->model, $sql);
-		$newField="<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >";
-		// $this->loadView("customField/vSelect", array("selectField"=>$selectField, "sql"=>$sql));
-		$this->loadView("customField/vSelect", array("sql"=>$sql, "newField"=>$newField));
+		// $newField="<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >";
+		$this->loadView("customField/vSelect", array("genericFields"=>$genericFields, "selectField"=>$selectField, "sql"=>$sql));
+		// $this->loadView("customField/vSelect", array("sql"=>$sql, "newField"=>$newField));
 	}
 
 	protected function setValuesToObject(&$object) {

@@ -9,7 +9,6 @@
 </form>
 
 <?php if(isset($_POST['idField'])):?>
-	<?php echo "newField : ".$newField;?>
 	<div class="selectedField">
 		<?="<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >"; ?>
 	</div>
