@@ -20,12 +20,23 @@ DAO::connect($db["dbName"],@$db["serverName"],@$db["port"],@$db["user"],@$db["pa
 
 //SENDING LOOP
 while (true) {
-	$users = DAO::getAll("User", 'idAuthProvider > 0');
-	foreach ($users as $user) {
-		echo $user->getLogin();
-		echo "\n";
+	
+	$notifs = DAO::getAll("Notification", "mailSent = 0");
+	foreach ($notifs as $notif){
+		$alert = DAO::getOne("Alert", "idUser=".$notif->getUser()->getId());
+		
+		$format = 'H:i';
+		$date = DateTime::createFromFormat($format, json_decode($alert->getFrequence(), true)[0]['time']);
+		$currDate = date_create(date('H:i'));
+		echo date_diff($date, $currDate);
+		
+		$datetime1 = date_create('2009-10-11');
+		$datetime2 = date_create('2009-10-13');
+		$interval = date_diff($datetime1, $datetime2);
+		echo $interval->format('%R%a days');
 	}
+	
 	echo "\n";
 
-	sleep(2);
+	sleep(1);
 }

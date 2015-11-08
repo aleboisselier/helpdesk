@@ -36,6 +36,7 @@ class Notification extends Base{
 	private $message;
 
 	private $date;
+	private $mailSent;
 
 	public function getTicket(){
 		return $this->ticket;
@@ -93,4 +94,23 @@ class Notification extends Base{
 		$this->date=$date;
 		return $this;
 	}
+
+    /**
+     * mailSent
+     * @return unkown
+     */
+    public function getMailSent(){
+        return $this->mailSent;
+    }
+
+    /**
+     * mailSent
+     * @param unkown $mailSent
+     * @return Notification
+     */
+    public function setMailSent($mailSent){
+        $this->mailSent = $mailSent;
+        return $this;
+    }
+
 }

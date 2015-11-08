@@ -26,6 +26,14 @@
                 </div>
             </div>
         <?php endif;?>
+        <div class="row">
+                <div class="form-group col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-addon"><input type="checkbox" name="instant" <?php if($alert->getInstant()):?> checked <?php endif;?>></span>
+                        <span class="input-group-addon" id="title" style="width: 120px;">Recevoir instantanément</span>
+                    </div>
+                </div>
+            </div>
         <div class="days-list">
             <div class="row">
                 <div class="col-md-1"></div>

@@ -50,6 +50,11 @@ class Alerts extends \_DefaultController {
 		}else{
 			$object->setEnabled(0);
 		}
+		
+		if(isset($_POST['instant']))
+			$object->setInstant(1);
+		else	
+			$object->setInstant(0);
 	}
 
 }

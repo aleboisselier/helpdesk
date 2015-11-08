@@ -20,6 +20,7 @@ class Alert extends Base{
 	private $event;
 	private $enabled;
 	private $frequence;
+	private $instant;
 
 
 	public function getId() {
@@ -110,6 +111,25 @@ class Alert extends Base{
      */
     public function setUser($idUser){
         $this->user = $idUser;
+        return $this;
+    }
+
+
+    /**
+     * instant
+     * @return unkown
+     */
+    public function getInstant(){
+        return $this->instant;
+    }
+
+    /**
+     * instant
+     * @param unkown $instant
+     * @return Alert
+     */
+    public function setInstant($instant){
+        $this->instant = $instant;
         return $this;
     }
 
