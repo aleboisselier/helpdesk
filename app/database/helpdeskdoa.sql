@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 05 Novembre 2015 à 09:10
+-- Généré le :  Dim 08 Novembre 2015 à 23:17
 -- Version du serveur :  5.6.26
 -- Version de PHP :  5.6.12
 
@@ -25,13 +25,9 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `authprovider`
 --
-DROP DATABASE IF EXISTS helpdeskdoa;
-CREATE DATABASE helpdeskdoa;
-USE helpdeskdoa;
-
 
 CREATE TABLE IF NOT EXISTS `authprovider` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
   `icon` varchar(50) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -81,7 +77,14 @@ CREATE TABLE IF NOT EXISTS `customfield` (
   `libelle` varchar(50) NOT NULL,
   `propriete` varchar(256) DEFAULT NULL,
   `idGenericField` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `customfield`
+--
+
+INSERT INTO `customfield` (`idCustomField`, `libelle`, `propriete`, `idGenericField`) VALUES
+(1, 'pouet', 'pouet', 1);
 
 -- --------------------------------------------------------
 
@@ -106,8 +109,8 @@ CREATE TABLE IF NOT EXISTS `faq` (
 --
 
 INSERT INTO `faq` (`id`, `titre`, `contenu`, `dateCreation`, `idCategorie`, `idUser`, `version`, `popularity`, `published`) VALUES
-(2, 'À quoi sert le HelpDesk ?', '<p>Le HelpDesk correspond au projet 2 <em><strong>&laquo; &Eacute;volution de l&#39;outil d&#39;assistance &raquo;</strong></em> du programme 6 <em><strong>&laquo; Accompagner la consolidation et la transformation de la fonction SI au sein de notre &eacute;tablissement &raquo;</strong></em>.</p>\r\n\r\n<p>L&#39;un des objectifs strat&eacute;giques &agrave; l&#39;origine du projet est d&#39;homog&eacute;n&eacute;iser la prestation d&#39;assistance sur tous les sites et pour tous les usagers afin d&#39;offrir un niveau de service &eacute;quitablement accessible. En termes op&eacute;rationnels, l&#39;outil d&eacute;velopp&eacute; permet de disposer d&rsquo;un guichet d&rsquo;assistance unique, de mettre en &oelig;uvre des outils et des proc&eacute;dures communes et d&#39;identifier les probl&egrave;mes redondants.</p>\r\n\r\n<p>Du point de vue de l&#39;usager, il apporte l&#39;assurance d&#39;un enregistrement formel des demandes et des fonctionnalit&eacute;s d&#39;information et de suivi syst&eacute;matiques.</p>\r\n', '2015-10-19 09:56:39', 11, 1, '1.0', 5, 0),
-(3, 'Procédure de changement de mot de passe', '<h2>Objet</h2>\r\n\r\nCette procédure a pour but de fournir des conseils et des recommandations pour la création d''un mot de passe fort.\r\n\r\n<h2>Domaine d''application</h2>\r\n\r\nCette procédure s''adresse à tous les utilisateurs disposant d''un compte d''accès au système d''information\r\n\r\n<h2>Descriptif</h2>\r\n\r\n<h3>Pré-requis :</h3>\r\n\r\nUn bon mot de passe est un mot de passe suffisamment long, facile à retenir et très difficile à deviner. Votre mot de passse doit être constitué d''au moins 8 caractères dont une majuscule et un chiffre. Il peut contenir des lettres non accentuées, des chiffres, et certains caractères spéciaux : _ ! @ # $ % - + = < > ( ) { } [ ] | : ; , . ? ~ &\r\n\r\n<h3>Quelques procédés ou comment faire ?</h3>\r\n<ul>\r\n<li>Accoler mots et chiffres : Faire3Pas</li>\r\n<li>Créer un rébus : 71fame3MAIC&O (c''est un fameux 3 mâts Hisse et Ho)</li>\r\n<li>Pensez à une chanson ou un poème et extrayez les premières lettres : ottoc4ocR! (one, two, three, o''clock, four o''clock, rock !)</li>\r\n<li>Choisissez un mot de passe en y insérant des caractères spéciaux g1M2p#DUtI1 (j''ai un mot de passe différent du tien)</li>\r\n<li>Ne pas utiliser de mot de passe ayant un rapport avec soi (noms, dates de naissance,..)</li>\r\n<li>Vous avez tout intérêt à mélanger les possibilités offertes : lettres, chiffres et caractères spéciaux.</li>\r\n</ul>\r\n<h3>Respectez les règles</h3>\r\n\r\nVous êtes responsable de l''usage qui est fait de votre compte d''accès au système d''information. Pour garantir la sécurité de votre mot de passe, nous vous invitons à suivre les conseils ci-dessous:\r\n<ul>\r\n<li>Ne le communiquez à personne (il garantit votre identité et vous identifie personnellement dans notre système d''information</li>\r\n<li>Ne le notez pas sur un post-it</li>\r\n<li>Verrouillez ou fermez systématiquement votre session en quittant votre poste de travail</li>\r\n<li>Changez-le régulièrement</li>\r\n<li>N''utilisez pas le mot de passe de votre compte d''accès au système d''information pour un autre compte</li>\r\n</ul>', '2015-09-29 14:04:27', 12, 1, '1.0', 22, 0),
+(2, 'À quoi sert le HelpDesk ?', '<p>Le HelpDesk correspond au projet 2 <em><strong>&laquo; &Eacute;volution de l&#39;outil d&#39;assistance &raquo;</strong></em> du programme 6 <em><strong>&laquo; Accompagner la consolidation et la transformation de la fonction SI au sein de notre &eacute;tablissement &raquo;</strong></em>.</p>\r\n\r\n<p>L&#39;un des objectifs strat&eacute;giques &agrave; l&#39;origine du projet est d&#39;homog&eacute;n&eacute;iser la prestation d&#39;assistance sur tous les sites et pour tous les usagers afin d&#39;offrir un niveau de service &eacute;quitablement accessible. En termes op&eacute;rationnels, l&#39;outil d&eacute;velopp&eacute; permet de disposer d&rsquo;un guichet d&rsquo;assistance unique, de mettre en &oelig;uvre des outils et des proc&eacute;dures communes et d&#39;identifier les probl&egrave;mes redondants.</p>\r\n\r\n<p>Du point de vue de l&#39;usager, il apporte l&#39;assurance d&#39;un enregistrement formel des demandes et des fonctionnalit&eacute;s d&#39;information et de suivi syst&eacute;matiques.</p>\r\n', '2015-10-19 09:56:39', 11, 1, '1.0', 5, 1),
+(3, 'Procédure de changement de mot de passe', '<h2>Objet</h2>\r\n\r\nCette procédure a pour but de fournir des conseils et des recommandations pour la création d''un mot de passe fort.\r\n\r\n<h2>Domaine d''application</h2>\r\n\r\nCette procédure s''adresse à tous les utilisateurs disposant d''un compte d''accès au système d''information\r\n\r\n<h2>Descriptif</h2>\r\n\r\n<h3>Pré-requis :</h3>\r\n\r\nUn bon mot de passe est un mot de passe suffisamment long, facile à retenir et très difficile à deviner. Votre mot de passse doit être constitué d''au moins 8 caractères dont une majuscule et un chiffre. Il peut contenir des lettres non accentuées, des chiffres, et certains caractères spéciaux : _ ! @ # $ % - + = < > ( ) { } [ ] | : ; , . ? ~ &\r\n\r\n<h3>Quelques procédés ou comment faire ?</h3>\r\n<ul>\r\n<li>Accoler mots et chiffres : Faire3Pas</li>\r\n<li>Créer un rébus : 71fame3MAIC&O (c''est un fameux 3 mâts Hisse et Ho)</li>\r\n<li>Pensez à une chanson ou un poème et extrayez les premières lettres : ottoc4ocR! (one, two, three, o''clock, four o''clock, rock !)</li>\r\n<li>Choisissez un mot de passe en y insérant des caractères spéciaux g1M2p#DUtI1 (j''ai un mot de passe différent du tien)</li>\r\n<li>Ne pas utiliser de mot de passe ayant un rapport avec soi (noms, dates de naissance,..)</li>\r\n<li>Vous avez tout intérêt à mélanger les possibilités offertes : lettres, chiffres et caractères spéciaux.</li>\r\n</ul>\r\n<h3>Respectez les règles</h3>\r\n\r\nVous êtes responsable de l''usage qui est fait de votre compte d''accès au système d''information. Pour garantir la sécurité de votre mot de passe, nous vous invitons à suivre les conseils ci-dessous:\r\n<ul>\r\n<li>Ne le communiquez à personne (il garantit votre identité et vous identifie personnellement dans notre système d''information</li>\r\n<li>Ne le notez pas sur un post-it</li>\r\n<li>Verrouillez ou fermez systématiquement votre session en quittant votre poste de travail</li>\r\n<li>Changez-le régulièrement</li>\r\n<li>N''utilisez pas le mot de passe de votre compte d''accès au système d''information pour un autre compte</li>\r\n</ul>', '2015-09-29 14:04:27', 12, 1, '1.0', 22, 1),
 (4, 'rdgsgs', '', '2015-09-22 12:05:25', 1, 1, '1.0', 0, 1);
 
 -- --------------------------------------------------------
@@ -130,23 +133,24 @@ CREATE TABLE IF NOT EXISTS `fieldvalue` (
 --
 
 CREATE TABLE IF NOT EXISTS `genericfield` (
-  `idGenericField` int(3) NOT NULL,
+  `id` int(3) NOT NULL,
   `libelle` varchar(50) NOT NULL,
   `propriete` varchar(256) DEFAULT NULL,
-  `baseHtml` varchar(256) NOT NULL
+  `baseHtml` varchar(256) NOT NULL,
+  `multiple` tinyint(1) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `genericfield`
 --
 
-INSERT INTO `genericfield` (`idGenericField`, `libelle`, `propriete`, `baseHtml`) VALUES
-(1, 'email', 'type="email"', 'input'),
-(2, 'texte', 'type="text"', 'input'),
-(3, 'datetime', 'type="datetime"', 'input'),
-(4, 'checkbox', 'type="checkbox"', 'input'),
-(5, 'radioButton', 'type="radio"', 'input'),
-(6, 'select', '', 'select');
+INSERT INTO `genericfield` (`id`, `libelle`, `propriete`, `baseHtml`, `multiple`) VALUES
+(1, 'email', 'type="email"', 'input', 0),
+(2, 'texte', 'type="text"', 'input', 0),
+(3, 'datetime', 'type="datetime"', 'input', 0),
+(4, 'checkbox', 'type="checkbox"', 'input', 1),
+(5, 'radioButton', 'type="radio"', 'input', 1),
+(6, 'select', '', 'select', 1);
 
 -- --------------------------------------------------------
 
@@ -180,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `idUser` int(11) NOT NULL,
   `idTicket` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `message`
@@ -191,7 +195,8 @@ INSERT INTO `message` (`id`, `contenu`, `date`, `idUser`, `idTicket`) VALUES
 (2, 'Le message est <strong>`vidage de la mémoire physique...`</strong>', '2015-05-10 23:20:30', 2, 1),
 (3, '<p>Tr&egrave;s bien</p>\r\n', '2015-10-01 10:01:51', 1, 1),
 (4, '<p>Test</p>\r\n', '2015-10-05 07:54:27', 2, 1),
-(8, '<p>test</p>\r\n', '2015-10-05 08:23:32', 1, 1);
+(8, '<p>test</p>\r\n', '2015-10-05 08:23:32', 1, 1),
+(9, '<p>STEST ILKJGHFQKULJGZFQOMIGZRFAOMILGFTOLUITFO8</p>\r\n', '2015-11-07 18:07:39', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -205,6 +210,13 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `idMessage` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Contenu de la table `notification`
+--
+
+INSERT INTO `notification` (`idUser`, `idTicket`, `idMessage`, `date`) VALUES
+(1, 1, 0, '2015-11-07 19:07:39');
 
 -- --------------------------------------------------------
 
@@ -313,7 +325,7 @@ INSERT INTO `user` (`id`, `login`, `password`, `mail`, `admin`, `idGroupe`, `idA
 (1, 'admin', '$2y$10$0QTBrMN.NI6/h0Y0h2/pO.BPzG.MraWt9Wy7Hck3eqxh8jdZe2SSm', 'admin@local.fr', 1, 1, NULL, ''),
 (2, 'user', '$2y$10$wSSIwuac4n6ZI68jj1QkCeILm.K4gU/hJgQQG55KUzBzQPpMfQVtq', 'user@local.fr', 0, 2, NULL, ''),
 (3, 'autreUser', '$2y$10$rWyNDY9Hs6f043OGsKgz8.AsgGvit8Idin8xDOXR0h0sAPRV8yrc6', 'autreuser@local.fr', 0, 3, NULL, ''),
-(4, 'moi', '$2y$10$0dYwBluYRBocAcR0ody5f.XVYOXrWEHQhLQp6sUy0jEewh8UglHRe', 'contact@aleboisselier.fr', 0, 3, NULL, ''),
+(4, 'moi', '$2y$10$LFtMxpYMAMxG5exK8YkOtOF48Q0lNencp.1KjuIHcZ4B8QuV31LnK', 'contact@aleboisselier.fr', 0, 3, NULL, ''),
 (6, 'Antoine LEBOISSELIER', '', '', 0, 2, 1, '14269716');
 
 --
@@ -324,7 +336,7 @@ INSERT INTO `user` (`id`, `login`, `password`, `mail`, `admin`, `idGroupe`, `idA
 -- Index pour la table `authprovider`
 --
 ALTER TABLE `authprovider`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `categorie`
@@ -360,7 +372,7 @@ ALTER TABLE `fieldvalue`
 -- Index pour la table `genericfield`
 --
 ALTER TABLE `genericfield`
-  ADD PRIMARY KEY (`idGenericField`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `groupe`
@@ -427,7 +439,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `authprovider`
 --
 ALTER TABLE `authprovider`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `categorie`
 --
@@ -437,7 +449,7 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `customfield`
 --
 ALTER TABLE `customfield`
-  MODIFY `idCustomField` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCustomField` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `faq`
 --
@@ -452,7 +464,7 @@ ALTER TABLE `fieldvalue`
 -- AUTO_INCREMENT pour la table `genericfield`
 --
 ALTER TABLE `genericfield`
-  MODIFY `idGenericField` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `groupe`
 --
@@ -462,7 +474,7 @@ ALTER TABLE `groupe`
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `statut`
 --
@@ -477,7 +489,7 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Contraintes pour les tables exportées
 --
@@ -492,7 +504,7 @@ ALTER TABLE `categorie`
 -- Contraintes pour la table `customfield`
 --
 ALTER TABLE `customfield`
-  ADD CONSTRAINT `customfield_ibfk_1` FOREIGN KEY (`idGenericField`) REFERENCES `genericfield` (`idGenericField`);
+  ADD CONSTRAINT `customfield_ibfk_1` FOREIGN KEY (`idGenericField`) REFERENCES `genericfield` (`id`);
 
 --
 -- Contraintes pour la table `faq`
