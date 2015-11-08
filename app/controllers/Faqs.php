@@ -59,6 +59,7 @@ class Faqs extends \_DefaultController {
 	public function view($id=NULL){
 		$faq=$this->getInstance($id);
 		if ($faq->getPublished() || $faq->getUser()->getId() == Auth::getUser()->getId()) {
+			$faq->setUser(DAO::getAll("User", "id=".$faq->getUser()->getId())[0]);
 			$this->loadView("faq/vView",array("faq"=>$faq));
 		}else{
 			$this->forward("Faqs/index");
@@ -69,6 +70,7 @@ class Faqs extends \_DefaultController {
 		global $config;
 
 		$faq=$this->getInstance($id);
+		$faq->setUser(DAO::getAll("User", "id=".$faq->getUser()->getId())[0]);
 
 		$categories=DAO::getAll("Categorie");
 		if($faq->getCategorie()==null){
@@ -77,7 +79,7 @@ class Faqs extends \_DefaultController {
 			$cat=$faq->getCategorie()->getId();
 		}
 		$listCat=Gui::select($categories,$cat,"Sélectionner une catégorie ...");
-
+	
 		$this->loadView("faq/vAdd",array("faq"=>$faq,"listCat"=>$listCat));
 		if(!$config["test"]) echo Jquery::execute("CKEDITOR.replace('contenu');");
 	}

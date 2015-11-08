@@ -17,7 +17,7 @@
 			</div>
 		</div>
 	</div>
-<?php if (Auth::getUser()->getGroupe()->getId() == 2):?>
+<?php if (!Auth::isAdmin()):?>
 	<div class="row">
 		<div class="col-md-6">
 			<div class="well well-lg">

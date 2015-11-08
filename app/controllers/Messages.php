@@ -53,6 +53,7 @@ class Messages extends \_DefaultController {
 				if (!in_array($user, $users) && $user != Auth::getUser()->getId() ) {
 					array_push($users, $message->getUser()->getId());
 				}
+				$message->setUser(DAO::getAll("User", "id=".$message->getUser()->getId())[0]);
 			}
 
 			foreach ($users as $user) {
