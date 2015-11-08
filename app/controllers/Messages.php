@@ -55,15 +55,16 @@ class Messages extends \_DefaultController {
 				}
 				$message->setUser(DAO::getAll("User", "id=".$message->getUser()->getId())[0]);
 			}
+			
+			$message = DAO::getOne("Message", "idUser=".Auth::getUser()->getId()." ORDER BY date DESC");
 
 			foreach ($users as $user) {
 				if (DAO::getOne("Notification", 'idUser = '.$user.' AND idTicket = '.$ticket->getId()) == null) {
 					$user = DAO::getOne("User", $user);
 					$notif = new Notification();
-					// $message = DAO::getMax("Message", 'idUser = '.Auth::getUser()->getId());
-					// $notif->setMessage($message);
 					$notif->setUser($user);
 					$notif->setTicket($ticket);
+					$notif->setMessage($message);
 					DAO::insert($notif);
 				}
 			}
