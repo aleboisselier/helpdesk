@@ -44,7 +44,7 @@ class CustomFields extends \_DefaultController {
 	}
 
 	public function multipleField(){
-		$this->loadView("customField/vAdd", array("test"=>$test));
+		$this->loadView("customField/vAdd");
 		echo Jquery::executeOn(".ajoutItem","click", "$('.addNewItem').load('customField/vAdd')");
 	}
 
