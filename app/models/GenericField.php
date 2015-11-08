@@ -13,6 +13,7 @@ class GenericField extends Base{
 	private $libelle;
 	private $propriete;
 	private $baseHtml;
+	private $multiple;
 
 	public function getId() {
 		return $this->id;
@@ -43,6 +44,14 @@ class GenericField extends Base{
     }
     public function setBaseHtml($baseHtml){
         $this->baseHtml=$baseHtml;
+		return $this;
+    }
+
+    public function getMultiple(){
+        return $this->multiple;
+    }
+    public function setMultiple($multiple){
+        $this->multiple=$multiple;
 		return $this;
     }
 

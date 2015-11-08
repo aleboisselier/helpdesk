@@ -3,8 +3,7 @@
 	<select class="form-control select" name="idField">
 		<?php echo $fieldList;?>
 	</select>
-	<button type="submit">Valider</button>
 </form>
 
-	<div class="selectedField">
-	</div>
+<div class="selectedField">
+</div>

@@ -29,13 +29,21 @@ class CustomFields extends \_DefaultController {
 	}
 
 	public function filter(){
-		if (isset($_POST['idField']) && $_POST['idField'] !="Sélectionner un nouveau champ ...") {
+		if (isset($_POST['idField']) && $_POST['idField'] !="Sélectionner un champ...") {
 			$selectField=DAO::getOne("GenericField", $_POST['idField']);
-			echo "<".$selectField->getBaseHtml()." ".$selectField->getPropriete()." >";
+			echo '<form action="CustomFields/ajout" method="post" name="ajoutForm" id="ajoutForm">
+				<label for='.$selectField->getLibelle().'>Ajout de "'.$selectField->getLibelle().'". Nommer  :</label><br>	
+				<'.$selectField->getBaseHtml()." ".$selectField->getPropriete().' >';
+			if($selectField->getMultiple()==1){
+				$this->multipleField();
+			}
+			echo '<button type="submit">Ajouter</button>
+				</select>';
 		}
-		
-		//$this->loadView("customField/vSelect", array("genericFields"=>$genericFields, "selectField"=>$selectField, "sql"=>$sql));
-		// $this->loadView("customField/vSelect", array("sql"=>$sql, "newField"=>$newField));
+	}
+
+	public function multipleField(){
+		echo "<br> Repouet";
 	}
 
 	protected function setValuesToObject(&$object) {
