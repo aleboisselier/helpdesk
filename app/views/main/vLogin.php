@@ -33,4 +33,10 @@
 			</form>	
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<div class="text-center"><a class="btn btn-default btn-block" href="UserAuth/signin_with_hybridauth/GitHub"><span class='pe-so-github' aria-hidden='true'></span>&nbsp Connexion avec GitHub</a></div>
+		</div>
+	</div>
 </div>

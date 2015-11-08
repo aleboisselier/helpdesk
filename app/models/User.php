@@ -85,9 +85,6 @@ class User extends Base{
 	public function toString(){
 		$uType="Utilisateur";
 		$p="";
-		if($this->admin){
-			$uType="Administrateur";
-		}
 		if($this->authProvider!=null){
 			$p="<span class='".$this->authProvider->getIcon()."' aria-hidden='true'></span>&nbsp;";
 		}

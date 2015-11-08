@@ -14,8 +14,8 @@
 <script type="text/javascript" src="assets/js/bootstrap-clockpicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-clockpicker.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 <link rel="icon" href="assets/img/helpdesk.png">
+<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 </head>
 <meta charset="UTF-8">
 <body>
