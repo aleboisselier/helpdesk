@@ -20,7 +20,7 @@ class UserAuth extends BaseController {
 
 	public function signin_with_hybridauth($provider) {
 		global $config;
-		$authConfig=ROOT."./hybridauth/config.php";
+		$authConfig=ROOT."configHybrid.php";
 		include ROOT."./../vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php";
 
 		$hybridauth=new Hybrid_Auth($authConfig);
@@ -46,7 +46,7 @@ class UserAuth extends BaseController {
 			$_SESSION["user"]=$user;
 			setcookie("autoConnect", $provider[0], time()+3600, "/");
 			if (array_key_exists("action", $_SESSION)) {
-				Startu::runAction($_SESSION["action"], false, false);
+				Startup::runAction($_SESSION["action"], false, false);
 				unset($_SESSION["action"]);
 			} else {
 				echo '<h3>Connecté à '.$dbProvider->getName().'</h3>';
