@@ -24,19 +24,47 @@ while (true) {
 	$notifs = DAO::getAll("Notification", "mailSent = 0");
 	foreach ($notifs as $notif){
 		$alert = DAO::getOne("Alert", "idUser=".$notif->getUser()->getId());
+		$freq = json_decode($alert->getFrequence(), true);
 		
-		$format = 'H:i';
-		$date = DateTime::createFromFormat($format, json_decode($alert->getFrequence(), true)[0]['time']);
-		$currDate = date_create(date('H:i'));
-		echo date_diff($date, $currDate);
+		//Converting my days to PHP days values
+		$freqC = array();
+		foreach ($freq as $f){
+			if(intval($f['day']) == 6){
+				array_push($freqC, array("day"=>0, "time"=>$f["time"]));
+			}else{
+				array_push($freqC, array("day"=>intval($f["day"])+1, "time"=>$f["time"]));
+			}
+		}
 		
-		$datetime1 = date_create('2009-10-11');
-		$datetime2 = date_create('2009-10-13');
-		$interval = date_diff($datetime1, $datetime2);
-		echo $interval->format('%R%a days');
+		$today = getdate()["wday"];
+		foreach ($freqC as $f){
+			if (($today == $f['day'] && time() >= strtotime($f["time"]) )|| $alert->getInstant()){
+					require_once ROOT.'../vendor\phpmailer\phpmailer/PHPMailerAutoload.php';
+					$mail = new PHPMailer;
+					$mail->isSMTP();
+					$mail->SMTPDebug = 0;
+			
+					$mail->Host = $config['mails']['smtp'];
+					$mail->Port = $config['mails']['port'];
+			
+					$mail->SMTPSecure = $config['mails']['secure'];
+					$mail->SMTPAuth = $config['mails']['smtpAuth'];
+					$mail->Username = $config['mails']['username'];
+					$mail->Password = $config['mails']['password'];
+			
+					$mail->setFrom('no-reply@helpdesk.com', 'Centre de Notifications HelpDesk');
+					$mail->addAddress($to);
+					$mail->Subject = 'Nouvelle(s) Notification(s)';
+					$mail->CharSet = 'UTF-8';
+					$mail->msgHTML('<a href="'.$config['siteUrl'].'Tickets/frm/'.$notif->getTicket()->getId().'#'.$notif->getMessage()->getId().'" class="list-group-item notif">'.$notif.'</a>', dirname(__FILE__));
+			
+					$mail->send();
+					
+					$notif->setMailSent(1);
+					DAO::update($notif);
+			}
+		}
 	}
 	
-	echo "\n";
-
-	sleep(1);
+	sleep(10);
 }
