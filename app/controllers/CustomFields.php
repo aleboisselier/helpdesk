@@ -45,8 +45,10 @@ class CustomFields extends \_DefaultController {
 
 	public function multipleField(){
 		$this->loadView("customField/vAdd");
-		echo Jquery::executeOn(".ajoutItem","click", "$('.addNewItem').load('customField/vAdd')");
+		$this->initialize();
+		echo Jquery::postOn( "click", ".ajoutItem", "customField/vAdd",".addNewItem");
 		echo Jquery::compile();
+		$this->finalize();
 	}
 
 	protected function setValuesToObject(&$object) {
