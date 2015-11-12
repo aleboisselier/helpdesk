@@ -40,6 +40,16 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-md-6">
+			<div class="well well-lg">
+				<div>
+					<fieldset>
+						<legend>Compte Utilisateur</legend>
+						<a class="btn btn-info btn-lg btn-block" href="Users"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Mon Compte</a>
+					</fieldset>
+				</div>
+			</div>
+		</div>
 	</div>
 <?php else:?>
 	<div class="row">
@@ -53,13 +63,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6 pull-right">
 			<div class="well well-lg">
 				<div>
 					<fieldset>
 						<legend>Foire aux Questions :</legend>
 						<a class="btn btn-info btn-lg btn-block" href="Faqs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Voir les Articles</a>
 						<a class="btn btn-success btn-lg btn-block" href="Faqs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Créer un Article</a>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 pull-left">
+			<div class="well well-lg">
+				<div>
+					<fieldset>
+						<legend>Compte Utilisateur</legend>
+						<a class="btn btn-info btn-lg btn-block" href="Users/frm/<?php echo Auth::getUser()->getId();?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Mon Compte</a>
 					</fieldset>
 				</div>
 			</div>
@@ -76,5 +96,6 @@
 		</div>
 	</div>
 <?php endif;?>
+
 </div>
 

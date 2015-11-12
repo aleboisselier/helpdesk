@@ -1,12 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 05 Novembre 2015 à 09:10
--- Version du serveur :  5.6.26
--- Version de PHP :  5.6.12
-
+-- Généré le :  Jeu 12 Novembre 2015 à 08:32
+-- Version du serveur :  5.6.21
+-- Version de PHP :  5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -15,15 +14,35 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de données :  `helpdesk`
 --
 
-DROP DATABASE IF EXISTS helpdesk;
-CREATE DATABASE helpdesk;
-USE helpdesk;
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `alert`
+--
+
+CREATE TABLE IF NOT EXISTS `alert` (
+`id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `event` varchar(50) NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  `instant` tinyint(4) NOT NULL,
+  `frequence` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `alert`
+--
+
+INSERT INTO `alert` (`id`, `idUser`, `event`, `enabled`, `instant`, `frequence`) VALUES
+(7, 2, '', 1, 0, '[{"day":"0","time":"15:12"},{"day":"2","time":"15:12"},{"day":"4","time":"15:12"}]'),
+(9, 1, '', 1, 1, '[{"day":"0","time":"00:00"},{"day":"2","time":"05:30"},{"day":"4","time":"05:30"},{"day":"6","time":"05:30"}]');
+
 -- --------------------------------------------------------
 
 --
@@ -50,7 +69,7 @@ INSERT INTO `authprovider` (`id`, `name`, `icon`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `categorie` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `libelle` varchar(100) NOT NULL,
   `idCategorie` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
@@ -77,7 +96,7 @@ INSERT INTO `categorie` (`id`, `libelle`, `idCategorie`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `customfield` (
-  `idCustomField` int(3) NOT NULL,
+`idCustomField` int(3) NOT NULL,
   `libelle` varchar(50) NOT NULL,
   `propriete` varchar(256) DEFAULT NULL,
   `idGenericField` int(3) NOT NULL
@@ -90,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `customfield` (
 --
 
 CREATE TABLE IF NOT EXISTS `faq` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `titre` varchar(100) NOT NULL,
   `contenu` text NOT NULL,
   `dateCreation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -117,7 +136,7 @@ INSERT INTO `faq` (`id`, `titre`, `contenu`, `dateCreation`, `idCategorie`, `idU
 --
 
 CREATE TABLE IF NOT EXISTS `fieldvalue` (
-  `idFieldValue` int(3) NOT NULL,
+`idFieldValue` int(3) NOT NULL,
   `libelle` varchar(50) NOT NULL,
   `idField` int(3) NOT NULL,
   `value` varchar(50) CHARACTER SET utf8 COLLATE utf8_estonian_ci NOT NULL
@@ -130,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `fieldvalue` (
 --
 
 CREATE TABLE IF NOT EXISTS `genericfield` (
-  `idGenericField` int(3) NOT NULL,
+`idGenericField` int(3) NOT NULL,
   `libelle` varchar(50) NOT NULL,
   `propriete` varchar(256) DEFAULT NULL,
   `baseHtml` varchar(256) NOT NULL
@@ -155,7 +174,7 @@ INSERT INTO `genericfield` (`idGenericField`, `libelle`, `propriete`, `baseHtml`
 --
 
 CREATE TABLE IF NOT EXISTS `groupe` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `libelle` varchar(50) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -175,12 +194,12 @@ INSERT INTO `groupe` (`id`, `libelle`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `message` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `contenu` text NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `idUser` int(11) NOT NULL,
   `idTicket` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `message`
@@ -191,7 +210,9 @@ INSERT INTO `message` (`id`, `contenu`, `date`, `idUser`, `idTicket`) VALUES
 (2, 'Le message est <strong>`vidage de la mémoire physique...`</strong>', '2015-05-10 23:20:30', 2, 1),
 (3, '<p>Tr&egrave;s bien</p>\r\n', '2015-10-01 10:01:51', 1, 1),
 (4, '<p>Test</p>\r\n', '2015-10-05 07:54:27', 2, 1),
-(8, '<p>test</p>\r\n', '2015-10-05 08:23:32', 1, 1);
+(8, '<p>test</p>\r\n', '2015-10-05 08:23:32', 1, 1),
+(9, '<p>Test de message</p>\r\n', '2015-11-08 14:29:22', 1, 1),
+(10, '<p>Test alertes</p>\r\n', '2015-11-08 17:31:58', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -203,7 +224,8 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `idUser` int(11) NOT NULL,
   `idTicket` int(11) NOT NULL,
   `idMessage` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `mailSent` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -213,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
 --
 
 CREATE TABLE IF NOT EXISTS `statut` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `libelle` varchar(30) NOT NULL,
   `ordre` int(11) NOT NULL,
   `icon` varchar(20) NOT NULL,
@@ -240,7 +262,7 @@ INSERT INTO `statut` (`id`, `libelle`, `ordre`, `icon`, `statutsSuivant`, `actio
 --
 
 CREATE TABLE IF NOT EXISTS `ticket` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `type` set('demande','incident') NOT NULL DEFAULT 'demande',
   `idCategorie` int(11) NOT NULL,
   `titre` varchar(100) NOT NULL,
@@ -295,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `token` (
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `login` varchar(20) NOT NULL,
   `password` varchar(60) NOT NULL,
   `mail` varchar(255) NOT NULL,
@@ -303,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `idGroupe` int(11) NOT NULL,
   `idAuthProvider` int(11) DEFAULT NULL,
   `key` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `user`
@@ -314,11 +336,17 @@ INSERT INTO `user` (`id`, `login`, `password`, `mail`, `admin`, `idGroupe`, `idA
 (2, 'user', '$2y$10$wSSIwuac4n6ZI68jj1QkCeILm.K4gU/hJgQQG55KUzBzQPpMfQVtq', 'user@local.fr', 0, 2, NULL, ''),
 (3, 'autreUser', '$2y$10$rWyNDY9Hs6f043OGsKgz8.AsgGvit8Idin8xDOXR0h0sAPRV8yrc6', 'autreuser@local.fr', 0, 3, NULL, ''),
 (4, 'moi', '$2y$10$0dYwBluYRBocAcR0ody5f.XVYOXrWEHQhLQp6sUy0jEewh8UglHRe', 'contact@aleboisselier.fr', 0, 3, NULL, ''),
-(6, 'Antoine LEBOISSELIER', '', '', 0, 2, 1, '14269716');
+(7, 'Antoine LEBOISSELIER', '', 'antoine.leboisselier@outlook.com', 0, 2, 1, '14269716');
 
 --
 -- Index pour les tables exportées
 --
+
+--
+-- Index pour la table `alert`
+--
+ALTER TABLE `alert`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `authprovider`
@@ -330,99 +358,89 @@ ALTER TABLE `authprovider`
 -- Index pour la table `categorie`
 --
 ALTER TABLE `categorie`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idCategorie` (`idCategorie`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idCategorie` (`idCategorie`);
 
 --
 -- Index pour la table `customfield`
 --
 ALTER TABLE `customfield`
-  ADD PRIMARY KEY (`idCustomField`),
-  ADD KEY `idGenericField` (`idGenericField`);
+ ADD PRIMARY KEY (`idCustomField`), ADD KEY `idGenericField` (`idGenericField`);
 
 --
 -- Index pour la table `faq`
 --
 ALTER TABLE `faq`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idCategorie` (`idCategorie`,`idUser`),
-  ADD KEY `idUser` (`idUser`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idCategorie` (`idCategorie`,`idUser`), ADD KEY `idUser` (`idUser`);
 
 --
 -- Index pour la table `fieldvalue`
 --
 ALTER TABLE `fieldvalue`
-  ADD PRIMARY KEY (`idFieldValue`),
-  ADD KEY `value` (`value`),
-  ADD KEY `idField` (`idField`);
+ ADD PRIMARY KEY (`idFieldValue`), ADD KEY `value` (`value`), ADD KEY `idField` (`idField`);
 
 --
 -- Index pour la table `genericfield`
 --
 ALTER TABLE `genericfield`
-  ADD PRIMARY KEY (`idGenericField`);
+ ADD PRIMARY KEY (`idGenericField`);
 
 --
 -- Index pour la table `groupe`
 --
 ALTER TABLE `groupe`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `message`
 --
 ALTER TABLE `message`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idUser` (`idUser`),
-  ADD KEY `idTicket` (`idTicket`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idUser` (`idUser`), ADD KEY `idTicket` (`idTicket`);
 
 --
 -- Index pour la table `notification`
 --
 ALTER TABLE `notification`
-  ADD PRIMARY KEY (`idUser`,`idTicket`);
+ ADD PRIMARY KEY (`idUser`,`idTicket`);
 
 --
 -- Index pour la table `statut`
 --
 ALTER TABLE `statut`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `ticket`
 --
 ALTER TABLE `ticket`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idCategorie` (`idCategorie`),
-  ADD KEY `idStatut` (`idStatut`,`idUser`),
-  ADD KEY `idUser` (`idUser`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idCategorie` (`idCategorie`), ADD KEY `idStatut` (`idStatut`,`idUser`), ADD KEY `idUser` (`idUser`);
 
 --
 -- Index pour la table `ticketvalue`
 --
 ALTER TABLE `ticketvalue`
-  ADD KEY `idCustomField` (`idCustomField`),
-  ADD KEY `idTicketValue` (`idTicket`),
-  ADD KEY `value` (`value`);
+ ADD KEY `idCustomField` (`idCustomField`), ADD KEY `idTicketValue` (`idTicket`), ADD KEY `value` (`value`);
 
 --
 -- Index pour la table `token`
 --
 ALTER TABLE `token`
-  ADD PRIMARY KEY (`token`);
+ ADD PRIMARY KEY (`token`);
 
 --
 -- Index pour la table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `login` (`login`),
-  ADD KEY `groupe` (`idGroupe`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login` (`login`), ADD KEY `groupe` (`idGroupe`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
 --
 
+--
+-- AUTO_INCREMENT pour la table `alert`
+--
+ALTER TABLE `alert`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `authprovider`
 --
@@ -432,52 +450,52 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `customfield`
 --
 ALTER TABLE `customfield`
-  MODIFY `idCustomField` int(3) NOT NULL AUTO_INCREMENT;
+MODIFY `idCustomField` int(3) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `faq`
 --
 ALTER TABLE `faq`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `fieldvalue`
 --
 ALTER TABLE `fieldvalue`
-  MODIFY `idFieldValue` int(3) NOT NULL AUTO_INCREMENT;
+MODIFY `idFieldValue` int(3) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `genericfield`
 --
 ALTER TABLE `genericfield`
-  MODIFY `idGenericField` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `idGenericField` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `groupe`
 --
 ALTER TABLE `groupe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT pour la table `statut`
 --
 ALTER TABLE `statut`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT pour la table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- Contraintes pour les tables exportées
 --
@@ -486,54 +504,54 @@ ALTER TABLE `user`
 -- Contraintes pour la table `categorie`
 --
 ALTER TABLE `categorie`
-  ADD CONSTRAINT `categorie_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+ADD CONSTRAINT `categorie_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Contraintes pour la table `customfield`
 --
 ALTER TABLE `customfield`
-  ADD CONSTRAINT `customfield_ibfk_1` FOREIGN KEY (`idGenericField`) REFERENCES `genericfield` (`idGenericField`);
+ADD CONSTRAINT `customfield_ibfk_1` FOREIGN KEY (`idGenericField`) REFERENCES `genericfield` (`idGenericField`);
 
 --
 -- Contraintes pour la table `faq`
 --
 ALTER TABLE `faq`
-  ADD CONSTRAINT `faq_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `faq_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+ADD CONSTRAINT `faq_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+ADD CONSTRAINT `faq_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
 
 --
 -- Contraintes pour la table `fieldvalue`
 --
 ALTER TABLE `fieldvalue`
-  ADD CONSTRAINT `fieldvalue_ibfk_1` FOREIGN KEY (`idField`) REFERENCES `customfield` (`idCustomField`);
+ADD CONSTRAINT `fieldvalue_ibfk_1` FOREIGN KEY (`idField`) REFERENCES `customfield` (`idCustomField`);
 
 --
 -- Contraintes pour la table `message`
 --
 ALTER TABLE `message`
-  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`idTicket`) REFERENCES `ticket` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`idTicket`) REFERENCES `ticket` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `ticket`
 --
 ALTER TABLE `ticket`
-  ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`idStatut`) REFERENCES `statut` (`id`),
-  ADD CONSTRAINT `ticket_ibfk_3` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`idStatut`) REFERENCES `statut` (`id`),
+ADD CONSTRAINT `ticket_ibfk_3` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `ticketvalue`
 --
 ALTER TABLE `ticketvalue`
-  ADD CONSTRAINT `ticketvalue_ibfk_1` FOREIGN KEY (`idTicket`) REFERENCES `ticket` (`id`),
-  ADD CONSTRAINT `ticketvalue_ibfk_2` FOREIGN KEY (`idCustomField`) REFERENCES `customfield` (`idCustomField`);
+ADD CONSTRAINT `ticketvalue_ibfk_1` FOREIGN KEY (`idTicket`) REFERENCES `ticket` (`id`),
+ADD CONSTRAINT `ticketvalue_ibfk_2` FOREIGN KEY (`idCustomField`) REFERENCES `customfield` (`idCustomField`);
 
 --
 -- Contraintes pour la table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`idGroupe`) REFERENCES `groupe` (`id`);
+ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`idGroupe`) REFERENCES `groupe` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
