@@ -9,12 +9,12 @@
 	</div>
 	<div class="form-group">
 		<label for="login">Login :</label>
-		<input type="password" class="form-control" id="login" name="login" placeholder="Login" value="<?=$user->getLogin()?>">
+		<input type="text" class="form-control" id="login" name="login" placeholder="Login" value="<?=$user->getLogin()?>">
 	</div>
-		<select class="form-control" name="idGroupe">
-		<?php echo $groups;?>
-	</select>
 	<?php if(Auth::isAdmin()): ?>
+		<select class="form-control" name="idGroupe">
+			<?php echo $groups;?>
+		</select>
 		<div class="checkbox">
 			<label><input type="checkbox" name="admin" <?php echo ($user->getAdmin()?"checked":"")?> value="1">Administrateur ?</label>
 		</div>
