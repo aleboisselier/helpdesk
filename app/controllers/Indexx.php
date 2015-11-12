@@ -80,7 +80,7 @@ class Indexx extends micro\controllers\BaseController {
 				$_SESSION['logStatus'] = 'success';
 
 				if (isset($_POST['remember'])) {
-					setcookie('user', $user->getId(), $config['cookies']['user']['lifetime']);
+					setcookie('user', $user->getId(), $config['cookies']['user']['lifetime'], '/', '', 0, 0);
 				}
 
 			}else{
@@ -101,7 +101,7 @@ class Indexx extends micro\controllers\BaseController {
 				'disabled' => false
 		);
 		$_SESSION['logStatus'] = 'success';
-		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime']);
+		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime'], '/', '', 0, 0);
 		$this->index();
 	}
 
@@ -115,7 +115,7 @@ class Indexx extends micro\controllers\BaseController {
 				'disabled' => true
 		);
 		$_SESSION['logStatus'] = 'success';
-		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime']);
+		setcookie('user', $_SESSION["user"]->getId(), $config['cookies']['user']['lifetime'], '/', '', 0, 0);
 		$this->index();
 	}
 	
