@@ -33,7 +33,7 @@ class CustomFields extends \_DefaultController {
 			$selectField=DAO::getOne("GenericField", $_POST['idField']);
 			echo '<form action="CustomFields/ajout" method="post" name="ajoutForm" id="ajoutForm">
 				<br>
-				<label for="titre">Ajout d\'un titre pour"'.$selectField->getLibelle().'"  :</label><br>	
+				<label for="titre">Ajout d\'un titre descriptif pour "'.$selectField->getLibelle().'"  :</label><br>	
 				<input type="text" name="titre"><br>';
 			if($selectField->getMultiple()==1){
 				$this->multipleField();
@@ -46,7 +46,7 @@ class CustomFields extends \_DefaultController {
 	public function multipleField(){
 		$this->loadView("customField/vAdd");
 		$this->initialize();
-		echo Jquery::postOn( "click", ".ajoutItem", "customField/vAdd",".addNewItem");
+		Jquery::executeOn(".ajoutItem","click", "$('.addNewItem').append('<label for=\"item\" style=\float:left\">Item : </label><input type=\"text\" name=\"item[]\"><br><br>');");
 		echo Jquery::compile();
 		$this->finalize();
 	}
